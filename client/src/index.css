@@ -1,0 +1,336 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  /* ==============================
+     Kenya Foundation Color Palette
+     ============================== */
+
+  /* Primary */
+  --canopy-900: #072A4A;
+  --canopy-700: #0A4A80;
+  --canopy-600: #0061B2;
+
+  /* Secondary */
+  --marigold-500: #2E9E68;
+  --marigold-600: #217D50;
+
+  /* Accent */
+  --ember-600: #C62828;
+
+  /* Neutrals */
+  --ivory-50: #FAF7EF;
+  --ivory-100: #F3EEDF;
+  --cloud-100: #EDE7D8;
+
+  --ink-900: #111111;
+  --ink-700: #4B5563;
+
+  /* Borders */
+  --line: rgba(17, 17, 17, 0.12);
+  --line-on-dark: rgba(250, 247, 239, 0.18);
+
+  /* Typography */
+  --font-display: "Josefin Sans", sans-serif;
+  --font-body: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  /* Layout */
+  --radius-card: 14px;
+  --radius-button: 999px;
+  --max-width: 1160px;
+
+  /* Effects */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.08);
+  --transition: .3s ease;
+}
+
+/* ===================================
+   Base
+=================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ivory-50);
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+p {
+  margin: 0;
+  color: var(--ink-700);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--ink-900);
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* ===================================
+   Layout
+=================================== */
+
+.container {
+  width: min(100% - 48px, var(--max-width));
+  margin-inline: auto;
+}
+
+.section {
+  padding: 5.5rem 0;
+}
+
+.section--tight {
+  padding: 4rem 0;
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 3rem;
+}
+
+.section-head h2 {
+  margin-top: .5rem;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+}
+
+.section-head p {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/* ===================================
+   Eyebrow
+=================================== */
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--marigold-600);
+}
+
+.eyebrow--on-dark {
+  color: var(--marigold-500);
+}
+
+/* ===================================
+   Buttons
+=================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+
+  padding: .85rem 1.5rem;
+
+  border-radius: var(--radius-button);
+
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: 600;
+
+  transition:
+    transform var(--transition),
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--marigold-500);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: var(--marigold-600);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-ghost {
+  color: var(--ivory-50);
+  border: 1px solid var(--line-on-dark);
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  background: rgba(250, 247, 239, .08);
+}
+
+.btn-outline {
+  color: var(--canopy-900);
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.btn-outline:hover {
+  background: var(--cloud-100);
+}
+
+/* ===================================
+   Cards
+=================================== */
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===================================
+   Divider
+=================================== */
+
+.signal-divider {
+  width: 100%;
+  height: 28px;
+  display: block;
+}
+
+.signal-divider path {
+  fill: none;
+  stroke: var(--marigold-500);
+  stroke-width: 1.5;
+  opacity: .55;
+}
+
+/* ===================================
+   Selection
+=================================== */
+
+::selection {
+  background: var(--marigold-500);
+  color: #fff;
+}
+
+/* ===================================
+   Scrollbar
+=================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ivory-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--canopy-600);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--canopy-700);
+}
+
+/* ===================================
+   Responsive
+=================================== */
+
+@media (max-width: 768px) {
+
+  .container {
+    width: min(100% - 32px, var(--max-width));
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .section--tight {
+    padding: 3rem 0;
+  }
+
+  .btn {
+    padding: .75rem 1.2rem;
+    font-size: .9rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .section {
+    padding: 3.5rem 0;
+  }
+
+  .section-head {
+    margin-bottom: 2rem;
+  }
+
+  .btn {
+    padding: .65rem 1rem;
+    font-size: .85rem;
+  }
+
+}

@@ -1,0 +1,511 @@
+/* ==============================
+   Navbar
+============================== */
+
+.navbar {
+  position: relative;
+  background: var(--canopy-900);
+  z-index: 100;
+}
+
+
+/* ==============================
+   Top Bar
+============================== */
+
+.topbar {
+  background: var(--canopy-700);
+  border-bottom: 1px solid var(--line-on-dark);
+}
+
+.topbar__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  font-size: 12.5px;
+}
+
+.topbar__contact {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.topbar__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: var(--ivory-100);
+  opacity: .85;
+
+  transition:
+    color .25s ease,
+    opacity .25s ease;
+}
+
+.topbar__item:hover {
+  color: var(--ivory-50);
+  opacity: 1;
+}
+
+
+.topbar__socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar__socials a {
+  display: flex;
+
+  color: var(--ivory-100);
+  opacity: .85;
+
+  transition:
+    color .25s ease,
+    opacity .25s ease;
+}
+
+.topbar__socials a:hover {
+  color: var(--marigold-500);
+  opacity: 1;
+}
+
+
+@media(max-width:560px){
+
+  .topbar__item span {
+    display:none;
+  }
+
+}
+
+
+@media(max-width:420px){
+
+  .topbar {
+    display:none;
+  }
+
+}
+
+
+
+/* ==============================
+   Main Navigation
+============================== */
+
+
+.navbar__row {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  height:120px;
+
+}
+
+
+
+/* Logo */
+
+.navbar__brand {
+
+  display:flex;
+
+  align-items:center;
+
+  flex-shrink:0;
+  height: 100%;
+
+  transition:opacity .25s ease;
+
+}
+
+
+.navbar__logo {
+
+  display:block;
+
+  max-height:98px;
+
+  width:auto;
+
+  object-fit:contain;
+
+}
+
+
+
+/* Desktop Links */
+
+.navbar__links {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:28px;
+
+}
+
+
+.navbar__link {
+
+  color:var(--ivory-100);
+
+  font-size:15px;
+
+  font-weight:500;
+
+  transition:
+    color .25s ease;
+}
+
+
+.navbar__link:hover {
+
+  color:var(--ivory-50);
+
+}
+
+
+
+/* Donate button spacing */
+
+.navbar__links .btn {
+
+  margin-left:10px;
+
+}
+
+
+
+/* Mobile Toggle */
+
+
+.navbar__toggle {
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+
+  width:44px;
+
+  height:44px;
+
+
+  color:var(--ivory-50);
+
+  font-size:30px;
+
+  line-height:1;
+
+
+  cursor:pointer;
+
+}
+
+
+
+/* ==============================
+   Mobile Menu
+============================== */
+
+
+.navbar__mobile {
+
+  display:none;
+
+}
+
+
+
+
+/* ==============================
+   Mobile
+============================== */
+
+
+/* ==============================
+   Mobile
+============================== */
+
+@media(max-width:720px){
+
+  .navbar {
+    position:relative;
+  }
+
+
+  /* Hide desktop navigation */
+  .navbar__links {
+    display:none;
+  }
+
+
+  /* Match new logo height */
+  .navbar__row {
+
+    height:88px;
+
+    padding-top:8px;
+    padding-bottom:8px;
+
+  }
+
+
+  .navbar__brand {
+
+    height:100%;
+
+    max-width:220px;
+
+    overflow:hidden;
+
+  }
+
+
+  .navbar__logo {
+
+    max-height:62px;
+
+    width:auto;
+
+  }
+
+
+
+  .navbar__brand--hidden {
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+  }
+
+
+
+  /* Mobile menu button */
+
+  .navbar__toggle {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    position:relative;
+
+    z-index:10002;
+
+
+    width:44px;
+
+    height:44px;
+
+
+    color:var(--ivory-50);
+
+    font-size:30px;
+
+    line-height:1;
+
+  }
+
+
+  .navbar__toggle:hover {
+
+    color:var(--marigold-500);
+
+  }
+
+
+
+  /* Fullscreen mobile menu */
+
+  .navbar__mobile {
+
+    position:fixed;
+
+    inset:0;
+
+
+    z-index:10000;
+
+
+    width:100vw;
+
+    height:100dvh;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    gap:2rem;
+
+
+    padding:2rem;
+
+
+    background:var(--canopy-900);
+
+
+    animation:fadeMenu .3s ease;
+
+  }
+
+
+
+  .navbar__mobile .navbar__link {
+
+    color:var(--ivory-50);
+
+
+    font-size:
+
+      clamp(1.35rem,5vw,1.8rem);
+
+
+    font-weight:600;
+
+
+    transition:
+
+      color .25s ease,
+
+      transform .25s ease;
+
+  }
+
+
+
+  .navbar__mobile .navbar__link:hover {
+
+    color:var(--marigold-500);
+
+    transform:translateY(-3px);
+
+  }
+
+
+
+  .navbar__mobile-cta {
+
+    margin-top:1rem;
+
+    width:220px;
+
+    justify-content:center;
+
+  }
+
+}
+
+
+
+/* ==============================
+   Small Phones
+============================== */
+
+@media(max-width:480px){
+
+
+  .navbar__row {
+
+    height:78px;
+
+    padding-top:6px;
+
+    padding-bottom:6px;
+
+  }
+
+
+
+  .navbar__brand {
+
+    max-width:180px;
+
+  }
+
+
+
+  .navbar__logo {
+
+    max-height:52px;
+
+  }
+
+
+
+  .navbar__toggle {
+
+    width:40px;
+
+    height:40px;
+
+    font-size:26px;
+
+  }
+
+
+
+  .navbar__mobile {
+
+    gap:1.6rem;
+
+  }
+
+
+
+  .navbar__mobile .navbar__link {
+
+    font-size:1.3rem;
+
+  }
+
+}
+
+
+/* ==============================
+   Animation
+============================== */
+
+
+@keyframes fadeMenu {
+
+  from {
+
+    opacity:0;
+
+  }
+
+
+  to {
+
+    opacity:1;
+
+  }
+
+}

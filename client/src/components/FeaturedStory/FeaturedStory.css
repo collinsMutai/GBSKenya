@@ -1,0 +1,54 @@
+.featured-story__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.featured-story__title {
+  font-size: clamp(24px, 2.8vw, 32px);
+  margin-top: 12px;
+}
+
+.featured-story__excerpt {
+  margin-top: 16px;
+  font-size: 15.5px;
+  color: var(--ink-700);
+}
+
+.featured-story__byline {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--canopy-600);
+}
+
+.featured-story__cta {
+  margin-top: 24px;
+}
+
+.featured-story__quote-card {
+  background: var(--cloud-100);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  min-height: 220px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.featured-story__quote {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: italic;
+  color: var(--ink-700);
+}
+
+@media (max-width: 780px) {
+  .featured-story__grid {
+    grid-template-columns: 1fr;
+  }
+  .featured-story__quote-card {
+    order: -1;
+    min-height: 160px;
+  }
+}

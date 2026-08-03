@@ -1,0 +1,313 @@
+/* ===================================
+   Resources
+=================================== */
+
+.resources-intro__card,
+.resources-help__card{
+
+    max-width:900px;
+    margin-inline:auto;
+
+    text-align:center;
+
+    background:#fff;
+
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+
+    padding:3rem;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+
+.resources-intro__card:hover,
+.resources-help__card:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow-md);
+}
+
+
+.resources-intro__card h2,
+.resources-help__card h2{
+    margin-bottom:1rem;
+}
+
+
+.resources-intro__card p,
+.resources-help__card p{
+
+    max-width:720px;
+
+    margin-inline:auto;
+
+    line-height:1.8;
+}
+
+
+
+/* ===================================
+   Resource Grid
+=================================== */
+
+.resources-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(270px,1fr));
+
+    gap:2rem;
+
+    margin-top:3rem;
+}
+
+
+
+/* ===================================
+   Resource Card
+=================================== */
+
+.resource-card{
+
+    display:flex;
+    flex-direction:column;
+
+    background:#fff;
+
+    border:1px solid var(--line);
+
+    border-radius:var(--radius-card);
+
+    padding:2rem;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
+}
+
+
+
+.resource-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow-md);
+
+    border-color:rgba(10,74,128,.2);
+
+}
+
+
+
+.resource-card h3{
+
+    margin-bottom:.8rem;
+
+    font-size:1.35rem;
+
+}
+
+
+
+.resource-card p{
+
+    flex:1;
+
+    margin-bottom:1.5rem;
+
+    line-height:1.75;
+
+}
+
+
+
+/* ===================================
+   Lucide Icon Container
+=================================== */
+
+
+.resource-icon{
+
+    width:68px;
+    height:68px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    margin-bottom:1.25rem;
+
+
+    border-radius:18px;
+
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--canopy-700),
+            var(--canopy-600)
+        );
+
+
+    color:#fff;
+
+
+    box-shadow:var(--shadow-sm);
+
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+
+
+.resource-card:hover .resource-icon{
+
+    transform:scale(1.05);
+
+    box-shadow:var(--shadow-md);
+
+}
+
+
+
+/* ===================================
+   Resource Links
+=================================== */
+
+
+.resource-card a{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:.45rem;
+
+
+    width:max-content;
+
+
+    color:var(--canopy-700);
+
+    font-weight:600;
+
+
+    transition:
+
+        color var(--transition),
+        gap var(--transition);
+
+}
+
+
+
+.resource-card a:hover{
+
+    color:var(--marigold-600);
+
+    gap:.8rem;
+
+}
+
+
+
+/* ===================================
+   CTA Section
+=================================== */
+
+
+.resources-help{
+
+    background:var(--ivory-100);
+
+}
+
+
+
+.resources-help__card .btn,
+.resources-help__card .button{
+
+    margin-top:2rem;
+
+}
+
+
+
+/* ===================================
+   Responsive
+=================================== */
+
+
+@media(max-width:768px){
+
+
+    .resources-intro__card,
+    .resources-help__card{
+
+        padding:2rem;
+
+    }
+
+
+
+    .resources-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .resource-card{
+
+        padding:1.75rem;
+
+    }
+
+
+}
+
+
+
+@media(max-width:480px){
+
+
+    .resources-intro__card,
+    .resources-help__card{
+
+        padding:1.5rem;
+
+    }
+
+
+
+    .resource-card{
+
+        padding:1.25rem;
+
+    }
+
+
+
+    .resource-icon{
+
+        width:60px;
+        height:60px;
+
+    }
+
+
+}

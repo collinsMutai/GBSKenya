@@ -1,0 +1,462 @@
+/* ==============================
+   Understanding Conditions
+============================== */
+
+
+/* ==============================
+   Condition Card
+============================== */
+
+.condition-card{
+
+    background:#fff;
+
+    border:1px solid var(--line);
+
+    border-radius:var(--radius-card);
+
+    padding:2rem;
+
+    margin-bottom:2rem;
+
+    box-shadow:var(--shadow-sm);
+
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
+
+}
+
+
+
+.condition-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-md);
+
+    border-color:rgba(10,74,128,.18);
+
+}
+
+
+
+/* ==============================
+   Condition Header
+============================== */
+
+
+.condition-heading{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1.25rem;
+
+    margin-bottom:1.5rem;
+
+}
+
+
+
+.condition-icon{
+
+    width:68px;
+
+    height:68px;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    flex-shrink:0;
+
+
+    border-radius:18px;
+
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--canopy-700),
+            var(--canopy-600)
+        );
+
+
+    color:#fff;
+
+
+    box-shadow:var(--shadow-sm);
+
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+
+}
+
+
+
+.condition-card:hover .condition-icon{
+
+    transform:scale(1.05);
+
+    box-shadow:var(--shadow-md);
+
+}
+
+
+
+.condition-card h2{
+
+    margin:0;
+
+    font-size:clamp(1.5rem,2vw,2rem);
+
+}
+
+
+
+/* ==============================
+   Sub Headings
+============================== */
+
+
+.condition-subtitle{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.6rem;
+
+
+    margin:2rem 0 1rem;
+
+
+    color:var(--canopy-700);
+
+    font-size:1.05rem;
+
+    font-weight:700;
+
+}
+
+
+
+.condition-subtitle svg{
+
+    color:var(--marigold-500);
+
+    flex-shrink:0;
+
+}
+
+
+
+/* ==============================
+   Content
+============================== */
+
+
+.condition-card p{
+
+    color:var(--ink-700);
+
+    line-height:1.8;
+
+}
+
+
+
+.condition-card ul{
+
+    list-style:none;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+
+
+.condition-card li{
+
+    position:relative;
+
+
+    padding-left:1.5rem;
+
+    margin-bottom:.75rem;
+
+
+    color:var(--ink-700);
+
+    line-height:1.75;
+
+}
+
+
+
+.condition-card li::before{
+
+    content:"";
+
+
+    position:absolute;
+
+    left:0;
+
+    top:.7rem;
+
+
+    width:8px;
+
+    height:8px;
+
+
+    border-radius:50%;
+
+
+    background:var(--marigold-500);
+
+}
+
+
+
+/* ==============================
+   Information Banner
+============================== */
+
+
+.resources-tip{
+
+    background:var(--ivory-100);
+
+}
+
+
+
+.resources-tip__card{
+
+    max-width:900px;
+
+    margin-inline:auto;
+
+
+    padding:3rem;
+
+
+    text-align:center;
+
+
+    background:#fff;
+
+
+    border:1px solid var(--line);
+
+    border-radius:var(--radius-card);
+
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+
+
+.resources-tip__card h2{
+
+    margin-bottom:1rem;
+
+}
+
+
+
+.resources-tip__card p{
+
+    max-width:700px;
+
+    margin-inline:auto;
+
+}
+
+
+
+/* ==============================
+   Resources CTA
+============================== */
+
+
+.resources-help__card{
+
+    max-width:900px;
+
+    margin-inline:auto;
+
+
+    padding:3rem;
+
+
+    text-align:center;
+
+
+    background:#fff;
+
+
+    border:1px solid var(--line);
+
+    border-radius:var(--radius-card);
+
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+
+
+.resources-help__card h2{
+
+    margin-bottom:1rem;
+
+}
+
+
+
+.resources-help__card p{
+
+    max-width:700px;
+
+    margin:0 auto 2rem;
+
+}
+
+
+
+/* Button + Lucide Arrow */
+
+
+.resources-help__card .btn,
+.resources-help__card .button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:.6rem;
+
+}
+
+
+
+.resources-help__card .btn svg,
+.resources-help__card .button svg{
+
+    transition:transform var(--transition);
+
+}
+
+
+
+.resources-help__card .btn:hover svg,
+.resources-help__card .button:hover svg{
+
+    transform:translateX(4px);
+
+}
+
+
+
+/* ==============================
+   Responsive
+============================== */
+
+
+@media(max-width:768px){
+
+
+    .condition-card{
+
+        padding:1.5rem;
+
+    }
+
+
+
+    .condition-heading{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+
+
+    .condition-icon{
+
+        width:60px;
+
+        height:60px;
+
+    }
+
+
+
+    .condition-subtitle{
+
+        justify-content:center;
+
+    }
+
+
+
+    .resources-tip__card,
+    .resources-help__card{
+
+        padding:2rem;
+
+    }
+
+
+}
+
+
+
+@media(max-width:480px){
+
+
+    .condition-card{
+
+        padding:1.25rem;
+
+    }
+
+
+
+    .condition-card h2{
+
+        font-size:1.4rem;
+
+    }
+
+
+
+    .resources-tip__card,
+    .resources-help__card{
+
+        padding:1.5rem;
+
+    }
+
+
+}

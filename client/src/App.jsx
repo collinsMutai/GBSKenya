@@ -8,6 +8,14 @@ import ResilienceStories from "./components/ResilienceStories/ResilienceStories.
 import StoryDetails from "./components/StoryDetails/StoryDetails.jsx";
 import ResourcesHome from "./components/ResourcesHome/ResourcesHome.jsx";
 import UnderstandingConditions from "./components/UnderstandingConditions/UnderstandingConditions.jsx";
+import DiagnosisTreatment from "./components/DiagnosisTreatment/DiagnosisTreatment.jsx";
+import FinancialSupport from "./components/FinancialSupport/FinancialSupport.jsx";
+import Rehabilitation from "./components/Rehabilitation/Rehabilitation.jsx";
+import MentalHealth from "./components/MentalHealth/MentalHealth.jsx";
+import Downloads from "./components/Downloads/Downloads.jsx";
+import ResourcesFAQ from "./components/ResourcesFAQ/ResourcesFAQ.jsx";
+import GlobalEducation from "./components/GlobalEducation/GlobalEducation.jsx";
+import ContactPage from "./components/ContactPage/ContactPage.jsx";
 
 // Placeholder for pages not yet built — keeps nav links from breaking
 // while About, Resilience Stories, Resources, and Contact get built out.
@@ -42,7 +50,23 @@ export default function App() {
             path="/resources/conditions"
             element={<UnderstandingConditions />}
           />
-          <Route path="/contact" element={<ComingSoon title="Contact us" />} />
+          <Route
+            path="/resources/diagnosis-treatment"
+            element={<DiagnosisTreatment />}
+          />
+          <Route
+            path="/resources/financial-support"
+            element={<FinancialSupport />}
+          />
+          <Route
+            path="/resources/rehabilitation"
+            element={<Rehabilitation />}
+          />
+          <Route path="/resources/mental-health" element={<MentalHealth />} />
+          <Route path="/resources/downloads" element={<Downloads />} />
+          <Route path="/resources/faq" element={<ResourcesFAQ />} />
+          <Route path="/resources/global" element={<GlobalEducation />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

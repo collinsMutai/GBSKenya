@@ -1,0 +1,264 @@
+/* ==========================
+   Global Education
+========================== */
+
+
+.global-intro{
+
+    max-width:850px;
+
+    margin-inline:auto;
+
+    padding:3rem;
+
+    text-align:center;
+
+}
+
+
+.global-intro svg{
+
+    color:var(--marigold-500);
+
+    margin-bottom:1rem;
+
+}
+
+
+.global-intro h2{
+
+    margin-bottom:1rem;
+
+}
+
+
+.global-intro p{
+
+    line-height:1.8;
+
+}
+
+
+
+/* Grid */
+
+
+.global-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(270px,1fr));
+
+    gap:2rem;
+
+}
+
+
+
+.global-card{
+
+    background:#fff;
+
+    border:1px solid var(--line);
+
+    border-radius:var(--radius-card);
+
+    padding:2rem;
+
+
+    box-shadow:var(--shadow-sm);
+
+
+    display:flex;
+
+    flex-direction:column;
+
+
+    transition:
+
+    transform var(--transition),
+    box-shadow var(--transition);
+
+}
+
+
+
+.global-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow-md);
+
+}
+
+
+
+.global-icon{
+
+    width:64px;
+
+    height:64px;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    margin-bottom:1.2rem;
+
+
+    border-radius:18px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        var(--canopy-700),
+        var(--canopy-600)
+    );
+
+
+    color:#fff;
+
+}
+
+
+
+.global-card h3{
+
+    margin-bottom:.8rem;
+
+}
+
+
+
+.global-card p{
+
+    flex:1;
+
+    line-height:1.75;
+
+}
+
+
+
+.global-card a{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:.5rem;
+
+
+    margin-top:1.5rem;
+
+
+    font-weight:600;
+
+    color:var(--canopy-700);
+
+}
+
+
+
+.global-card a:hover{
+
+    color:var(--marigold-600);
+
+}
+
+
+
+/* Connect Banner */
+
+
+.global-connect{
+
+    background:var(--ivory-100);
+
+}
+
+
+
+.global-connect__card{
+
+    max-width:900px;
+
+    margin-inline:auto;
+
+
+    display:flex;
+
+    gap:1.2rem;
+
+    align-items:flex-start;
+
+
+    background:#fff;
+
+
+    padding:2.5rem;
+
+
+    border-radius:var(--radius-card);
+
+    border:1px solid var(--line);
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+
+
+.global-connect__card svg{
+
+    color:var(--canopy-600);
+
+    flex-shrink:0;
+
+}
+
+
+
+.global-connect__card h2{
+
+    margin-bottom:.8rem;
+
+}
+
+
+
+.global-connect__card p{
+
+    line-height:1.8;
+
+    margin-bottom:1.5rem;
+
+}
+
+
+
+@media(max-width:768px){
+
+.global-intro{
+
+    padding:2rem;
+
+}
+
+
+.global-connect__card{
+
+    flex-direction:column;
+
+    padding:2rem;
+
+}
+
+}

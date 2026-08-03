@@ -5,6 +5,7 @@ import "./Navbar.css";
 import logo from "../../assets/logo.jpeg";
 
 const links = [
+  { label: "Home", to: "/" },
   {
     label: "About us",
     to: "/about/who-we-are",

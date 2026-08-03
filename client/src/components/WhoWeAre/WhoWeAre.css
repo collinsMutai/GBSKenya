@@ -1,0 +1,77 @@
+.who-we-are__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.who-we-are__heading {
+  font-size: clamp(20px, 2.4vw, 26px);
+  margin-top: 10px;
+}
+
+.who-we-are__text {
+  margin-top: 14px;
+  font-size: 15.5px;
+  color: var(--ink-700);
+}
+
+.who-we-are__story {
+  background: var(--ivory-100);
+}
+
+.who-we-are__story-inner {
+  max-width: 720px;
+}
+
+.who-we-are__affiliation-card {
+  background: var(--canopy-900);
+  border-radius: var(--radius-card);
+  padding: 36px;
+}
+
+.who-we-are__affiliation-card .eyebrow {
+  color: var(--marigold-500);
+}
+
+.who-we-are__affiliation-text {
+  margin-top: 14px;
+  font-size: 15.5px;
+  color: var(--ivory-100);
+  opacity: 0.92;
+  max-width: 640px;
+}
+
+.who-we-are__values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.who-we-are__value-title {
+  font-size: 18px;
+}
+
+.who-we-are__value-body {
+  margin-top: 10px;
+  font-size: 14.5px;
+  color: var(--ink-700);
+}
+
+.who-we-are__registration {
+  background: var(--ivory-100);
+}
+
+.who-we-are__registration-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  max-width: 720px;
+}
+
+@media (max-width: 720px) {
+  .who-we-are__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}

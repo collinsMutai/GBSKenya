@@ -111,7 +111,18 @@
 }
 
 
+.navbar__dropdown {
+  position: relative;
+}
 
+.navbar__dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 16px;
+} 
 /* Logo */
 
 .navbar__brand {
@@ -157,6 +168,10 @@
 
 .navbar__link {
 
+  display:flex;
+  align-items:center;
+  gap:4px;
+
   color:var(--ivory-100);
 
   font-size:15px;
@@ -182,6 +197,69 @@
 
   margin-left:10px;
 
+}
+
+
+/* ==============================
+   Desktop Dropdown (About us)
+============================== */
+
+.navbar__dropdown {
+  position: relative;
+}
+
+.navbar__dropdown-trigger svg {
+  transition: transform 0.2s ease;
+}
+
+.navbar__dropdown:hover .navbar__dropdown-trigger svg,
+.navbar__dropdown:focus-within .navbar__dropdown-trigger svg {
+  transform: rotate(180deg);
+}
+
+.navbar__dropdown-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+
+  min-width: 260px;
+  padding: 10px;
+
+  background: var(--canopy-700);
+  border: 1px solid var(--line-on-dark);
+  border-radius: 12px;
+  box-shadow: 0 16px 32px rgba(7, 42, 74, 0.28);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.navbar__dropdown-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.navbar__dropdown-link {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  color: var(--ivory-100);
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navbar__dropdown-link:hover {
+  background: rgba(250, 247, 239, 0.08);
+  color: var(--ivory-50);
 }
 
 
@@ -228,11 +306,43 @@
 }
 
 
+/* Mobile About group (collapsible) */
+
+.navbar__mobile-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar__mobile-group-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.navbar__mobile-submenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.1rem;
+}
+
+.navbar__mobile-sublink {
+  color: var(--ivory-100);
+  font-size: clamp(1rem, 3.6vw, 1.2rem);
+  font-weight: 500;
+  opacity: 0.85;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.navbar__mobile-sublink:hover {
+  color: var(--marigold-500);
+  opacity: 1;
+}
 
 
-/* ==============================
-   Mobile
-============================== */
 
 
 /* ==============================

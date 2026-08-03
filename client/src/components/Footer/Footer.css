@@ -1,7 +1,7 @@
 .footer {
   background: var(--canopy-900);
   color: var(--ivory-100);
-  margin-top: 80px;
+  /* margin-top: 80px; */
 }
 
 .footer__grid {

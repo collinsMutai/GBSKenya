@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout/Layout.jsx'
 import Home from './pages/Home.jsx'
+import WhoWeAre from './components/WhoWeAre/WhoWeAre.jsx'
 
 // Placeholder for pages not yet built — keeps nav links from breaking
 // while About, Resilience Stories, Resources, and Contact get built out.
@@ -22,7 +23,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/about/who-we-are" element={<ComingSoon title="Who we are" />} />
+          <Route path="/about/who-we-are" element={<WhoWeAre />} />
           <Route path="/about/leadership" element={<ComingSoon title="Leadership & team" />} />
           <Route path="/about/impact" element={<ComingSoon title="Our impact & partners" />} />
           <Route path="/stories" element={<ComingSoon title="Resilience stories" />} />

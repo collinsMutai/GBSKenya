@@ -1,0 +1,22 @@
+.page-header {
+  background: var(--canopy-900);
+}
+
+.page-header__inner {
+  padding: 72px 24px 56px;
+  max-width: 720px;
+}
+
+.page-header__title {
+  font-size: clamp(30px, 4vw, 42px);
+  color: var(--ivory-50);
+  margin-top: 14px;
+}
+
+.page-header__subtitle {
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--ivory-100);
+  opacity: 0.9;
+  max-width: 560px;
+}

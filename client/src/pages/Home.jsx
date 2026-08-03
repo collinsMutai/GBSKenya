@@ -5,6 +5,8 @@ import ImpactStats from '../components/ImpactStats/ImpactStats.jsx'
 import FeaturedStory from '../components/FeaturedStory/FeaturedStory.jsx'
 import EventsPreview from '../components/EventsPreview/EventsPreview.jsx'
 import DonateBanner from '../components/DonateBanner/DonateBanner.jsx'
+import NewsletterSignup from '../components/NewsletterSignup/NewsletterSignup.jsx'
+
 
 export default function Home() {
   return (
@@ -16,6 +18,8 @@ export default function Home() {
       <FeaturedStory />
       <EventsPreview />
       <DonateBanner />
+      <NewsletterSignup />
+      
       {/* Pathway cards, conditions intro, impact stats, featured story,
           events preview, and donate banner get added here next. */}
     </>

@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, ChevronDown } from "lucide-react";
 import "./Navbar.css";
 import logo from "../../assets/logo.jpeg";
 
 const links = [
-  { label: "About us", to: "/about/who-we-are" },
+  {
+    label: "About us",
+    to: "/about/who-we-are",
+    children: [
+      { label: "Who We Are", to: "/about/who-we-are" },
+      { label: "Leadership", to: "/about/leadership" },
+      {
+        label: "Global Medical Advisory Board",
+        to: "/about/medical-advisory-board",
+      },
+    ],
+  },
   { label: "Resilience stories", to: "/stories" },
   { label: "Support resources", to: "/resources" },
   { label: "Contact us", to: "/contact" },
@@ -58,6 +69,8 @@ function LinkedinIcon({ size = 24, ...props }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   // Prevent page scrolling while mobile menu is open
   useEffect(() => {
@@ -67,7 +80,10 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const closeMenu = () => setOpen(false);
+  const closeMenu = () => {
+    setOpen(false);
+    setMobileAboutOpen(false);
+  };
 
   return (
     <header className="navbar">
@@ -136,11 +152,45 @@ export default function Navbar() {
         </Link>
 
         <nav className="navbar__links">
-          {links.map((link) => (
-            <Link key={link.to} to={link.to} className="navbar__link">
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) =>
+            link.children ? (
+              <div
+                key={link.to}
+                className="navbar__dropdown"
+                onMouseEnter={() => setOpenDropdown(link.to)}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
+                <Link
+                  to={link.to}
+                  className="navbar__link navbar__dropdown-trigger"
+                >
+                  {link.label}
+                  <ChevronDown size={14} />
+                </Link>
+
+                <div
+                  className={`navbar__dropdown-panel ${
+                    openDropdown === link.to ? "is-open" : ""
+                  }`}
+                >
+                  {link.children.map((child) => (
+                    <Link
+                      key={child.to}
+                      to={child.to}
+                      className="navbar__dropdown-link"
+                      onClick={() => setOpenDropdown(null)}
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Link key={link.to} to={link.to} className="navbar__link">
+                {link.label}
+              </Link>
+            ),
+          )}
 
           <Link to="/resources" className="btn btn-primary">
             Donate
@@ -161,16 +211,51 @@ export default function Navbar() {
       {/* Fullscreen Mobile Menu */}
       {open && (
         <nav className="navbar__mobile">
-          {links.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="navbar__link"
-              onClick={closeMenu}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) =>
+            link.children ? (
+              <div key={link.to} className="navbar__mobile-group">
+                <button
+                  type="button"
+                  className="navbar__link navbar__mobile-group-trigger"
+                  onClick={() => setMobileAboutOpen((prev) => !prev)}
+                  aria-expanded={mobileAboutOpen}
+                >
+                  {link.label}
+                  <ChevronDown
+                    size={18}
+                    strokeWidth={2}
+                    style={{
+                      transform: mobileAboutOpen ? "rotate(180deg)" : "none",
+                      transition: "transform 0.2s ease",
+                    }}
+                  />
+                </button>
+                {mobileAboutOpen && (
+                  <div className="navbar__mobile-submenu">
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.to}
+                        to={child.to}
+                        className="navbar__mobile-sublink"
+                        onClick={closeMenu}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="navbar__link"
+                onClick={closeMenu}
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
 
           <Link
             to="/resources"

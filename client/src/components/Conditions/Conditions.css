@@ -1,0 +1,33 @@
+.conditions {
+  background: var(--ivory-100);
+}
+
+.conditions__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.conditions__card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 28px;
+}
+
+.conditions__code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--canopy-600);
+}
+
+.conditions__name {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.conditions__body {
+  margin-top: 10px;
+  font-size: 14.5px;
+  color: var(--ink-700);
+}

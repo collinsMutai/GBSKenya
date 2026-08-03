@@ -1,0 +1,38 @@
+.impact-stats {
+  background: var(--canopy-900);
+}
+
+.impact-stats__inner {
+  padding: 64px 24px;
+}
+
+.impact-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+}
+
+.impact-stats__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(46, 158, 104, 0.14);
+  color: var(--marigold-500);
+  margin-bottom: 12px;
+}
+
+.impact-stats__value {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  color: var(--marigold-500);
+}
+
+.impact-stats__label {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--ivory-100);
+  opacity: 0.85;
+}

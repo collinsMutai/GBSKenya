@@ -1,0 +1,49 @@
+.pathways__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.pathways__card {
+  position: relative;
+  display: block;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pathways__card:hover {
+  border-color: var(--canopy-600);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(7, 42, 74, 0.08);
+}
+
+.pathways__card-title {
+  font-size: 19px;
+  margin-top: 12px;
+  padding-right: 24px;
+}
+
+.pathways__card-body {
+  margin-top: 10px;
+  font-size: 14.5px;
+  color: var(--ink-700);
+}
+
+.pathways__card-arrow {
+  position: absolute;
+  top: 28px;
+  right: 24px;
+  color: var(--canopy-600);
+  font-size: 16px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.pathways__card:hover .pathways__card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}

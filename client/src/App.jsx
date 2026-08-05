@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Layout from "./components/Layout/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import WhoWeAre from "./components/WhoWeAre/WhoWeAre.jsx";
@@ -17,8 +20,6 @@ import ResourcesFAQ from "./components/ResourcesFAQ/ResourcesFAQ.jsx";
 import GlobalEducation from "./components/GlobalEducation/GlobalEducation.jsx";
 import ContactPage from "./components/ContactPage/ContactPage.jsx";
 
-// Placeholder for pages not yet built — keeps nav links from breaking
-// while About, Resilience Stories, Resources, and Contact get built out.
 function ComingSoon({ title }) {
   return (
     <div className="container section" style={{ minHeight: "40vh" }}>
@@ -34,41 +35,88 @@ function ComingSoon({ title }) {
 export default function App() {
   return (
     <BrowserRouter>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
+
       <Routes>
+
         <Route element={<Layout />}>
+
           <Route path="/" element={<Home />} />
+
           <Route path="/about/who-we-are" element={<WhoWeAre />} />
+
           <Route path="/about/leadership" element={<Leadership />} />
+
           <Route
             path="/about/medical-advisory-board"
             element={<MedicalAdvisoryBoard />}
           />
+
           <Route path="/stories" element={<ResilienceStories />} />
+
           <Route path="/stories/:slug" element={<StoryDetails />} />
+
           <Route path="/resources" element={<ResourcesHome />} />
+
           <Route
             path="/resources/conditions"
             element={<UnderstandingConditions />}
           />
+
           <Route
             path="/resources/diagnosis-treatment"
             element={<DiagnosisTreatment />}
           />
+
           <Route
             path="/resources/financial-support"
             element={<FinancialSupport />}
           />
+
           <Route
             path="/resources/rehabilitation"
             element={<Rehabilitation />}
           />
-          <Route path="/resources/mental-health" element={<MentalHealth />} />
-          <Route path="/resources/downloads" element={<Downloads />} />
-          <Route path="/resources/faq" element={<ResourcesFAQ />} />
-          <Route path="/resources/global" element={<GlobalEducation />} />
-          <Route path="/contact" element={<ContactPage />} />
+
+          <Route
+            path="/resources/mental-health"
+            element={<MentalHealth />}
+          />
+
+          <Route
+            path="/resources/downloads"
+            element={<Downloads />}
+          />
+
+          <Route
+            path="/resources/faq"
+            element={<ResourcesFAQ />}
+          />
+
+          <Route
+            path="/resources/global"
+            element={<GlobalEducation />}
+          />
+
+          <Route
+            path="/contact"
+            element={<ContactPage />}
+          />
+
         </Route>
+
       </Routes>
+
     </BrowserRouter>
   );
 }

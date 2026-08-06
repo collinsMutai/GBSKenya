@@ -93,11 +93,11 @@ export default function Navbar() {
         <div className="container topbar__row">
           <div className="topbar__contact">
             <a
-              href="mailto:hello@gbsfoundationkenya.org"
+              href="mailto:info@gbsfoundationkenya.org"
               className="topbar__item"
             >
               <Mail size={14} />
-              <span>hello@gbsfoundationkenya.org</span>
+              <span>info@gbsfoundationkenya.org</span>
             </a>
 
             <a href="tel:+254700000000" className="topbar__item">

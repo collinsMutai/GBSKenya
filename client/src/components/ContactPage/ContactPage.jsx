@@ -193,11 +193,11 @@ export default function ContactPage() {
               <p className="eyebrow">Reach us directly</p>
 
               <a
-                href="mailto:hello@gbsfoundationkenya.org"
+                href="mailto:info@gbsfoundationkenya.org"
                 className="contact-page__info-row"
               >
                 <Mail size={18} strokeWidth={2} />
-                <span>hello@gbsfoundationkenya.org</span>
+                <span>info@gbsfoundationkenya.org</span>
               </a>
 
               <a href="tel:+254700000000" className="contact-page__info-row">

@@ -1,8 +1,45 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
+import { Mail, Loader2 } from "lucide-react";
+import { toast } from "react-toastify";
+import axios from "axios";
 import "./NewsletterSignup.css";
 
 export default function NewsletterSignup() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      toast.error("Please enter your email address.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/newsletter/subscribe`,
+        {
+          email,
+        }
+      );
+
+      toast.success(data.message || "Successfully subscribed!");
+
+      setEmail("");
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "Unable to subscribe. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="section newsletter">
       <motion.div
@@ -16,30 +53,49 @@ export default function NewsletterSignup() {
           <span className="eyebrow">Stay Connected</span>
 
           <h2 className="newsletter__title">
-            Get trusted CML updates delivered to your inbox
+            Get trusted GBS & CIDP updates delivered to your inbox
           </h2>
 
           <p className="newsletter__text">
             Receive educational resources, patient stories, upcoming events,
-            support group announcements, and the latest news from GBS Kenya.
+            support group announcements, advocacy initiatives, and the latest
+            news from the GBS | CIDP Kenya Chapter.
           </p>
         </div>
 
         <form
           className="newsletter__form"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSubscribe}
         >
           <div className="newsletter__input">
             <Mail size={18} />
+
             <input
               type="email"
               placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
 
-          <button className="btn btn-primary" type="submit">
-            Subscribe
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Loader2
+                  size={18}
+                  style={{ animation: "spin 1s linear infinite" }}
+                />
+                Subscribing...
+              </>
+            ) : (
+              "Subscribe"
+            )}
           </button>
         </form>
 

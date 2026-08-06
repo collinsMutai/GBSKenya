@@ -17,14 +17,14 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
-  })
+  }),
 );
 
 // Body Parser
 app.use(
   express.json({
     limit: "10kb",
-  })
+  }),
 );
 
 // Prevent NoSQL Injection
@@ -49,6 +49,7 @@ app.use("/api", limiter);
 
 // Routes
 app.use("/api/contact", require("./routes/contactRoutes"));
+app.use("/api/newsletter", require("./routes/newsletterRoutes"));
 
 // 404 Handler
 app.use(require("./middleware/notFound"));

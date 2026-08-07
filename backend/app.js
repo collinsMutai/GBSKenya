@@ -13,13 +13,30 @@ const app = express();
 app.use(helmet());
 
 // CORS
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  }),
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",").map((origin) =>
+  origin.trim()
 );
 
+app.use(
+  cors({
+    origin(origin, callback) {
+      // Allow requests without an Origin header (Postman, curl, server-to-server)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// Handle preflight requests
+app.options("*", cors());
 // Body Parser
 app.use(
   express.json({

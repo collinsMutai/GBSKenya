@@ -2,6 +2,11 @@ import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import PageHeader from "../PageHeader/PageHeader.jsx";
 import "./Leadership.css";
+import img1 from "../../assets/img1.jpeg"
+import img2 from "../../assets/img2.jpeg"
+import img3 from "../../assets/img3.jpeg"
+import img4 from "../../assets/img4.jpeg"
+
 
 
 const fadeUp = {
@@ -39,33 +44,41 @@ function LinkedinIcon({ size = 18 }) {
 
 const leaders = [
   {
-    name: "Jane Doe",
+    name: "Joseph K Yego",
     role: "Chairperson",
-    image: "https://i.pravatar.cc/600?img=47",
+    image: img1,
     bio: "Provides strategic leadership, partnerships, and advocacy to strengthen support for people affected by GBS, CIDP, and MMN.",
     email: "chair@gbskenya.org",
     linkedin: "#",
   },
   {
-    name: "John Mwangi",
+    name: "Violet Nelly Amukonyi",
     role: "Vice Chairperson",
-    image: "https://i.pravatar.cc/600?img=12",
+    image: img2,
     bio: "Supports governance, community engagement, and collaboration with healthcare partners.",
     email: "vicechair@gbskenya.org",
     linkedin: "#",
   },
   {
-    name: "Mary Wanjiku",
+    name: "Koech Kiplangat Collins",
     role: "Secretary",
-    image: "https://i.pravatar.cc/600?img=32",
+    image: "https://i.pravatar.cc/600?img=68",
     bio: "Coordinates communication, administration, and stakeholder engagement.",
     email: "secretary@gbskenya.org",
     linkedin: "#",
   },
   {
-    name: "David Kiptoo",
+    name: "Marylyn Stacy Kasandi Alali",
     role: "Treasurer",
-    image: "https://i.pravatar.cc/600?img=68",
+    image: img4,
+    bio: "Provides financial oversight and supports sustainable programmes.",
+    email: "treasurer@gbskenya.org",
+    linkedin: "#",
+  },
+  {
+    name: "Rose Mumbua Musyoka",
+    role: "Treasurer",
+    image: img2,
     bio: "Provides financial oversight and supports sustainable programmes.",
     email: "treasurer@gbskenya.org",
     linkedin: "#",

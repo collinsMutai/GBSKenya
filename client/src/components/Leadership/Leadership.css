@@ -122,6 +122,7 @@
   font-size: 1.25rem;
 
   color: var(--canopy-900);
+  text-transform: capitalize !important;
 
 }
 

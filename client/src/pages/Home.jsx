@@ -19,7 +19,7 @@ export default function Home() {
       <ImpactStats />
       <FeaturedStory />
       <EventsPreview />
-      <DonateBanner />
+      {/* <DonateBanner /> */}
       <NewsletterSignup />
       
       {/* Pathway cards, conditions intro, impact stats, featured story,

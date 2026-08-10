@@ -24,7 +24,7 @@ export default function NewsletterSignup() {
         `${import.meta.env.VITE_API_URL}/api/newsletter/subscribe`,
         {
           email,
-        }
+        },
       );
 
       toast.success(data.message || "Successfully subscribed!");
@@ -33,7 +33,7 @@ export default function NewsletterSignup() {
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
-          "Unable to subscribe. Please try again."
+          "Unable to subscribe. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -50,23 +50,17 @@ export default function NewsletterSignup() {
         transition={{ duration: 0.6 }}
       >
         <div className="newsletter__content">
-          <span className="eyebrow">Stay Connected</span>
+          <span className="eyebrow">Newsletter Sign-Up</span>
 
-          <h2 className="newsletter__title">
-            Get trusted GBS & CIDP updates delivered to your inbox
-          </h2>
+          <h2 className="newsletter__title">Stay Connected</h2>
 
           <p className="newsletter__text">
-            Receive educational resources, patient stories, upcoming events,
-            support group announcements, advocacy initiatives, and the latest
-            news from the GBS | CIDP Kenya Chapter.
+            Stay informed about GBS Foundation-Kenya's work, upcoming events,
+            patient stories and opportunities to get involved.
           </p>
         </div>
 
-        <form
-          className="newsletter__form"
-          onSubmit={handleSubscribe}
-        >
+        <form className="newsletter__form" onSubmit={handleSubscribe}>
           <div className="newsletter__input">
             <Mail size={18} />
 
@@ -80,11 +74,7 @@ export default function NewsletterSignup() {
             />
           </div>
 
-          <button
-            className="btn btn-primary"
-            type="submit"
-            disabled={loading}
-          >
+          <button className="btn btn-primary" type="submit" disabled={loading}>
             {loading ? (
               <>
                 <Loader2

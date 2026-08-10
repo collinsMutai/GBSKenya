@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,15 +25,14 @@ import GlobalEducation from "./components/GlobalEducation/GlobalEducation.jsx";
 import ContactPage from "./components/ContactPage/ContactPage.jsx";
 
 // Get Involved
+import GetInvolved from "./components/GetInvolved/GetInvolved.jsx";
+import EventDetails from "./components/EventDetails/EventDetails.jsx";
 import PartnerWithUs from "./components/PartnerWithUs/PartnerWithUs.jsx";
 import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientCaregiverSurvey.jsx";
 
 function ComingSoon({ title }) {
   return (
-    <div
-      className="container section"
-      style={{ minHeight: "40vh" }}
-    >
+    <div className="container section" style={{ minHeight: "40vh" }}>
       <h2 style={{ marginTop: 10 }}>{title}</h2>
 
       <p
@@ -52,42 +50,21 @@ function ComingSoon({ title }) {
 export default function App() {
   return (
     <BrowserRouter>
-      <ToastContainer
-        position="top-right"
-        autoClose={4000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="colored"
-      />
-
       <Routes>
         <Route element={<Layout />}>
-
           {/* ==============================
-              Home
+              HOME
           ============================== */}
 
-          <Route
-            path="/"
-            element={<Home />}
-          />
+          <Route path="/" element={<Home />} />
 
           {/* ==============================
-              About
+              ABOUT
           ============================== */}
 
-          <Route
-            path="/about/who-we-are"
-            element={<WhoWeAre />}
-          />
+          <Route path="/about/who-we-are" element={<WhoWeAre />} />
 
-          <Route
-            path="/about/leadership"
-            element={<Leadership />}
-          />
+          <Route path="/about/leadership" element={<Leadership />} />
 
           <Route
             path="/about/medical-advisory-board"
@@ -95,27 +72,18 @@ export default function App() {
           />
 
           {/* ==============================
-              Resilience Stories
+              RESILIENCE STORIES
           ============================== */}
 
-          <Route
-            path="/stories"
-            element={<ResilienceStories />}
-          />
+          <Route path="/stories" element={<ResilienceStories />} />
 
-          <Route
-            path="/stories/:slug"
-            element={<StoryDetails />}
-          />
+          <Route path="/stories/:slug" element={<StoryDetails />} />
 
           {/* ==============================
-              Resources
+              RESOURCES
           ============================== */}
 
-          <Route
-            path="/resources"
-            element={<ResourcesHome />}
-          />
+          <Route path="/resources" element={<ResourcesHome />} />
 
           <Route
             path="/resources/conditions"
@@ -137,29 +105,21 @@ export default function App() {
             element={<Rehabilitation />}
           />
 
-          <Route
-            path="/resources/mental-health"
-            element={<MentalHealth />}
-          />
+          <Route path="/resources/mental-health" element={<MentalHealth />} />
 
-          <Route
-            path="/resources/downloads"
-            element={<Downloads />}
-          />
+          <Route path="/resources/downloads" element={<Downloads />} />
 
-          <Route
-            path="/resources/faq"
-            element={<ResourcesFAQ />}
-          />
+          <Route path="/resources/faq" element={<ResourcesFAQ />} />
 
-          <Route
-            path="/resources/global"
-            element={<GlobalEducation />}
-          />
+          <Route path="/resources/global" element={<GlobalEducation />} />
 
           {/* ==============================
-              Get Involved
-          ============================== */}
+    Get Involved
+================================= */}
+
+          <Route path="/get-involved" element={<GetInvolved />} />
+
+          <Route path="/get-involved/events/:slug" element={<EventDetails />} />
 
           <Route
             path="/get-involved/patient-caregiver-survey"
@@ -177,17 +137,14 @@ export default function App() {
           />
 
           {/* ==============================
-              Contact
+              CONTACT
           ============================== */}
 
-          <Route
-            path="/contact"
-            element={<ContactPage />}
-          />
-
+          <Route path="/contact" element={<ContactPage />} />
         </Route>
       </Routes>
+
+      <ToastContainer position="bottom-right" autoClose={4000} />
     </BrowserRouter>
   );
 }
-

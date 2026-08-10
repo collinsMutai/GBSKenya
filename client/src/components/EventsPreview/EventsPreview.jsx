@@ -1,28 +1,91 @@
+
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import './EventsPreview.css'
 
 const events = [
   {
+    id: 1,
+    slug: 'nairobi-support-group',
     date: 'Aug 09, 2026',
     title: 'Nairobi support group meetup',
     location: 'Nairobi',
     type: 'Community meetup',
     color: 'green',
+
+    time: '10:00 AM – 1:00 PM',
+    organiser: 'Community Support Team',
+
+    description:
+      'A welcoming support group meetup bringing together patients, caregivers, family members, and community supporters. The session provides an opportunity to connect, share experiences, learn from one another, and access practical support.',
+
+    audience:
+      'Patients, caregivers, family members, volunteers, and anyone supporting people living with CIDP and related conditions.',
+
+    speakers: [
+      'Community support facilitators',
+      'Guest healthcare professionals',
+      'Patient and caregiver representatives',
+    ],
+
+    registration:
+      'Registration is required to help us plan seating, materials, and refreshments. Please register before attending.',
   },
+
   {
+    id: 2,
+    slug: 'cidp-webinar',
     date: 'Aug 23, 2026',
     title: 'Understanding CIDP — webinar',
-    location: 'Virtual',
+    location: 'Online — Zoom',
     type: 'Online session',
     color: 'coral',
+
+    time: '3:00 PM – 4:30 PM EAT',
+    organiser: 'Community Support Team',
+
+    description:
+      'An educational online session exploring CIDP, treatment journeys, symptom management, rehabilitation, and ways patients and caregivers can access meaningful support. The session will also provide an opportunity for participants to ask questions.',
+
+    audience:
+      'Patients, caregivers, families, healthcare professionals, students, volunteers, and anyone interested in learning more about CIDP.',
+
+    speakers: [
+      'Neurology and healthcare professionals',
+      'Rehabilitation specialists',
+      'Patient and caregiver advocates',
+    ],
+
+    registration:
+      'Registration is required. Registered participants will receive the webinar access link and joining instructions before the event.',
   },
+
   {
+    id: 3,
+    slug: 'mombasa-coast-chapter',
     date: 'Sep 06, 2026',
     title: 'Mombasa coast chapter meeting',
-    location: 'Mombasa',
+    location: 'Mombasa, Kenya',
     type: 'Chapter meeting',
     color: 'yellow',
+
+    time: '11:00 AM – 2:00 PM',
+    organiser: 'Coast Chapter Team',
+
+    description:
+      'A local chapter meeting bringing together patients, caregivers, families, volunteers, and community partners across the coast. The meeting will focus on peer support, community connection, awareness, and planning future activities for the region.',
+
+    audience:
+      'Patients, caregivers, families, volunteers, community health partners, and supporters in Mombasa and surrounding counties.',
+
+    speakers: [
+      'Coast Chapter representatives',
+      'Community support facilitators',
+      'Invited healthcare and community partners',
+    ],
+
+    registration:
+      'Registration is required. Venue and attendance details will be shared with registered participants before the meeting.',
   },
 ]
 
@@ -120,14 +183,23 @@ export default function EventsPreview() {
           onBlur={() => setPaused(false)}
         >
           <AnimatePresence mode="wait">
+
+            {/* =================================
+                CLICKABLE EVENT FLYER
+
+                Each flyer goes to:
+                /get-involved/events/:slug
+            ================================== */}
+
             <motion.a
-              key={currentEvent}
-              href="/resources"
+              key={event.slug}
+              href={`/get-involved/events/${event.slug}`}
               className={`events-preview__flyer events-preview__flyer--${event.color}`}
               variants={slideVariants}
               initial="enter"
               animate="center"
               exit="exit"
+              aria-label={`View full details for ${event.title}`}
             >
 
               {/* Decorative shapes */}
@@ -201,7 +273,7 @@ export default function EventsPreview() {
 
               <div className="events-preview__flyer-bottom">
                 <span>
-                  Join the community
+                  View full event details
                 </span>
 
                 <span
@@ -213,6 +285,7 @@ export default function EventsPreview() {
               </div>
 
             </motion.a>
+
           </AnimatePresence>
         </div>
 
@@ -230,7 +303,9 @@ export default function EventsPreview() {
               onClick={previousEvent}
               aria-label="Previous event"
             >
-              <span aria-hidden="true">←</span>
+              <span aria-hidden="true">
+                ←
+              </span>
             </button>
 
             <div
@@ -262,7 +337,9 @@ export default function EventsPreview() {
               onClick={nextEvent}
               aria-label="Next event"
             >
-              <span aria-hidden="true">→</span>
+              <span aria-hidden="true">
+                →
+              </span>
             </button>
 
           </div>
@@ -273,3 +350,4 @@ export default function EventsPreview() {
     </section>
   )
 }
+

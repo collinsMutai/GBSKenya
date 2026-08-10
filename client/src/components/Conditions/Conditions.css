@@ -1,33 +1,517 @@
+/* =========================================================
+   Conditions Section
+========================================================= */
+
 .conditions {
+  padding: 5rem 0;
   background: var(--ivory-100);
 }
 
-.conditions__grid {
+
+/* =========================================================
+   Header
+========================================================= */
+
+.conditions__header {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.75fr);
+
+  align-items: end;
+
+  gap: 5rem;
+
+  margin-bottom: 3rem;
 }
 
-.conditions__card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  padding: 28px;
-}
+.conditions__header .eyebrow {
+  margin: 0 0 0.6rem;
 
-.conditions__code {
-  font-family: var(--font-mono);
-  font-size: 13px;
   color: var(--canopy-600);
+
+  font-size: 0.76rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.conditions__title {
+  max-width: 720px;
+
+  margin: 0;
+
+  color: var(--canopy-900);
+
+  font-size: clamp(2rem, 4vw, 3.2rem);
+
+  line-height: 1.08;
+}
+
+.conditions__intro {
+  max-width: 620px;
+
+  margin: 0;
+
+  color: var(--ink-700);
+
+  font-size: 0.98rem;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   Carousel
+========================================================= */
+
+.conditions__carousel {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+
+  min-height: 520px;
+
+  overflow: hidden;
+
+  background: var(--canopy-900);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 24px 60px rgba(7, 42, 74, 0.12);
+}
+
+
+/* =========================================================
+   Image
+========================================================= */
+
+.conditions__visual {
+  position: relative;
+
+  min-height: 520px;
+
+  overflow: hidden;
+
+  background: var(--canopy-800);
+}
+
+.conditions__image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.conditions__visual::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 42, 74, 0.05),
+      rgba(7, 42, 74, 0.15)
+    );
+
+  pointer-events: none;
+}
+
+.conditions__visual-accent {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  z-index: 2;
+
+  width: 100%;
+  height: 8px;
+}
+
+.conditions__visual-label {
+  position: absolute;
+
+  left: 32px;
+  bottom: 28px;
+
+  z-index: 3;
+
+  color: var(--ivory-50);
+
+  font-size: clamp(2.5rem, 6vw, 5rem);
+
+  font-weight: 700;
+
+  line-height: 0.9;
+
+  letter-spacing: -0.04em;
+
+  text-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================================
+   Content
+========================================================= */
+
+.conditions__content {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  padding: 4rem;
+
+  color: var(--ivory-50);
+}
+
+.conditions__counter {
+  position: absolute;
+
+  top: 32px;
+  right: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: rgba(250, 247, 239, 0.55);
+
+  font-family: var(--font-mono);
+
+  font-size: 0.7rem;
+}
+
+.conditions__counter-line {
+  width: 28px;
+  height: 1px;
+
+  background: rgba(250, 247, 239, 0.3);
+}
+
+.conditions__number {
+  margin: 0 0 0.7rem;
+
+  font-family: var(--font-mono);
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
 }
 
 .conditions__name {
-  font-size: 18px;
-  margin-top: 10px;
+  max-width: 480px;
+
+  margin: 0;
+
+  color: var(--ivory-50);
+
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+
+  line-height: 1.1;
+
+  letter-spacing: -0.025em;
 }
 
 .conditions__body {
-  margin-top: 10px;
-  font-size: 14.5px;
+  max-width: 500px;
+
+  margin: 1.2rem 0 0;
+
+  color: rgba(250, 247, 239, 0.76);
+
+  font-size: 0.96rem;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.conditions__cta {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  width: fit-content;
+
+  margin-top: 1.7rem;
+
+  padding-bottom: 5px;
+
+  color: var(--ivory-50);
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  border-bottom: 1px solid rgba(250, 247, 239, 0.45);
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.conditions__cta:hover {
+  color: var(--marigold-500);
+
+  border-color: var(--marigold-500);
+
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   Controls
+========================================================= */
+
+.conditions__controls {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 3rem;
+}
+
+.conditions__dots {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.conditions__dot {
+  width: 30px;
+  height: 3px;
+
+  padding: 0;
+
+  background: rgba(250, 247, 239, 0.25);
+
+  border: 0;
+
+  cursor: pointer;
+
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+.conditions__dot.is-active {
+  width: 52px;
+
+  background: var(--marigold-500);
+}
+
+.conditions__arrows {
+  display: flex;
+
+  gap: 8px;
+}
+
+.conditions__arrow {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  color: var(--ivory-50);
+
+  background: transparent;
+
+  border: 1px solid rgba(250, 247, 239, 0.25);
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.conditions__arrow:hover {
+  color: var(--canopy-900);
+
+  background: var(--ivory-50);
+
+  border-color: var(--ivory-50);
+}
+
+
+/* =========================================================
+   Bottom Statement
+========================================================= */
+
+.conditions__bottom {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 1.5rem;
+}
+
+.conditions__bottom span {
+  width: 36px;
+  height: 2px;
+
+  flex-shrink: 0;
+
+  background: var(--marigold-500);
+}
+
+.conditions__bottom p {
+  margin: 0;
+
   color: var(--ink-700);
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   Tablet
+========================================================= */
+
+@media (max-width: 900px) {
+  .conditions {
+    padding: 4rem 0;
+  }
+
+  .conditions__header {
+    grid-template-columns: 1fr;
+
+    gap: 1rem;
+
+    margin-bottom: 2rem;
+  }
+
+  .conditions__carousel {
+    grid-template-columns: 1fr;
+
+    min-height: auto;
+  }
+
+  .conditions__visual {
+    min-height: 400px;
+  }
+
+  .conditions__content {
+    min-height: 430px;
+
+    padding: 3rem;
+  }
+}
+
+
+/* =========================================================
+   Mobile
+========================================================= */
+
+@media (max-width: 600px) {
+  .conditions {
+    padding: 3.5rem 0;
+  }
+
+  .conditions__title {
+    font-size: 2rem;
+  }
+
+  .conditions__intro {
+    font-size: 0.9rem;
+  }
+
+  .conditions__visual {
+    min-height: 300px;
+  }
+
+  .conditions__visual-label {
+    left: 20px;
+    bottom: 22px;
+
+    font-size: 3.2rem;
+  }
+
+  .conditions__content {
+    min-height: 440px;
+
+    padding: 2.2rem 1.5rem;
+  }
+
+  .conditions__counter {
+    top: 22px;
+    right: 24px;
+  }
+
+  .conditions__name {
+    font-size: 1.8rem;
+  }
+
+  .conditions__body {
+    font-size: 0.9rem;
+  }
+
+  .conditions__controls {
+    margin-top: 2.2rem;
+  }
+
+  .conditions__bottom {
+    margin-top: 1rem;
+  }
+}
+
+
+/* =========================================================
+   Reduced Motion
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .conditions__cta,
+  .conditions__arrow,
+  .conditions__dot {
+    transition: none;
+  }
+
+  .conditions__cta:hover {
+    transform: none;
+  }
 }

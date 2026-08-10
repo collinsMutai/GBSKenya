@@ -1,49 +1,304 @@
+/* =========================================================
+   Everyone Has a Role
+========================================================= */
+
+.pathways {
+  padding: 4rem 0;
+  background: var(--ivory-50);
+}
+
+/* =========================================================
+   Section Header
+========================================================= */
+
+.pathways__header {
+  max-width: 720px;
+  margin-bottom: 2rem;
+}
+
+.pathways__header .eyebrow {
+  margin-bottom: 0.5rem;
+
+  color: var(--canopy-600);
+
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pathways__title {
+  margin: 0;
+
+  color: var(--canopy-900);
+
+  font-size: clamp(2rem, 4vw, 3rem);
+
+  line-height: 1.1;
+}
+
+.pathways__intro {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0.65rem 0 0;
+
+  color: var(--ink-700);
+
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   Grid
+========================================================= */
+
 .pathways__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+/* =========================================================
+   Card
+========================================================= */
+
+.pathways__card-wrapper {
+  min-width: 0;
 }
 
 .pathways__card {
   position: relative;
-  display: block;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Prevent unnecessary vertical whitespace */
+  min-height: 0;
+
+  padding: 24px;
+
+  color: inherit;
+
   background: #fff;
+
   border: 1px solid var(--line);
+
   border-radius: var(--radius-card);
-  padding: 28px;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.pathways__card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 4px;
+  height: 0;
+
+  background: var(--marigold-500);
+
+  transition: height 0.25s ease;
 }
 
 .pathways__card:hover {
   border-color: var(--canopy-600);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgba(7, 42, 74, 0.08);
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 14px 28px rgba(7, 42, 74, 0.09);
+}
+
+.pathways__card:hover::before {
+  height: 100%;
+}
+
+/* =========================================================
+   Card Content
+========================================================= */
+
+.pathways__card-content {
+  flex: none;
+}
+
+.pathways__card-tag {
+  margin: 0 0 0.65rem;
+
+  color: var(--canopy-600);
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  line-height: 1.4;
+
+  text-transform: uppercase;
 }
 
 .pathways__card-title {
-  font-size: 19px;
-  margin-top: 12px;
-  padding-right: 24px;
+  max-width: 470px;
+
+  margin: 0;
+
+  padding-right: 10px;
+
+  color: var(--canopy-900);
+
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+
+  line-height: 1.3;
 }
 
 .pathways__card-body {
-  margin-top: 10px;
-  font-size: 14.5px;
+  max-width: 500px;
+
+  margin: 0.65rem 0 0;
+
   color: var(--ink-700);
+
+  font-size: 0.92rem;
+
+  line-height: 1.6;
 }
 
-.pathways__card-arrow {
-  position: absolute;
-  top: 28px;
-  right: 24px;
-  color: var(--canopy-600);
-  font-size: 16px;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+/* =========================================================
+   Card Footer
+========================================================= */
+
+.pathways__card-footer {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.3rem;
+
+  margin-top: 1.2rem;
+
+  padding-top: 0.9rem;
+
+  border-top: 1px solid var(--line);
 }
 
-.pathways__card:hover .pathways__card-arrow {
-  opacity: 1;
-  transform: translateX(0);
+.pathways__card-cta {
+  display: inline-flex;
+
+  align-items: center;
+
+  color: var(--canopy-700);
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pathways__card:hover .pathways__card-cta {
+  color: var(--canopy-900);
+
+  transform: translateX(3px);
+}
+
+.pathways__card-destination {
+  color: var(--ink-700);
+
+  font-size: 0.74rem;
+
+  line-height: 1.4;
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   Responsive
+========================================================= */
+
+@media (max-width: 760px) {
+  .pathways {
+    padding: 3.5rem 0;
+  }
+
+  .pathways__grid {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .pathways__card {
+    min-height: 0;
+
+    padding: 22px;
+  }
+}
+
+/* =========================================================
+   Small Phones
+========================================================= */
+
+@media (max-width: 480px) {
+  .pathways {
+    padding: 3rem 0;
+  }
+
+  .pathways__header {
+    margin-bottom: 1.75rem;
+  }
+
+  .pathways__card {
+    padding: 20px;
+  }
+
+  .pathways__card-title {
+    font-size: 1.2rem;
+  }
+
+  .pathways__card-body {
+    font-size: 0.88rem;
+
+    line-height: 1.55;
+  }
+
+  .pathways__card-footer {
+    margin-top: 1rem;
+
+    padding-top: 0.8rem;
+  }
+}
+
+/* =========================================================
+   Reduced Motion
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .pathways__card,
+  .pathways__card::before,
+  .pathways__card-cta {
+    transition: none;
+  }
+
+  .pathways__card:hover {
+    transform: none;
+  }
+
+  .pathways__card:hover .pathways__card-cta {
+    transform: none;
+  }
 }

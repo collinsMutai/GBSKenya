@@ -3,12 +3,11 @@ import "./Hero.css";
 import heroImage from "../../assets/hero.jpg";
 import { useEffect, useState } from "react";
 
-
 const headlines = [
   "Supporting Patients Across Kenya",
-  "Building Hope Through Community",
-  "Empowering Families With Knowledge",
-  "Advocating for GBS, CIDP & MMN",
+  "Strengthening Awareness & Early Recognition",
+  "Advancing Multi-Stakeholder Collaboration",
+  "Building Sustainable Access to Treatment",
 ];
 const container = {
   hidden: {},
@@ -111,10 +110,12 @@ export default function Hero() {
         </h1>
 
         <motion.p variants={item} className="hero__subtitle">
-          Helping people living with Guillain-Barré Syndrome, Chronic
-          Inflammatory Demyelinating Polyneuropathy (CIDP), and Multifocal Motor
-          Neuropathy (MMN) through education, advocacy, community support, and
-          hope.
+          The GBS Foundation-Kenya is at the center of the care ecosystem,
+          bringing patients, healthcare professionals, government, industry and
+          other stakeholders together to improve outcomes by enhancing
+          awareness, patient support, and access to timely and affordable
+          treatment for people affected by GBS, CIDP and associated
+          neuropathies.
         </motion.p>
 
         <motion.div variants={item} className="hero__actions">

@@ -98,7 +98,7 @@ export default function Leadership() {
 
       {/* Board & Commitment */}
 
-      <motion.section
+      {/* <motion.section
         className="section leadership-board"
         initial="hidden"
         whileInView="show"
@@ -227,7 +227,7 @@ export default function Leadership() {
 
         </div>
 
-      </motion.section>
+      </motion.section> */}
 
 
 
@@ -251,7 +251,7 @@ export default function Leadership() {
             </p>
 
             <h2>
-              Meet our leaders
+              Meet our board
             </h2>
 
           </div>

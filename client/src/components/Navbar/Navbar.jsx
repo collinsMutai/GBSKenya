@@ -35,11 +35,7 @@ const links = [
     label: "Support resources",
     to: "/resources",
   },
-  {
-    label: "Contact us",
-    to: "/contact",
-  },
-  {
+    {
     label: "Get Involved",
     to: "/get-involved",
     children: [
@@ -57,6 +53,11 @@ const links = [
       },
     ],
   },
+  {
+    label: "Contact us",
+    to: "/contact",
+  },
+
 ];
 
 const iconBase = {

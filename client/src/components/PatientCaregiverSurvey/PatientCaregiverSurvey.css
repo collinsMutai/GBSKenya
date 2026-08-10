@@ -1,0 +1,818 @@
+
+/* =========================================================
+   Patient & Caregiver Survey
+========================================================= */
+
+.survey-page {
+  min-height: 100vh;
+
+  background: var(--ivory-50);
+
+  color: var(--canopy-900);
+}
+
+
+/* =========================================================
+   Hero
+========================================================= */
+
+.survey-hero {
+  position: relative;
+
+  padding: 5rem 0;
+
+  background: var(--canopy-900);
+
+  color: var(--ivory-50);
+
+  overflow: hidden;
+}
+
+.survey-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -260px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  background: rgba(250, 247, 239, 0.04);
+}
+
+.survey-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  bottom: -220px;
+  left: -100px;
+
+  border-radius: 50%;
+
+  background: rgba(246, 180, 45, 0.08);
+}
+
+.survey-hero__inner {
+  position: relative;
+
+  z-index: 1;
+
+  max-width: 950px;
+}
+
+.survey-hero__icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 62px;
+  height: 62px;
+
+  margin-bottom: 1.5rem;
+
+  color: var(--marigold-500);
+
+  background: rgba(246, 180, 45, 0.12);
+
+  border: 1px solid rgba(246, 180, 45, 0.25);
+
+  border-radius: 15px;
+}
+
+.survey-hero__eyebrow {
+  display: block;
+
+  margin-bottom: 0.7rem;
+
+  color: var(--marigold-500);
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+.survey-hero h1 {
+  max-width: 900px;
+
+  margin: 0 0 1.2rem;
+
+  color: var(--ivory-50);
+
+  font-size: clamp(2.2rem, 5vw, 4rem);
+
+  line-height: 1.08;
+}
+
+.survey-hero__subtitle {
+  max-width: 850px;
+
+  margin: 0;
+
+  color: var(--ivory-100);
+
+  font-size: 1.05rem;
+
+  line-height: 1.75;
+
+  opacity: 0.9;
+}
+
+
+/* =========================================================
+   Purpose
+========================================================= */
+
+.survey-purpose {
+  padding: 3rem 0 1rem;
+}
+
+.survey-purpose__card {
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  padding: 2rem 2.25rem;
+
+  background: #ffffff;
+
+  border-left: 4px solid var(--marigold-500);
+
+  border-radius: 10px;
+
+  box-shadow: 0 8px 30px rgba(7, 42, 74, 0.06);
+}
+
+.survey-purpose__card h2 {
+  margin: 0 0 0.8rem;
+
+  color: var(--canopy-900);
+
+  font-size: 1.35rem;
+}
+
+.survey-purpose__card p {
+  margin: 0 0 0.75rem;
+
+  color: var(--canopy-700);
+
+  font-size: 0.95rem;
+
+  line-height: 1.7;
+}
+
+.survey-purpose__card p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   Form Section
+========================================================= */
+
+.survey-form-section {
+  padding: 2rem 0 6rem;
+}
+
+.survey-form-card {
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  padding: clamp(1.5rem, 4vw, 3rem);
+
+  background: #ffffff;
+
+  border: 1px solid rgba(7, 42, 74, 0.1);
+
+  border-radius: 18px;
+
+  box-shadow: 0 15px 50px rgba(7, 42, 74, 0.08);
+}
+
+
+/* =========================================================
+   Progress
+========================================================= */
+
+.survey-progress {
+  margin-bottom: 3rem;
+}
+
+.survey-progress__top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-bottom: 0.75rem;
+
+  color: var(--canopy-700);
+
+  font-size: 0.8rem;
+}
+
+.survey-progress__top strong {
+  color: var(--canopy-900);
+
+  font-size: 0.9rem;
+}
+
+.survey-progress__bar {
+  width: 100%;
+
+  height: 7px;
+
+  overflow: hidden;
+
+  background: rgba(7, 42, 74, 0.1);
+
+  border-radius: 100px;
+}
+
+.survey-progress__fill {
+  height: 100%;
+
+  background: var(--marigold-500);
+
+  border-radius: inherit;
+
+  transition: width 0.3s ease;
+}
+
+.survey-progress__steps {
+  display: grid;
+
+  grid-template-columns: repeat(7, 1fr);
+
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+}
+
+.survey-progress__step {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 0.35rem;
+
+  color: rgba(7, 42, 74, 0.4);
+
+  text-align: center;
+}
+
+.survey-progress__step span {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  background: rgba(7, 42, 74, 0.08);
+
+  border-radius: 50%;
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+}
+
+.survey-progress__step small {
+  font-size: 0.65rem;
+
+  line-height: 1.2;
+}
+
+.survey-progress__step.is-active {
+  color: var(--canopy-900);
+}
+
+.survey-progress__step.is-active span {
+  color: var(--canopy-900);
+
+  background: var(--marigold-500);
+}
+
+
+/* =========================================================
+   Step Heading
+========================================================= */
+
+.survey-step__heading {
+  margin-bottom: 2rem;
+
+  padding-bottom: 1.3rem;
+
+  border-bottom: 1px solid rgba(7, 42, 74, 0.1);
+}
+
+.survey-step__heading span {
+  display: block;
+
+  margin-bottom: 0.4rem;
+
+  color: var(--marigold-500);
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.survey-step__heading h2 {
+  margin: 0 0 0.5rem;
+
+  color: var(--canopy-900);
+
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+}
+
+.survey-step__heading p {
+  margin: 0;
+
+  color: var(--canopy-700);
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   Fields
+========================================================= */
+
+.survey-fields {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 1.5rem;
+}
+
+.survey-field,
+.survey-fieldset {
+  min-width: 0;
+}
+
+.survey-field label,
+.survey-fieldset legend {
+  display: block;
+
+  margin-bottom: 0.6rem;
+
+  padding: 0;
+
+  color: var(--canopy-900);
+
+  font-size: 0.9rem;
+
+  font-weight: 650;
+
+  line-height: 1.5;
+}
+
+.survey-field label span,
+.survey-fieldset legend span {
+  margin-left: 0.2rem;
+
+  color: #c64b45;
+}
+
+
+/* =========================================================
+   Inputs
+========================================================= */
+
+.survey-field input,
+.survey-field textarea {
+  box-sizing: border-box;
+
+  width: 100%;
+
+  padding: 0.9rem 1rem;
+
+  color: var(--canopy-900);
+
+  background: var(--ivory-50);
+
+  border: 1px solid rgba(7, 42, 74, 0.18);
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font: inherit;
+
+  font-size: 0.95rem;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.survey-field textarea {
+  min-height: 140px;
+
+  resize: vertical;
+
+  line-height: 1.65;
+}
+
+.survey-field input:focus,
+.survey-field textarea:focus {
+  background: #ffffff;
+
+  border-color: var(--canopy-700);
+
+  box-shadow:
+    0 0 0 3px rgba(7, 42, 74, 0.08);
+}
+
+
+/* =========================================================
+   Radio / Checkbox Groups
+========================================================= */
+
+.survey-fieldset {
+  margin: 0;
+
+  padding: 0;
+
+  border: none;
+}
+
+.survey-options {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 0.7rem;
+}
+
+.survey-option {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.7rem;
+
+  min-height: 48px;
+
+  padding: 0.7rem 0.85rem;
+
+  color: var(--canopy-700);
+
+  background: var(--ivory-50);
+
+  border: 1px solid rgba(7, 42, 74, 0.12);
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 0.9rem;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.survey-option:hover {
+  border-color: var(--canopy-700);
+
+  background: #ffffff;
+}
+
+.survey-option.is-selected {
+  color: var(--canopy-900);
+
+  background: rgba(246, 180, 45, 0.1);
+
+  border-color: var(--marigold-500);
+}
+
+.survey-option input {
+  width: 17px;
+
+  height: 17px;
+
+  flex-shrink: 0;
+
+  margin: 0;
+
+  accent-color: var(--canopy-700);
+}
+
+
+/* =========================================================
+   Navigation
+========================================================= */
+
+.survey-navigation {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-top: 2.5rem;
+
+  padding-top: 1.5rem;
+
+  border-top: 1px solid rgba(7, 42, 74, 0.1);
+}
+
+.survey-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.55rem;
+
+  min-width: 130px;
+
+  padding: 0.85rem 1.2rem;
+
+  border-radius: 8px;
+
+  font: inherit;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.survey-button--primary {
+  color: var(--canopy-900);
+
+  background: var(--marigold-500);
+
+  border: 2px solid var(--marigold-500);
+}
+
+.survey-button--primary:hover {
+  background: var(--ivory-50);
+
+  border-color: var(--canopy-900);
+
+  transform: translateY(-2px);
+}
+
+.survey-button--secondary {
+  color: var(--canopy-900);
+
+  background: transparent;
+
+  border: 1px solid rgba(7, 42, 74, 0.25);
+}
+
+.survey-button--secondary:hover {
+  background: var(--ivory-50);
+
+  border-color: var(--canopy-900);
+}
+
+
+/* =========================================================
+   Success
+========================================================= */
+
+.survey-success {
+  min-height: 70vh;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 5rem 0;
+}
+
+.survey-success__card {
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  padding: 3rem;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow: 0 15px 50px rgba(7, 42, 74, 0.08);
+}
+
+.survey-success__icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 80px;
+  height: 80px;
+
+  margin: 0 auto 1.5rem;
+
+  color: var(--canopy-700);
+
+  background: rgba(7, 42, 74, 0.08);
+
+  border-radius: 50%;
+}
+
+.survey-success__eyebrow {
+  display: block;
+
+  margin-bottom: 0.6rem;
+
+  color: var(--marigold-500);
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.survey-success h1 {
+  margin: 0 0 1rem;
+
+  color: var(--canopy-900);
+
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.survey-success p {
+  max-width: 600px;
+
+  margin: 0 auto 1.8rem;
+
+  color: var(--canopy-700);
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   Tablet
+========================================================= */
+
+@media (max-width: 800px) {
+  .survey-progress__steps {
+    grid-template-columns: repeat(7, 28px);
+
+    justify-content: space-between;
+  }
+
+  .survey-progress__step small {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   Mobile
+========================================================= */
+
+@media (max-width: 600px) {
+  .survey-hero {
+    padding: 3.5rem 0;
+  }
+
+  .survey-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .survey-hero__subtitle {
+    font-size: 0.95rem;
+  }
+
+  .survey-purpose {
+    padding-top: 1.5rem;
+  }
+
+  .survey-purpose__card {
+    padding: 1.4rem;
+
+    border-left-width: 3px;
+  }
+
+  .survey-form-section {
+    padding: 1.5rem 0 4rem;
+  }
+
+  .survey-form-card {
+    padding: 1.25rem;
+
+    border-radius: 12px;
+  }
+
+  .survey-progress {
+    margin-bottom: 2rem;
+  }
+
+  .survey-progress__top {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 0.25rem;
+  }
+
+  .survey-options {
+    grid-template-columns: 1fr;
+  }
+
+  .survey-option {
+    min-height: 46px;
+  }
+
+  .survey-navigation {
+    margin-top: 2rem;
+  }
+
+  .survey-button {
+    min-width: 115px;
+  }
+
+  .survey-success__card {
+    padding: 2rem 1.25rem;
+  }
+}
+
+
+/* =========================================================
+   Very Small Screens
+========================================================= */
+
+@media (max-width: 400px) {
+  .survey-form-card {
+    padding: 1rem;
+  }
+
+  .survey-button {
+    min-width: 100px;
+
+    padding: 0.75rem 0.9rem;
+
+    font-size: 0.85rem;
+  }
+}
+
+
+/* =========================================================
+   Reduced Motion
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .survey-progress__fill,
+  .survey-button,
+  .survey-field input,
+  .survey-field textarea,
+  .survey-option {
+    transition: none;
+  }
+
+  .survey-button--primary:hover {
+    transform: none;
+  }
+}
+

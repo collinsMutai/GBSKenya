@@ -27,6 +27,7 @@ import ContactPage from "./components/ContactPage/ContactPage.jsx";
 
 // Get Involved
 import PartnerWithUs from "./components/PartnerWithUs/PartnerWithUs.jsx";
+import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientCaregiverSurvey.jsx";
 
 function ComingSoon({ title }) {
   return (
@@ -69,7 +70,10 @@ export default function App() {
               Home
           ============================== */}
 
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={<Home />}
+          />
 
           {/* ==============================
               About
@@ -158,8 +162,18 @@ export default function App() {
           ============================== */}
 
           <Route
+            path="/get-involved/patient-caregiver-survey"
+            element={<PatientCaregiverSurvey />}
+          />
+
+          <Route
             path="/get-involved/partner-with-us"
             element={<PartnerWithUs />}
+          />
+
+          <Route
+            path="/get-involved/donate"
+            element={<ComingSoon title="Donate" />}
           />
 
           {/* ==============================

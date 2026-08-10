@@ -1,0 +1,293 @@
+
+/* ==============================
+   Patient & Caregiver Survey CTA
+============================== */
+
+.survey-cta {
+  position: relative;
+
+  padding: 4rem 0;
+
+  background: var(--canopy-700);
+
+  color: var(--ivory-50);
+
+  overflow: hidden;
+}
+
+
+/* Decorative background */
+
+.survey-cta::before {
+  content: "";
+
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  top: -180px;
+  right: -80px;
+
+  border-radius: 50%;
+
+  background: rgba(250, 247, 239, 0.05);
+
+  pointer-events: none;
+}
+
+.survey-cta::after {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  bottom: -150px;
+  left: -70px;
+
+  border-radius: 50%;
+
+  background: rgba(246, 180, 45, 0.08);
+
+  pointer-events: none;
+}
+
+
+/* ==============================
+   Inner Layout
+============================== */
+
+.survey-cta__inner {
+  position: relative;
+
+  z-index: 1;
+
+  display: grid;
+
+  grid-template-columns: auto 1fr auto;
+
+  align-items: center;
+
+  gap: 2rem;
+}
+
+
+/* ==============================
+   Icon
+============================== */
+
+.survey-cta__icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  flex-shrink: 0;
+
+  color: var(--marigold-500);
+
+  background: rgba(246, 180, 45, 0.12);
+
+  border: 1px solid rgba(246, 180, 45, 0.25);
+
+  border-radius: 16px;
+}
+
+
+/* ==============================
+   Content
+============================== */
+
+.survey-cta__content {
+  max-width: 760px;
+}
+
+.survey-cta__eyebrow {
+  display: block;
+
+  margin-bottom: 0.45rem;
+
+  color: var(--marigold-500);
+
+  font-size: 0.78rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.survey-cta__title {
+  margin: 0 0 0.65rem;
+
+  color: var(--ivory-50);
+
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+
+  line-height: 1.15;
+
+  font-weight: 700;
+}
+
+.survey-cta__text {
+  max-width: 720px;
+
+  margin: 0;
+
+  color: var(--ivory-100);
+
+  font-size: 1rem;
+
+  line-height: 1.7;
+
+  opacity: 0.9;
+}
+
+
+/* ==============================
+   Button
+============================== */
+
+.survey-cta__action {
+  flex-shrink: 0;
+}
+
+.survey-cta__button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.6rem;
+
+  min-width: 170px;
+
+  padding: 0.9rem 1.35rem;
+
+  color: var(--canopy-900);
+
+  background: var(--marigold-500);
+
+  border: 2px solid var(--marigold-500);
+
+  border-radius: 8px;
+
+  font-size: 0.95rem;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.survey-cta__button svg {
+  transition: transform 0.25s ease;
+}
+
+.survey-cta__button:hover {
+  color: var(--canopy-900);
+
+  background: var(--ivory-50);
+
+  border-color: var(--ivory-50);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.survey-cta__button:hover svg {
+  transform: translateX(4px);
+}
+
+
+/* ==============================
+   Tablet
+============================== */
+
+@media (max-width: 900px) {
+  .survey-cta {
+    padding: 3.5rem 0;
+  }
+
+  .survey-cta__inner {
+    grid-template-columns: auto 1fr;
+  }
+
+  .survey-cta__action {
+    grid-column: 2;
+  }
+}
+
+
+/* ==============================
+   Mobile
+============================== */
+
+@media (max-width: 600px) {
+  .survey-cta {
+    padding: 3rem 0;
+  }
+
+  .survey-cta__inner {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 1.25rem;
+  }
+
+  .survey-cta__icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .survey-cta__title {
+    font-size: 1.75rem;
+  }
+
+  .survey-cta__text {
+    font-size: 0.95rem;
+
+    line-height: 1.65;
+  }
+
+  .survey-cta__action {
+    width: 100%;
+  }
+
+  .survey-cta__button {
+    width: 100%;
+  }
+}
+
+
+/* ==============================
+   Reduced Motion
+============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .survey-cta__button,
+  .survey-cta__button svg {
+    transition: none;
+  }
+
+  .survey-cta__button:hover {
+    transform: none;
+  }
+}
+

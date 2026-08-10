@@ -5,22 +5,58 @@ import "./Navbar.css";
 import logo from "../../assets/logo.jpeg";
 
 const links = [
-  { label: "Home", to: "/" },
+  {
+    label: "Home",
+    to: "/",
+  },
   {
     label: "About us",
     to: "/about/who-we-are",
     children: [
-      { label: "Who We Are", to: "/about/who-we-are" },
-      { label: "Leadership", to: "/about/leadership" },
       {
-        label: "Global Medical Advisory Board",
+        label: "Who We Are",
+        to: "/about/who-we-are",
+      },
+      {
+        label: "Leadership",
+        to: "/about/leadership",
+      },
+      {
+        label: "Our Medical Advisory Board",
         to: "/about/medical-advisory-board",
       },
     ],
   },
-  { label: "Resilience stories", to: "/stories" },
-  { label: "Support resources", to: "/resources" },
-  { label: "Contact us", to: "/contact" },
+  {
+    label: "Resilience stories",
+    to: "/stories",
+  },
+  {
+    label: "Support resources",
+    to: "/resources",
+  },
+  {
+    label: "Contact us",
+    to: "/contact",
+  },
+  {
+    label: "Get Involved",
+    to: "/get-involved",
+    children: [
+      {
+        label: "Patient and Caregiver Survey",
+        to: "/get-involved/patient-caregiver-survey",
+      },
+      {
+        label: "Partner with us",
+        to: "/get-involved/partner-with-us",
+      },
+      {
+        label: "Donate",
+        to: "/get-involved/donate",
+      },
+    ],
+  },
 ];
 
 const iconBase = {
@@ -43,7 +79,7 @@ function FacebookIcon({ size = 24, ...props }) {
 function TwitterIcon({ size = 24, ...props }) {
   return (
     <svg {...iconBase} width={size} height={size} {...props}>
-      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 10.2 2.2.1 4.4-.6 6-2C3 14.5.5 9.6 3 5.7c2.3 2.8 5.7 4.2 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 2.8-.6 3-1.9z" />
     </svg>
   );
 }
@@ -51,9 +87,9 @@ function TwitterIcon({ size = 24, ...props }) {
 function InstagramIcon({ size = 24, ...props }) {
   return (
     <svg {...iconBase} width={size} height={size} {...props}>
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" />
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
     </svg>
   );
 }
@@ -61,21 +97,24 @@ function InstagramIcon({ size = 24, ...props }) {
 function LinkedinIcon({ size = 24, ...props }) {
   return (
     <svg {...iconBase} width={size} height={size} {...props}>
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect x="2" y="9" width="4" height="12" />
-      <circle cx="4" cy="4" r="2" />
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <path d="M8 11v5" />
+      <path d="M8 8v.01" />
+      <path d="M12 16v-5" />
+      <path d="M12 13a3 3 0 0 1 6 0v3" />
     </svg>
   );
 }
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(null);
 
-  // Prevent page scrolling while mobile menu is open
+  // Prevent page scrolling when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+
     return () => {
       document.body.style.overflow = "";
     };
@@ -83,12 +122,15 @@ export default function Navbar() {
 
   const closeMenu = () => {
     setOpen(false);
-    setMobileAboutOpen(false);
+    setMobileDropdownOpen(null);
   };
 
   return (
     <header className="navbar">
-      {/* Top Bar */}
+      {/* ==============================
+          Top Bar
+      ============================== */}
+
       <div className="topbar">
         <div className="container topbar__row">
           <div className="topbar__contact">
@@ -146,12 +188,16 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navigation */}
+      {/* ==============================
+          Main Navigation
+      ============================== */}
+
       <div className="container navbar__row">
         <Link to="/" className="navbar__brand" onClick={closeMenu}>
           <img src={logo} alt="GBS Foundation Kenya" className="navbar__logo" />
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="navbar__links">
           {links.map((link) =>
             link.children ? (
@@ -192,12 +238,9 @@ export default function Navbar() {
               </Link>
             ),
           )}
-
-          <Link to="/resources" className="btn btn-primary">
-            Donate
-          </Link>
         </nav>
 
+        {/* Mobile Menu Button */}
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -209,7 +252,10 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Fullscreen Mobile Menu */}
+      {/* ==============================
+          Mobile Menu
+      ============================== */}
+
       {open && (
         <nav className="navbar__mobile">
           {links.map((link) =>
@@ -218,20 +264,29 @@ export default function Navbar() {
                 <button
                   type="button"
                   className="navbar__link navbar__mobile-group-trigger"
-                  onClick={() => setMobileAboutOpen((prev) => !prev)}
-                  aria-expanded={mobileAboutOpen}
+                  onClick={() =>
+                    setMobileDropdownOpen((prev) =>
+                      prev === link.to ? null : link.to,
+                    )
+                  }
+                  aria-expanded={mobileDropdownOpen === link.to}
                 >
                   {link.label}
+
                   <ChevronDown
                     size={18}
                     strokeWidth={2}
                     style={{
-                      transform: mobileAboutOpen ? "rotate(180deg)" : "none",
+                      transform:
+                        mobileDropdownOpen === link.to
+                          ? "rotate(180deg)"
+                          : "none",
                       transition: "transform 0.2s ease",
                     }}
                   />
                 </button>
-                {mobileAboutOpen && (
+
+                {mobileDropdownOpen === link.to && (
                   <div className="navbar__mobile-submenu">
                     {link.children.map((child) => (
                       <Link
@@ -257,14 +312,6 @@ export default function Navbar() {
               </Link>
             ),
           )}
-
-          <Link
-            to="/resources"
-            className="btn btn-primary navbar__mobile-cta"
-            onClick={closeMenu}
-          >
-            Donate
-          </Link>
         </nav>
       )}
     </header>

@@ -6,12 +6,14 @@ import FeaturedStory from '../components/FeaturedStory/FeaturedStory.jsx'
 import EventsPreview from '../components/EventsPreview/EventsPreview.jsx'
 import DonateBanner from '../components/DonateBanner/DonateBanner.jsx'
 import NewsletterSignup from '../components/NewsletterSignup/NewsletterSignup.jsx'
+import SurveyCTA from '../components/SurveyCTA/SurveyCTA.jsx'
 
 
 export default function Home() {
   return (
     <>
       <Hero />
+      <SurveyCTA />
       <PathwayCards />
       <ConditionsIntro />
       <ImpactStats />

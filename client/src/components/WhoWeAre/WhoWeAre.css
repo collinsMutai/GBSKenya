@@ -23,7 +23,7 @@
   max-width: 720px;
 }
 
-.who-we-are__affiliation-card {
+/* .who-we-are__affiliation-card {
   background: var(--canopy-900);
   border-radius: var(--radius-card);
   padding: 36px;
@@ -31,15 +31,15 @@
 
 .who-we-are__affiliation-card .eyebrow {
   color: var(--marigold-500);
-}
+} */
 
-.who-we-are__affiliation-text {
+/* .who-we-are__affiliation-text {
   margin-top: 14px;
   font-size: 15.5px;
   color: var(--ivory-100);
   opacity: 0.92;
   max-width: 640px;
-}
+} */
 
 .who-we-are__values-grid {
   display: grid;

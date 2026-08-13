@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import PageHeader from "../PageHeader/PageHeader.jsx";
 import "./Leadership.css";
-import img1 from "../../assets/img1.jpeg"
 import img2 from "../../assets/img2.jpeg"
-import img3 from "../../assets/img3.jpeg"
-import img4 from "../../assets/img4.jpeg"
+import Violet_Nelly_Amukonyi from "../../assets/Violet_Nelly_Amukonyi.jpeg"
+import Joseph_K_Yego from "../../assets/Joseph_K_Yego.jpeg"
+import Marylyn_Stacy_Kasandi_Alali from "../../assets/Marylyn_Stacy_Kasandi_Alali.jpeg"
 
 
 
@@ -46,7 +46,7 @@ const leaders = [
   {
     name: "Joseph K Yego",
     role: "Chairperson",
-    image: img1,
+    image: Joseph_K_Yego,
     bio: "Provides strategic leadership, partnerships, and advocacy to strengthen support for people affected by GBS, CIDP, and MMN.",
     email: "chair@gbskenya.org",
     linkedin: "#",
@@ -54,7 +54,7 @@ const leaders = [
   {
     name: "Violet Nelly Amukonyi",
     role: "Vice Chairperson",
-    image: img2,
+    image: Violet_Nelly_Amukonyi,
     bio: "Supports governance, community engagement, and collaboration with healthcare partners.",
     email: "vicechair@gbskenya.org",
     linkedin: "#",
@@ -70,7 +70,7 @@ const leaders = [
   {
     name: "Marylyn Stacy Kasandi Alali",
     role: "Treasurer",
-    image: img4,
+    image: Marylyn_Stacy_Kasandi_Alali,
     bio: "Provides financial oversight and supports sustainable programmes.",
     email: "treasurer@gbskenya.org",
     linkedin: "#",

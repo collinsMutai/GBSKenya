@@ -112,9 +112,9 @@ export default function PathwayCards() {
                     <span aria-hidden="true"> →</span>
                   </span>
 
-                  <span className="pathways__card-destination">
+                  {/* <span className="pathways__card-destination">
                     {pathway.destination}
-                  </span>
+                  </span> */}
                 </div>
               </Link>
             </motion.div>

@@ -89,7 +89,7 @@ export default function WhoWeAre() {
         </div>
       </motion.section>
 
-      <motion.section
+      {/* <motion.section
         className="section section--tight who-we-are__affiliation"
         initial="hidden"
         whileInView="show"
@@ -108,7 +108,7 @@ export default function WhoWeAre() {
             </p>
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       <motion.section
         className="section who-we-are__values"

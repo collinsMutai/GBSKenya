@@ -2,10 +2,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import './FeaturedStory.css'
 
-import img1 from '../../assets/img1.jpeg'
-import img2 from '../../assets/img2.jpeg'
-import img3 from '../../assets/img3.jpeg'
-import img4 from '../../assets/img4.jpeg'
+import img1 from '../../assets/Violet_Nelly_Amukonyi.jpeg'
+import img2 from '../../assets/Marylyn_Stacy_Kasandi_Alali.jpeg'
+import Joseph_K_Yego from "../../assets/Joseph_K_Yego.jpeg"
+import img4 from '../../assets/img2.jpeg'
 
 const stories = [
   {
@@ -30,7 +30,7 @@ const stories = [
     excerpt:
       'Connecting with others who understood my experience changed the way I thought about my diagnosis and gave me hope for what comes next.',
     author: 'David N.',
-    image: img3,
+    image: Joseph_K_Yego,
   },
   {
     tag: 'Resilience',
@@ -46,7 +46,7 @@ const stories = [
     excerpt:
       'The hardest chapter of my life eventually introduced me to people and experiences I never expected.',
     author: 'James O.',
-    image: img3,
+    image: Joseph_K_Yego,
   },
   {
     tag: 'Living well',

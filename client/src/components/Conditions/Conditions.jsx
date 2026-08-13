@@ -4,9 +4,9 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import "./Conditions.css";
 
-import gbsImage from "../../assets/img1.jpeg";
-import cidpImage from "../../assets/img2.jpeg";
-import neuropathyImage from "../../assets/img3.jpeg";
+import gbsImage from "../../assets/Violet_Nelly_Amukonyi.jpeg";
+import cidpImage from "../../assets/Marylyn_Stacy_Kasandi_Alali.jpeg";
+import neuropathyImage from "../../assets/Joseph_K_Yego.jpeg"
 
 const conditions = [
   {

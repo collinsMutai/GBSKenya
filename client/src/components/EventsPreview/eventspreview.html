@@ -1,0 +1,1666 @@
+<section class="events-preview">
+  <div class="events-preview__container">
+
+    <!-- HEADER -->
+    <div class="events-preview__head">
+
+      <div>
+        <p class="events-preview__eyebrow">
+          Community calendar
+        </p>
+
+        <h2 class="events-preview__heading">
+          Upcoming<br />
+          <span>events.</span>
+        </h2>
+      </div>
+
+      <p class="events-preview__intro">
+        Meet, learn and connect with others across the community.
+      </p>
+
+    </div>
+
+
+    <!-- EVENT -->
+    <div class="events-preview__stage">
+
+      <a
+        id="eventsCard"
+        class="events-preview__flyer events-preview__flyer--green"
+        href="#"
+      >
+
+        <div class="events-preview__shape events-preview__shape--one"></div>
+
+        <div class="events-preview__shape events-preview__shape--two"></div>
+
+        <div class="events-preview__shape events-preview__shape--three"></div>
+
+
+        <!-- TOP -->
+
+        <div class="events-preview__flyer-top">
+
+          <span
+            id="eventsType"
+            class="events-preview__type"
+          >
+            Loading...
+          </span>
+
+          <span
+            id="eventsNumber"
+            class="events-preview__number"
+          >
+            01
+          </span>
+
+        </div>
+
+
+        <!-- BODY -->
+
+        <div class="events-preview__flyer-body">
+
+          <div class="events-preview__date-block">
+
+            <span
+              id="eventsDay"
+              class="events-preview__day"
+            >
+              --
+            </span>
+
+            <span
+              id="eventsMonth"
+              class="events-preview__month"
+            >
+              ---
+            </span>
+
+          </div>
+
+
+          <div class="events-preview__details">
+
+            <h3 id="eventsTitle">
+              Loading event...
+            </h3>
+
+            <div class="events-preview__location">
+
+              <span aria-hidden="true">
+                ↳
+              </span>
+
+              <span id="eventsLocation">
+                Loading...
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="events-preview__flyer-bottom">
+
+          <span>
+            View full event details
+          </span>
+
+          <span class="events-preview__arrow">
+            ↗
+          </span>
+
+        </div>
+
+      </a>
+
+    </div>
+
+
+    <!-- CONTROLS -->
+
+    <div class="events-preview__controls">
+
+      <div class="events-preview__navigation">
+
+        <button
+          id="eventsPrevious"
+          type="button"
+          class="events-preview__button"
+          aria-label="Previous event"
+        >
+          ←
+        </button>
+
+        <div class="events-preview__counter">
+
+          <strong id="eventsCurrent">
+            01
+          </strong>
+
+          <span>/</span>
+
+          <span id="eventsTotal">
+            01
+          </span>
+
+        </div>
+
+        <button
+          id="eventsNext"
+          type="button"
+          class="events-preview__button"
+          aria-label="Next event"
+        >
+          →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<style>
+
+.events-preview {
+  width: 100%;
+  padding: 90px 0;
+  background: #f8faf7;
+  overflow: hidden;
+}
+
+
+.events-preview__container {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.events-preview__head {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    340px;
+
+  align-items: end;
+
+  gap: 70px;
+
+  margin-bottom: 46px;
+}
+
+
+.events-preview__eyebrow {
+  margin: 0 0 16px;
+
+  color: #4f7d5c;
+
+  font-family: monospace;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+}
+
+
+.events-preview__heading {
+  margin: 0;
+
+  color: #17201a;
+
+  font-size:
+    clamp(46px, 5.2vw, 68px);
+
+  font-weight: 500;
+
+  line-height: 0.96;
+
+  letter-spacing: -0.055em;
+}
+
+
+.events-preview__heading span {
+  color: #4f7d5c;
+}
+
+
+.events-preview__intro {
+  max-width: 330px;
+
+  margin: 0;
+
+  color: #5f6962;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   STAGE
+========================================= */
+
+.events-preview__stage {
+  position: relative;
+
+  width: 100%;
+}
+
+
+/* =========================================
+   FLYER
+========================================= */
+
+.events-preview__flyer {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  min-height: 390px;
+
+  padding: 36px 42px;
+
+  overflow: hidden;
+
+  color: #17201a;
+
+  text-decoration: none;
+
+  background: #dcebdc;
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+
+.events-preview__flyer:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 50px rgba(23, 32, 26, 0.12);
+}
+
+
+/* =========================================
+   COLORS
+========================================= */
+
+.events-preview__flyer--green {
+  background: #dcebdc;
+}
+
+
+.events-preview__flyer--coral {
+  background: #f1d3ca;
+}
+
+
+.events-preview__flyer--yellow {
+  background: #eee4b9;
+}
+
+
+/* =========================================
+   DECORATIVE SHAPES
+========================================= */
+
+.events-preview__shape {
+  position: absolute;
+
+  pointer-events: none;
+}
+
+
+.events-preview__shape--one {
+  width: 300px;
+  height: 300px;
+
+  right: -80px;
+  top: -110px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.28);
+}
+
+
+.events-preview__shape--two {
+  width: 180px;
+  height: 180px;
+
+  right: 120px;
+  bottom: -100px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(79, 125, 92, 0.1);
+}
+
+
+.events-preview__shape--three {
+  width: 90px;
+  height: 90px;
+
+  left: 45%;
+  top: 25%;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(23, 32, 26, 0.12);
+}
+
+
+/* =========================================
+   TOP
+========================================= */
+
+.events-preview__flyer-top {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+
+.events-preview__type {
+  font-family: monospace;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+}
+
+
+.events-preview__number {
+  font-family: monospace;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+
+.events-preview__flyer-body {
+  position: relative;
+
+  z-index: 2;
+
+  display: grid;
+
+  grid-template-columns:
+    120px
+    1fr;
+
+  gap: 38px;
+
+  align-items: center;
+}
+
+
+.events-preview__date-block {
+  display: flex;
+
+  flex-direction: column;
+
+  padding-right: 30px;
+
+  border-right:
+    1px solid rgba(23, 32, 26, 0.18);
+}
+
+
+.events-preview__day {
+  font-size:
+    clamp(70px, 8vw, 110px);
+
+  font-weight: 500;
+
+  line-height: 0.8;
+
+  letter-spacing: -0.07em;
+}
+
+
+.events-preview__month {
+  margin-top: 12px;
+
+  font-family: monospace;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+}
+
+
+.events-preview__details h3 {
+  max-width: 650px;
+
+  margin: 0;
+
+  color: #17201a;
+
+  font-size:
+    clamp(34px, 4vw, 56px);
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  letter-spacing: -0.045em;
+}
+
+
+.events-preview__location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 22px;
+
+  font-family: monospace;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.events-preview__flyer-bottom {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding-top: 20px;
+
+  border-top:
+    1px solid rgba(23, 32, 26, 0.18);
+
+  font-family: monospace;
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+
+.events-preview__arrow {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border:
+    1px solid rgba(23, 32, 26, 0.25);
+
+  border-radius: 50%;
+
+  font-family: sans-serif;
+
+  font-size: 18px;
+
+  transition: 0.3s ease;
+}
+
+
+.events-preview__flyer:hover
+.events-preview__arrow {
+  background: #4f7d5c;
+
+  border-color: #4f7d5c;
+
+  color: white;
+
+  transform:
+    translate(3px, -3px);
+}
+
+
+/* =========================================
+   CONTROLS
+========================================= */
+
+.events-preview__controls {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 20px;
+}
+
+
+.events-preview__navigation {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+.events-preview__button {
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border:
+    1px solid #d7ddd7;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #17201a;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  transition: 0.25s ease;
+}
+
+
+.events-preview__button:hover {
+  background: #4f7d5c;
+
+  border-color: #4f7d5c;
+
+  color: white;
+}
+
+
+.events-preview__counter {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 5px;
+
+  min-width: 55px;
+
+  font-family: monospace;
+
+  font-size: 11px;
+
+  color: #8a938c;
+}
+
+
+.events-preview__counter strong {
+  color: #17201a;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+
+  .events-preview {
+    padding: 75px 0;
+  }
+
+
+  .events-preview__head {
+    grid-template-columns:
+      1fr
+      280px;
+
+    gap: 40px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .events-preview {
+    padding: 65px 0;
+  }
+
+
+  .events-preview__container {
+    width:
+      calc(100% - 32px);
+  }
+
+
+  .events-preview__head {
+    display: block;
+
+    margin-bottom: 32px;
+  }
+
+
+  .events-preview__intro {
+    margin-top: 22px;
+  }
+
+
+  .events-preview__heading {
+    font-size:
+      clamp(44px, 14vw, 62px);
+  }
+
+
+  .events-preview__flyer {
+    min-height: 430px;
+
+    padding:
+      28px 24px;
+  }
+
+
+  .events-preview__flyer-body {
+    grid-template-columns:
+      75px
+      1fr;
+
+    gap: 20px;
+  }
+
+
+  .events-preview__date-block {
+    padding-right: 18px;
+  }
+
+
+  .events-preview__day {
+    font-size: 65px;
+  }
+
+
+  .events-preview__details h3 {
+    font-size: 32px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+  .events-preview {
+    padding: 55px 0;
+  }
+
+
+  .events-preview__flyer {
+    min-height: 400px;
+  }
+
+
+  .events-preview__flyer-body {
+    grid-template-columns:
+      65px
+      1fr;
+
+    gap: 15px;
+  }
+
+
+  .events-preview__day {
+    font-size: 56px;
+  }
+
+
+  .events-preview__details h3 {
+    font-size: 28px;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+(function () {
+
+  /* =========================================
+     WORDPRESS EVENTS API
+  ========================================= */
+
+  const API =
+    "/wp-json/wp/v2/events?per_page=100&_embed";
+
+
+  /* =========================================
+     STATE
+  ========================================= */
+
+  let events = [];
+
+  let currentEvent = 0;
+
+  let paused = false;
+
+  let timer = null;
+
+
+  /* =========================================
+     DOM ELEMENTS
+  ========================================= */
+
+  const card =
+    document.getElementById("eventsCard");
+
+
+  const type =
+    document.getElementById("eventsType");
+
+
+  const number =
+    document.getElementById("eventsNumber");
+
+
+  const day =
+    document.getElementById("eventsDay");
+
+
+  const month =
+    document.getElementById("eventsMonth");
+
+
+  const title =
+    document.getElementById("eventsTitle");
+
+
+  const location =
+    document.getElementById("eventsLocation");
+
+
+  const current =
+    document.getElementById("eventsCurrent");
+
+
+  const total =
+    document.getElementById("eventsTotal");
+
+
+  const previous =
+    document.getElementById("eventsPrevious");
+
+
+  const next =
+    document.getElementById("eventsNext");
+
+
+  /* =========================================
+     PARSE ACF DATE
+
+     Supports:
+
+     20260830
+
+     2026-08-30
+  ========================================= */
+
+  function parseEventDate(value) {
+
+    if (!value) {
+      return null;
+    }
+
+
+    value =
+      String(value).trim();
+
+
+    /*
+     * ACF Date Picker:
+     *
+     * YYYYMMDD
+     */
+
+    if (/^\d{8}$/.test(value)) {
+
+      const year =
+        Number(
+          value.substring(0, 4)
+        );
+
+
+      const month =
+        Number(
+          value.substring(4, 6)
+        ) - 1;
+
+
+      const date =
+        Number(
+          value.substring(6, 8)
+        );
+
+
+      return new Date(
+        year,
+        month,
+        date
+      );
+
+    }
+
+
+    /*
+     * YYYY-MM-DD
+     */
+
+    if (
+      /^\d{4}-\d{2}-\d{2}$/
+        .test(value)
+    ) {
+
+      const parts =
+        value.split("-");
+
+
+      return new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+      );
+
+    }
+
+
+    return null;
+
+  }
+
+
+  /* =========================================
+     TODAY
+  ========================================= */
+
+  function getToday() {
+
+    const today =
+      new Date();
+
+
+    today.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+
+    return today;
+
+  }
+
+
+  /* =========================================
+     BUILD REACT EVENT URL
+  ========================================= */
+
+  function getEventDetailsUrl(event) {
+
+    /*
+     * Your React EventDetails page
+     * expects:
+     *
+     * /event-details/?slug=event-slug
+     */
+
+    if (!event || !event.slug) {
+
+      return "#";
+
+    }
+
+
+    return (
+      "/event-details/?slug=" +
+      encodeURIComponent(
+        event.slug
+      )
+    );
+
+  }
+
+
+  /* =========================================
+     LOAD EVENTS
+  ========================================= */
+
+  async function loadEvents() {
+
+    try {
+
+      console.log(
+        "Loading events from:",
+        API
+      );
+
+
+      const response =
+        await fetch(API);
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "WordPress REST API returned " +
+          response.status
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      console.log(
+        "Events returned:",
+        data
+      );
+
+
+      /*
+       * Only events with valid
+       * future/current dates.
+       */
+
+      events =
+        data
+
+          .filter(function (event) {
+
+            const acf =
+              event.acf || {};
+
+
+            const eventDate =
+              parseEventDate(
+                acf.event_date
+              );
+
+
+            console.log(
+              event.title?.rendered,
+              "=>",
+              acf.event_date,
+              "=>",
+              eventDate
+            );
+
+
+            if (!eventDate) {
+
+              return false;
+
+            }
+
+
+            /*
+             * Remove past events.
+             */
+
+            return (
+              eventDate >=
+              getToday()
+            );
+
+          })
+
+
+          /*
+           * Earliest event first.
+           */
+
+          .sort(function (a, b) {
+
+            const dateA =
+              parseEventDate(
+                a.acf?.event_date
+              );
+
+
+            const dateB =
+              parseEventDate(
+                b.acf?.event_date
+              );
+
+
+            return dateA - dateB;
+
+          });
+
+
+      console.log(
+        "Upcoming events:",
+        events
+      );
+
+
+      currentEvent = 0;
+
+
+      /*
+       * Total
+       */
+
+      total.textContent =
+        String(events.length)
+          .padStart(2, "0");
+
+
+      /*
+       * No events
+       */
+
+      if (!events.length) {
+
+        showEmpty();
+
+        return;
+
+      }
+
+
+      /*
+       * Display first event
+       */
+
+      renderEvent();
+
+
+      /*
+       * Start slider
+       */
+
+      startSlider();
+
+    }
+
+
+    catch (error) {
+
+      console.error(
+        "Events error:",
+        error
+      );
+
+
+      showError();
+
+    }
+
+  }
+
+
+  /* =========================================
+     RENDER EVENT
+  ========================================= */
+
+  function renderEvent() {
+
+    const event =
+      events[currentEvent];
+
+
+    if (!event) {
+
+      return;
+
+    }
+
+
+    const acf =
+      event.acf || {};
+
+
+    /* =========================================
+       DATE
+    ========================================= */
+
+    const eventDate =
+      parseEventDate(
+        acf.event_date
+      );
+
+
+    if (eventDate) {
+
+      day.textContent =
+        String(
+          eventDate.getDate()
+        ).padStart(2, "0");
+
+
+      month.textContent =
+        eventDate
+          .toLocaleString(
+            "en-US",
+            {
+              month: "short",
+            }
+          )
+          .toUpperCase();
+
+    }
+
+
+    /* =========================================
+       TITLE
+    ========================================= */
+
+    title.textContent =
+      event.title?.rendered ||
+      "Untitled event";
+
+
+    /* =========================================
+       TYPE
+    ========================================= */
+
+    type.textContent =
+      acf.event_type ||
+      "Community event";
+
+
+    /* =========================================
+       LOCATION
+    ========================================= */
+
+    location.textContent =
+      acf.event_location ||
+      "Location TBC";
+
+
+    /* =========================================
+       NUMBER
+    ========================================= */
+
+    number.textContent =
+      String(
+        currentEvent + 1
+      ).padStart(2, "0");
+
+
+    current.textContent =
+      String(
+        currentEvent + 1
+      ).padStart(2, "0");
+
+
+    total.textContent =
+      String(
+        events.length
+      ).padStart(2, "0");
+
+
+    /* =========================================
+       EVENT LINK
+
+       IMPORTANT:
+
+       This no longer uses:
+
+       event.link
+
+       because that sends users to:
+
+       /events/nairobi-support-group-meetup/
+
+       Instead it sends them to:
+
+       /event-details/?slug=nairobi-support-group
+    ========================================= */
+
+    card.href =
+      getEventDetailsUrl(event);
+
+
+    /*
+     * Optional debug
+     */
+
+    console.log(
+      "React event URL:",
+      card.href
+    );
+
+
+    /* =========================================
+       COLOUR
+    ========================================= */
+
+    let colour =
+      acf.event_colour;
+
+
+    /*
+     * Default to green
+     */
+
+    if (
+      !colour ||
+      colour === false ||
+      colour === "false"
+    ) {
+
+      colour =
+        "green";
+
+    }
+
+
+    /*
+     * Only allow known colours
+     */
+
+    const allowedColours = [
+      "green",
+      "coral",
+      "yellow",
+    ];
+
+
+    if (
+      !allowedColours.includes(
+        colour
+      )
+    ) {
+
+      colour =
+        "green";
+
+    }
+
+
+    card.className =
+      "events-preview__flyer " +
+      "events-preview__flyer--" +
+      colour;
+
+
+    /* =========================================
+       ANIMATION
+    ========================================= */
+
+    card.style.opacity =
+      "0";
+
+
+    card.style.transform =
+      "translateX(35px) rotate(1deg)";
+
+
+    requestAnimationFrame(
+      function () {
+
+        card.style.transition =
+          "opacity .55s ease, " +
+          "transform .7s " +
+          "cubic-bezier(.16,1,.3,1)";
+
+
+        card.style.opacity =
+          "1";
+
+
+        card.style.transform =
+          "translateX(0) rotate(0)";
+
+      }
+    );
+
+  }
+
+
+  /* =========================================
+     EMPTY STATE
+  ========================================= */
+
+  function showEmpty() {
+
+    type.textContent =
+      "Community calendar";
+
+
+    number.textContent =
+      "01";
+
+
+    day.textContent =
+      "--";
+
+
+    month.textContent =
+      "---";
+
+
+    title.textContent =
+      "No upcoming events";
+
+
+    location.textContent =
+      "Check back soon";
+
+
+    current.textContent =
+      "01";
+
+
+    total.textContent =
+      "00";
+
+
+    card.href =
+      "#";
+
+
+    card.style.cursor =
+      "default";
+
+  }
+
+
+  /* =========================================
+     ERROR
+  ========================================= */
+
+  function showError() {
+
+    type.textContent =
+      "Community calendar";
+
+
+    number.textContent =
+      "01";
+
+
+    day.textContent =
+      "--";
+
+
+    month.textContent =
+      "---";
+
+
+    title.textContent =
+      "Unable to load events";
+
+
+    location.textContent =
+      "Please try again later";
+
+
+    current.textContent =
+      "01";
+
+
+    total.textContent =
+      "00";
+
+
+    card.href =
+      "#";
+
+
+    card.style.cursor =
+      "default";
+
+  }
+
+
+  /* =========================================
+     NEXT EVENT
+  ========================================= */
+
+  function nextEvent() {
+
+    if (!events.length) {
+
+      return;
+
+    }
+
+
+    currentEvent =
+      (
+        currentEvent + 1
+      ) % events.length;
+
+
+    renderEvent();
+
+  }
+
+
+  /* =========================================
+     PREVIOUS EVENT
+  ========================================= */
+
+  function previousEvent() {
+
+    if (!events.length) {
+
+      return;
+
+    }
+
+
+    currentEvent =
+      (
+        currentEvent -
+        1 +
+        events.length
+      ) % events.length;
+
+
+    renderEvent();
+
+  }
+
+
+  /* =========================================
+     AUTO SLIDER
+  ========================================= */
+
+  function startSlider() {
+
+    clearInterval(timer);
+
+
+    if (
+      events.length <= 1
+    ) {
+
+      return;
+
+    }
+
+
+    timer =
+      setInterval(
+        function () {
+
+          if (!paused) {
+
+            nextEvent();
+
+          }
+
+        },
+        7000
+      );
+
+  }
+
+
+  /* =========================================
+     PREVIOUS BUTTON
+  ========================================= */
+
+  if (previous) {
+
+    previous.addEventListener(
+      "click",
+      function (event) {
+
+        /*
+         * Prevent any accidental
+         * navigation.
+         */
+
+        event.preventDefault();
+
+
+        previousEvent();
+
+
+        startSlider();
+
+      }
+    );
+
+  }
+
+
+  /* =========================================
+     NEXT BUTTON
+  ========================================= */
+
+  if (next) {
+
+    next.addEventListener(
+      "click",
+      function (event) {
+
+        /*
+         * Prevent any accidental
+         * navigation.
+         */
+
+        event.preventDefault();
+
+
+        nextEvent();
+
+
+        startSlider();
+
+      }
+    );
+
+  }
+
+
+  /* =========================================
+     PAUSE ON HOVER
+  ========================================= */
+
+  if (card) {
+
+    card.addEventListener(
+      "mouseenter",
+      function () {
+
+        paused =
+          true;
+
+      }
+    );
+
+
+    card.addEventListener(
+      "mouseleave",
+      function () {
+
+        paused =
+          false;
+
+      }
+    );
+
+  }
+
+
+  /* =========================================
+     START
+  ========================================= */
+
+  loadEvents();
+
+})();
+
+</script>

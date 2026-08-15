@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react'
 import {
   motion,
@@ -43,15 +42,21 @@ const stats = [
 
 function CountUp({ value, suffix, duration = 1.4 }) {
   const ref = useRef(null)
+
+  // once: false — re-triggers every time this number re-enters view
   const inView = useInView(ref, {
-    once: true,
+    once: false,
     amount: 0.6,
   })
 
   const [display, setDisplay] = useState(0)
 
   useEffect(() => {
-    if (!inView) return
+    if (!inView) {
+      // Reset to 0 on exit so it counts up fresh next time it re-enters
+      setDisplay(0)
+      return
+    }
 
     let start = null
     let frame
@@ -86,11 +91,16 @@ function CountUp({ value, suffix, duration = 1.4 }) {
   )
 }
 
+/* =========================================
+   ANIMATION VARIANTS
+   ========================================= */
+
 const container = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.14,
+      delayChildren: 0.1,
     },
   },
 }
@@ -98,38 +108,128 @@ const container = {
 const item = {
   hidden: {
     opacity: 0,
-    y: 14,
+    y: 24,
   },
   show: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.55,
       ease: [0.16, 1, 0.3, 1],
     },
+  },
+}
+
+const iconVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.4,
+    rotate: -50,
+  },
+  show: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 260,
+      damping: 14,
+      delay: 0.05,
+    },
+  },
+}
+
+const valueVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 1.3,
+    filter: 'blur(6px)',
+  },
+  show: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+      delay: 0.15,
+    },
+  },
+}
+
+const lineVariants = {
+  hidden: { scaleX: 0 },
+  show: {
+    scaleX: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
+      delay: 0.35,
+    },
+  },
+}
+
+const labelVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: [0.16, 1, 0.3, 1],
+      delay: 0.4,
+    },
+  },
+}
+
+const backgroundEntranceVariants = {
+  hidden: { opacity: 0, scale: 1.18 },
+  show: {
+    opacity: 1,
+    scale: 1.08, // settles at the parallax's own "resting" zoom level
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
+  },
+}
+
+const overlayEntranceVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 },
   },
 }
 
 export default function ImpactStats() {
   const sectionRef = useRef(null)
 
-  /*
-   * Tracks the section's position in the viewport.
-   * 0 = section entering viewport
-   * 1 = section leaving viewport
-   */
+  // once: false — replays on every entry, and fires immediately if the
+  // section is already visible on first page load
+  const isInView = useInView(sectionRef, {
+    once: false,
+    amount: 0.15,
+  })
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   })
 
-  /*
-   * Move the background independently from the content.
-   */
   const backgroundY = useTransform(
     scrollYProgress,
     [0, 1],
     ['-15%', '15%']
+  )
+
+  const backgroundScale = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [1.08, 1, 1.08]
+  )
+
+  const overlayOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [0.9, 0.75, 0.9]
   )
 
   return (
@@ -137,16 +237,27 @@ export default function ImpactStats() {
       ref={sectionRef}
       className="impact-stats"
     >
-      {/* PARALLAX IMAGE */}
+      {/* PARALLAX + ZOOM IMAGE */}
       <motion.div
         className="impact-stats__background"
-        style={{ y: backgroundY }}
+        variants={backgroundEntranceVariants}
+        initial="hidden"
+        animate={isInView ? 'show' : 'hidden'}
+        style={
+          isInView
+            ? { y: backgroundY, scale: backgroundScale }
+            : undefined
+        }
         aria-hidden="true"
       />
 
       {/* IMAGE OVERLAY */}
-      <div
+      <motion.div
         className="impact-stats__overlay"
+        variants={overlayEntranceVariants}
+        initial="hidden"
+        animate={isInView ? 'show' : 'hidden'}
+        style={isInView ? { opacity: overlayOpacity } : undefined}
         aria-hidden="true"
       />
 
@@ -156,11 +267,7 @@ export default function ImpactStats() {
           className="impact-stats__grid"
           variants={container}
           initial="hidden"
-          whileInView="show"
-          viewport={{
-            once: true,
-            amount: 0.4,
-          }}
+          animate={isInView ? 'show' : 'hidden'}
         >
           {stats.map((s) => {
             const Icon = s.icon
@@ -170,24 +277,42 @@ export default function ImpactStats() {
                 key={s.label}
                 className="impact-stats__item"
                 variants={item}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
-                <div className="impact-stats__icon">
+                <motion.div
+                  className="impact-stats__icon"
+                  variants={iconVariants}
+                  whileHover={{ scale: 1.1, rotate: 6 }}
+                >
                   <Icon
                     size={20}
                     strokeWidth={2}
                   />
-                </div>
+                </motion.div>
 
-                <div className="impact-stats__value">
+                <motion.div
+                  className="impact-stats__value"
+                  variants={valueVariants}
+                >
                   <CountUp
                     value={s.value}
                     suffix={s.suffix}
                   />
-                </div>
+                </motion.div>
 
-                <div className="impact-stats__label">
+                <motion.div
+                  className="impact-stats__value-line"
+                  variants={lineVariants}
+                  aria-hidden="true"
+                />
+
+                <motion.div
+                  className="impact-stats__label"
+                  variants={labelVariants}
+                >
                   {s.label}
-                </div>
+                </motion.div>
               </motion.div>
             )
           })}
@@ -196,4 +321,3 @@ export default function ImpactStats() {
     </section>
   )
 }
-

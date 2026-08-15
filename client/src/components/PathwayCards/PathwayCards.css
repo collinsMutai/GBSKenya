@@ -18,34 +18,25 @@
 
 .pathways__header .eyebrow {
   margin-bottom: 0.5rem;
-
   color: var(--canopy-600);
-
   font-size: 0.78rem;
   font-weight: 700;
-
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .pathways__title {
   margin: 0;
-
   color: var(--canopy-900);
-
   font-size: clamp(2rem, 4vw, 3rem);
-
   line-height: 1.1;
 }
 
 .pathways__intro {
   width: 100%;
   max-width: 900px;
-
   margin: 0.65rem 0 0;
-
   color: var(--ink-700);
-
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -56,37 +47,41 @@
 
 .pathways__grid {
   display: grid;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
   gap: 18px;
 }
 
 /* =========================================================
-   Card
+   Card wrapper / magnet layer
 ========================================================= */
 
 .pathways__card-wrapper {
   min-width: 0;
 }
 
+.pathways__card-magnet {
+  height: 100%;
+  will-change: transform;
+}
+
+/* =========================================================
+   Card
+========================================================= */
+
 .pathways__card {
   position: relative;
 
   display: flex;
   flex-direction: column;
-
-  /* Prevent unnecessary vertical whitespace */
   min-height: 0;
+  height: 100%;
 
   padding: 24px;
 
   color: inherit;
-
   background: #fff;
 
   border: 1px solid var(--line);
-
   border-radius: var(--radius-card);
 
   text-decoration: none;
@@ -94,38 +89,28 @@
   overflow: hidden;
 
   transition:
-    border-color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
-}
-
-.pathways__card::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 4px;
-  height: 0;
-
-  background: var(--marigold-500);
-
-  transition: height 0.25s ease;
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
 }
 
 .pathways__card:hover {
   border-color: var(--canopy-600);
-
-  transform: translateY(-4px);
-
-  box-shadow: 0 14px 28px rgba(7, 42, 74, 0.09);
+  box-shadow: 0 16px 30px rgba(7, 42, 74, 0.1);
+  background: linear-gradient(180deg, #fff 0%, var(--ivory-50) 100%);
 }
 
-.pathways__card:hover::before {
-  height: 100%;
+/* Pulsing accent dot, top-left */
+.pathways__card-dot {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  background: var(--marigold-500);
 }
 
 /* =========================================================
@@ -134,46 +119,38 @@
 
 .pathways__card-content {
   flex: none;
+  padding-left: 22px;
 }
 
 .pathways__card-tag {
   margin: 0 0 0.65rem;
-
   color: var(--canopy-600);
-
   font-size: 0.72rem;
   font-weight: 700;
-
   letter-spacing: 0.1em;
-
   line-height: 1.4;
-
   text-transform: uppercase;
+}
+
+.pathways__card-title-mask {
+  overflow: hidden;
 }
 
 .pathways__card-title {
   max-width: 470px;
-
   margin: 0;
-
   padding-right: 10px;
 
   color: var(--canopy-900);
-
   font-size: clamp(1.25rem, 2vw, 1.5rem);
-
   line-height: 1.3;
 }
 
 .pathways__card-body {
   max-width: 500px;
-
   margin: 0.65rem 0 0;
-
   color: var(--ink-700);
-
   font-size: 0.92rem;
-
   line-height: 1.6;
 }
 
@@ -183,47 +160,59 @@
 
 .pathways__card-footer {
   display: flex;
-
   flex-direction: column;
-
   gap: 0.3rem;
 
   margin-top: 1.2rem;
-
   padding-top: 0.9rem;
+  padding-left: 22px;
 
   border-top: 1px solid var(--line);
 }
 
 .pathways__card-cta {
-  display: inline-flex;
+  position: relative;
 
+  display: inline-flex;
   align-items: center;
+  width: fit-content;
 
   color: var(--canopy-700);
-
   font-size: 0.9rem;
-
   font-weight: 700;
 
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: color 0.25s ease;
 }
 
 .pathways__card:hover .pathways__card-cta {
   color: var(--canopy-900);
+}
 
-  transform: translateX(3px);
+/* Animated underline that draws left-to-right on hover */
+.pathways__card-cta-underline {
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+
+  width: 100%;
+  height: 2px;
+
+  background: var(--marigold-500);
+
+  transform: scaleX(0);
+  transform-origin: left;
+
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.pathways__card:hover .pathways__card-cta-underline {
+  transform: scaleX(1);
 }
 
 .pathways__card-destination {
   color: var(--ink-700);
-
   font-size: 0.74rem;
-
   line-height: 1.4;
-
   opacity: 0.65;
 }
 
@@ -238,20 +227,14 @@
 
   .pathways__grid {
     grid-template-columns: 1fr;
-
     gap: 14px;
   }
 
   .pathways__card {
     min-height: 0;
-
     padding: 22px;
   }
 }
-
-/* =========================================================
-   Small Phones
-========================================================= */
 
 @media (max-width: 480px) {
   .pathways {
@@ -272,13 +255,11 @@
 
   .pathways__card-body {
     font-size: 0.88rem;
-
     line-height: 1.55;
   }
 
   .pathways__card-footer {
     margin-top: 1rem;
-
     padding-top: 0.8rem;
   }
 }
@@ -289,16 +270,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .pathways__card,
-  .pathways__card::before,
-  .pathways__card-cta {
+  .pathways__card-cta-underline {
     transition: none;
   }
 
-  .pathways__card:hover {
-    transform: none;
+  .pathways__card-dot {
+    animation: none;
   }
 
-  .pathways__card:hover .pathways__card-cta {
-    transform: none;
+  .pathways__card-magnet {
+    transform: none !important;
   }
 }

@@ -1,9 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import PageHeader from "../PageHeader/PageHeader.jsx";
 import "./AllStories.css";
-import { stories } from "../../data/stories.js";
+
+const API_URL = "http://localhost:5000/api";
+
 
 const tags = [
   "All",
@@ -18,37 +20,92 @@ const tags = [
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: {
+    opacity: 0,
+    y: 22,
+  },
+
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
+    },
   },
 };
 
 export default function AllStories() {
+  const [stories, setStories] = useState([]);
   const [activeTag, setActiveTag] = useState("All");
   const [search, setSearch] = useState("");
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // --------------------------------------------------
+  // Fetch stories from API
+  // --------------------------------------------------
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await fetch(`${API_URL}/stories`, {
+          credentials: "include",
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || "Failed to load stories");
+        }
+
+        setStories(result.data || []);
+      } catch (error) {
+        console.error("Failed to fetch stories:", error);
+
+        setError(error.message || "Unable to load stories.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStories();
+  }, []);
+
+  // --------------------------------------------------
+  // Filter stories
+  // --------------------------------------------------
+
   const filteredStories = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return stories.filter((s) => {
+
+    return stories.filter((story) => {
       const matchesTag =
         activeTag === "All" ||
-        s.category === activeTag ||
-        s.condition === activeTag;
+        story.category === activeTag ||
+        story.condition === activeTag;
+
       const matchesSearch =
         !query ||
-        s.title.toLowerCase().includes(query) ||
-        s.excerpt.toLowerCase().includes(query) ||
-        s.author.toLowerCase().includes(query);
+        story.title?.toLowerCase().includes(query) ||
+        story.excerpt?.toLowerCase().includes(query) ||
+        story.authorId?.name?.toLowerCase().includes(query);
+
       return matchesTag && matchesSearch;
     });
-  }, [activeTag, search]);
+  }, [stories, activeTag, search]);
 
   return (
     <>
@@ -60,12 +117,17 @@ export default function AllStories() {
 
       <section className="section all-stories">
         <div className="container">
+          {/* ----------------------------------------- */}
+          {/* Filters */}
+          {/* ----------------------------------------- */}
+
           <div className="all-stories__filters">
             <input
               type="search"
               placeholder="Search stories..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              aria-label="Search stories"
             />
 
             <div className="all-stories__tags">
@@ -82,45 +144,74 @@ export default function AllStories() {
             </div>
           </div>
 
-          <p className="all-stories__count">
-            {filteredStories.length}{" "}
-            {filteredStories.length === 1 ? "story" : "stories"}
-          </p>
+          {/* ----------------------------------------- */}
+          {/* Loading */}
+          {/* ----------------------------------------- */}
 
-          {filteredStories.length === 0 ? (
-            <p className="all-stories__empty">
-              No stories match your search yet — try another tag.
-            </p>
-          ) : (
-            <motion.div
-              className="all-stories__grid"
-              variants={container}
-              initial="hidden"
-              animate="show"
-            >
-              {filteredStories.map((story) => (
-                <motion.article
-                  key={story.slug}
-                  className="story-card card"
-                  variants={item}
+          {loading && (
+            <p className="all-stories__loading">Loading stories...</p>
+          )}
+
+          {/* ----------------------------------------- */}
+          {/* Error */}
+          {/* ----------------------------------------- */}
+
+          {!loading && error && <p className="all-stories__empty">{error}</p>}
+
+          {/* ----------------------------------------- */}
+          {/* Stories */}
+          {/* ----------------------------------------- */}
+
+          {!loading && !error && (
+            <>
+              <p className="all-stories__count">
+                {filteredStories.length}{" "}
+                {filteredStories.length === 1 ? "story" : "stories"}
+              </p>
+
+              {filteredStories.length === 0 ? (
+                <p className="all-stories__empty">
+                  No stories match your search yet — try another tag.
+                </p>
+              ) : (
+                <motion.div
+                  className="all-stories__grid"
+                  variants={container}
+                  initial="hidden"
+                  animate="show"
                 >
-                  <img src={story.image} alt={story.title} />
+                  {filteredStories.map((story) => (
+                    <motion.article
+                      key={story._id}
+                      className="story-card card"
+                      variants={item}
+                    >
+                      {story.image && (
+                        <img src={story.image} alt={story.title} />
+                      )}
 
-                  <div className="story-card__content">
-                    <div className="story-card__tags">
-                      <span>{story.category}</span>
-                      <span>{story.condition}</span>
-                    </div>
+                      <div className="story-card__content">
+                        <div className="story-card__tags">
+                          <span>{story.category}</span>
 
-                    <h3>{story.title}</h3>
-                    <p>{story.excerpt}</p>
-                    <small>By {story.author}</small>
+                          <span>{story.condition}</span>
+                        </div>
 
-                    <Link to={`/stories/${story.slug}`}>Read story →</Link>
-                  </div>
-                </motion.article>
-              ))}
-            </motion.div>
+                        <h3>{story.title}</h3>
+
+                        <p>{story.excerpt}</p>
+
+                        <small>
+                          By {story.authorId?.name || "Community member"}
+                        </small>
+
+                        <Link to={`/stories/${story.slug}`}>Read story →</Link>
+                      </div>
+                    </motion.article>
+                  ))}
+                </motion.div>
+              )}
+            </>
           )}
         </div>
       </section>

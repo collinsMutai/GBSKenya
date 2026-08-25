@@ -1,0 +1,139 @@
+.all-stories__filters {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 12px;
+}
+
+.all-stories__filters input {
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  font-size: 15px;
+  font-family: var(--font-body);
+  background: #fff;
+  color: var(--ink-900);
+}
+
+.all-stories__filters input:focus {
+  outline: none;
+  border-color: var(--canopy-600);
+}
+
+.all-stories__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.all-stories__tags button {
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13.5px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.all-stories__tags button.is-active {
+  background: var(--canopy-900);
+  border-color: var(--canopy-900);
+  color: var(--ivory-50);
+}
+
+.all-stories__count {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-700);
+  margin-bottom: 28px;
+}
+
+.all-stories__empty {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--ink-700);
+  font-size: 15px;
+}
+
+.all-stories__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Story card — shared look with the resilience-stories page cards */
+.story-card {
+  overflow: hidden;
+  padding: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(7, 42, 74, 0.1);
+}
+
+.story-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.story-card__content {
+  padding: 24px;
+}
+
+.story-card__tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.story-card__tags span {
+  font-size: 0.75rem;
+  background: var(--ivory-100);
+  padding: 6px 10px;
+  border-radius: 20px;
+  color: var(--ink-700);
+}
+
+.story-card h3 {
+  margin-top: 14px;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.story-card p {
+  margin-top: 10px;
+  line-height: 1.6;
+  color: var(--ink-700);
+  font-size: 14.5px;
+}
+
+.story-card small {
+  display: block;
+  margin-top: 12px;
+  color: var(--ink-700);
+  font-size: 13px;
+}
+
+.story-card a {
+  display: block;
+  margin-top: 14px;
+  color: var(--canopy-700);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .all-stories__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .all-stories__grid {
+    grid-template-columns: 1fr;
+  }
+}

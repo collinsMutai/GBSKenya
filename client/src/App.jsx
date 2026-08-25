@@ -29,6 +29,7 @@ import GetInvolved from "./components/GetInvolved/GetInvolved.jsx";
 import EventDetails from "./components/EventDetails/EventDetails.jsx";
 import PartnerWithUs from "./components/PartnerWithUs/PartnerWithUs.jsx";
 import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientCaregiverSurvey.jsx";
+import AllStories from "./components/AllStories/AllStories.jsx";
 
 function ComingSoon({ title }) {
   return (
@@ -75,7 +76,7 @@ export default function App() {
               RESILIENCE STORIES
           ============================== */}
 
-          <Route path="/stories" element={<ResilienceStories />} />
+          <Route path="/stories" element={<AllStories />} />
 
           <Route path="/stories/:slug" element={<StoryDetails />} />
 

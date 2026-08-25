@@ -17,11 +17,12 @@ const storySchema = new mongoose.Schema(
       maxlength: 200,
     },
 
-    author: {
-      type: String,
+    // Authenticated user who owns this story
+    authorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
-      trim: true,
-      maxlength: 100,
+      index: true,
     },
 
     condition: {

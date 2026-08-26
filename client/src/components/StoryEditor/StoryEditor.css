@@ -4,8 +4,8 @@
 
 .story-editor-wrapper {
   width: min(100%, 900px);
+  max-width: 100%;
 
-  /* Center horizontally + spacing vertically */
   margin: 2rem auto 3rem;
 
   background: #ffffff;
@@ -16,6 +16,15 @@
   box-shadow: var(--shadow-md);
 
   overflow: visible;
+
+  box-sizing: border-box;
+}
+
+/* Make sizing predictable */
+.story-editor-wrapper *,
+.story-editor-wrapper *::before,
+.story-editor-wrapper *::after {
+  box-sizing: border-box;
 }
 
 /* ==================================================
@@ -40,11 +49,7 @@
 
   border-bottom: 1px solid var(--line);
 
-  border-radius:
-    var(--radius-card)
-    var(--radius-card)
-    0
-    0;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
 
 /* ==================================================
@@ -58,6 +63,8 @@
   align-items: center;
 
   gap: 2px;
+
+  flex-shrink: 0;
 }
 
 /* ==================================================
@@ -102,6 +109,8 @@
 
   cursor: pointer;
 
+  flex-shrink: 0;
+
   transition:
     background var(--transition),
     color var(--transition),
@@ -110,7 +119,6 @@
 
 .toolbar-button:hover {
   background: var(--ivory-100);
-
   color: var(--canopy-900);
 }
 
@@ -124,7 +132,6 @@
 
 .toolbar-button:disabled {
   opacity: 0.35;
-
   cursor: not-allowed;
 }
 
@@ -161,7 +168,8 @@
 
   gap: 6px;
 
-  min-width: 300px;
+  width: 300px;
+  max-width: calc(100vw - 30px);
 
   padding: 9px;
 
@@ -200,8 +208,7 @@
 .toolbar-popup input:focus {
   border-color: var(--marigold-500);
 
-  box-shadow:
-    0 0 0 3px rgba(46, 158, 104, 0.1);
+  box-shadow: 0 0 0 3px rgba(46, 158, 104, 0.1);
 }
 
 .toolbar-popup button {
@@ -222,6 +229,8 @@
   font-weight: 600;
 
   cursor: pointer;
+
+  flex-shrink: 0;
 }
 
 .toolbar-popup button:hover {
@@ -230,7 +239,6 @@
 
 .toolbar-popup .popup-secondary {
   background: var(--ivory-100);
-
   color: var(--ink-700);
 }
 
@@ -243,42 +251,21 @@
 ================================================== */
 
 .story-editor-container {
-  /*
-    Initial editor height.
-    The editor can grow as content increases.
-  */
   min-height: 220px;
-
-  /*
-    Maximum visible height.
-    Scrollbar appears after this height.
-  */
   max-height: 600px;
+
+  width: 100%;
 
   padding: 24px 32px;
 
   background: #ffffff;
 
-  /*
-    Vertical scrolling when content exceeds max-height.
-  */
   overflow-y: auto;
-
-  /*
-    Prevent horizontal overflow.
-  */
   overflow-x: hidden;
 
-  /*
-    Smooth scrolling.
-  */
   scroll-behavior: smooth;
 
-  /*
-    Firefox scrollbar.
-  */
   scrollbar-width: thin;
-
   scrollbar-color:
     var(--canopy-600)
     var(--ivory-100);
@@ -313,10 +300,8 @@
 ================================================== */
 
 .story-editor-content {
-  /*
-    No fixed height.
-    Content determines its own height.
-  */
+  width: 100%;
+
   min-height: 170px;
 
   outline: none;
@@ -331,7 +316,7 @@
 
   word-wrap: break-word;
 
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* ==================================================
@@ -364,6 +349,8 @@
   font-size: 1rem;
 
   line-height: 1.8;
+
+  overflow-wrap: anywhere;
 }
 
 /* ==================================================
@@ -381,6 +368,8 @@
   font-weight: 700;
 
   letter-spacing: -0.02em;
+
+  overflow-wrap: anywhere;
 }
 
 .story-editor-content h1 {
@@ -430,6 +419,8 @@
 
 .story-editor-content li {
   margin: 0.35rem 0;
+
+  overflow-wrap: anywhere;
 }
 
 /* ==================================================
@@ -450,6 +441,8 @@
   color: var(--ink-700);
 
   font-style: italic;
+
+  overflow-wrap: anywhere;
 }
 
 /* ==================================================
@@ -462,6 +455,8 @@
   text-decoration: underline;
 
   text-underline-offset: 3px;
+
+  overflow-wrap: anywhere;
 }
 
 .story-editor-content a:hover {
@@ -484,12 +479,16 @@
   font-family: var(--font-mono);
 
   font-size: 0.88em;
+
+  overflow-wrap: anywhere;
 }
 
 .story-editor-content pre {
   margin: 1.5rem 0;
 
   padding: 1rem 1.2rem;
+
+  max-width: 100%;
 
   overflow-x: auto;
 
@@ -506,6 +505,8 @@
   background: transparent;
 
   color: inherit;
+
+  white-space: pre;
 }
 
 /* ==================================================
@@ -516,7 +517,6 @@
   display: block;
 
   max-width: 100%;
-
   height: auto;
 
   margin: 1.5rem auto;
@@ -565,6 +565,8 @@
 
   min-height: 38px;
 
+  width: 100%;
+
   padding: 0 14px;
 
   background: #ffffff;
@@ -577,11 +579,9 @@
 
   font-size: 11px;
 
-  border-radius:
-    0
-    0
-    var(--radius-card)
-    var(--radius-card);
+  gap: 10px;
+
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
 }
 
 /* ==================================================
@@ -595,6 +595,8 @@
 
   min-height: 220px;
 
+  width: 100%;
+
   background: #ffffff;
 
   border: 1px solid var(--line);
@@ -605,28 +607,130 @@
 }
 
 /* ==================================================
-   MOBILE
+   STORY SUBMIT AREA
+================================================== */
+
+.story-editor-submit {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  min-height: 72px;
+
+  padding: 14px 20px;
+
+  background: #ffffff;
+
+  border-top: 1px solid var(--line);
+
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+
+/* ==================================================
+   SUBMIT BUTTON
+================================================== */
+
+.story-submit-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-width: 150px;
+  min-height: 44px;
+
+  padding: 10px 22px;
+
+  border: 0;
+  border-radius: var(--radius-button);
+
+  background: var(--marigold-500);
+  color: #ffffff;
+
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  cursor: pointer;
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.story-submit-button:hover {
+  background: var(--marigold-600);
+
+  transform: translateY(-2px);
+
+  box-shadow: var(--shadow-md);
+}
+
+.story-submit-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+.story-submit-spinner {
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: story-submit-spin 0.7s linear infinite;
+
+  flex-shrink: 0;
+}
+
+@keyframes story-submit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================================================
+   TABLET
 ================================================== */
 
 @media (max-width: 768px) {
   .story-editor-wrapper {
-    width: 100%;
+    width: calc(100% - 24px);
 
-    margin: 1.25rem auto 2rem;
+    margin: 1.25rem 12px 2rem;
+
+    border-radius: 12px;
   }
+
+  /* ------------------------------------------
+     Toolbar
+  ------------------------------------------ */
 
   .story-editor-toolbar {
     position: relative;
 
     flex-wrap: nowrap;
 
+    width: 100%;
+
     overflow-x: auto;
+    overflow-y: visible;
 
     padding: 7px;
 
-    /*
-      Hide horizontal scrollbar for toolbar.
-    */
+    -webkit-overflow-scrolling: touch;
+
     scrollbar-width: none;
   }
 
@@ -641,7 +745,9 @@
   .toolbar-divider {
     flex-shrink: 0;
 
-    margin: 0 3px;
+    height: 26px;
+
+    margin: 0 2px;
   }
 
   .toolbar-button {
@@ -650,7 +756,13 @@
     height: 34px;
 
     padding: 0 7px;
+
+    font-size: 13px;
   }
+
+  /* ------------------------------------------
+     Editor
+  ------------------------------------------ */
 
   .story-editor-container {
     min-height: 200px;
@@ -679,16 +791,113 @@
   .story-editor-content h3 {
     font-size: 1.3rem;
   }
+
+  .story-editor-content h4 {
+    font-size: 1.15rem;
+  }
+
+  /* ------------------------------------------
+     Submit
+  ------------------------------------------ */
+
+  .story-editor-submit {
+    min-height: 68px;
+
+    padding: 12px 16px;
+  }
+
+  .story-submit-button {
+    min-height: 44px;
+  }
 }
 
 /* ==================================================
-   SMALL MOBILE
+   MOBILE
 ================================================== */
 
 @media (max-width: 480px) {
   .story-editor-wrapper {
-    margin: 1rem auto 1.5rem;
+    width: calc(100% - 16px);
+
+    margin: 1rem 8px 1.5rem;
+
+    border-radius: 10px;
   }
+
+  /* ------------------------------------------
+     Toolbar
+  ------------------------------------------ */
+
+  .story-editor-toolbar {
+    gap: 2px;
+
+    padding: 6px;
+
+    border-radius: 10px 10px 0 0;
+  }
+
+  .toolbar-button {
+    min-width: 32px;
+
+    height: 32px;
+
+    padding: 0 6px;
+
+    font-size: 12px;
+
+    border-radius: 6px;
+  }
+
+  .toolbar-divider {
+    height: 24px;
+
+    margin: 0 1px;
+  }
+
+  /* ------------------------------------------
+     Popups
+  ------------------------------------------ */
+
+  .toolbar-popup {
+    position: fixed;
+
+    top: auto;
+    left: 8px;
+    right: 8px;
+
+    bottom: 12px;
+
+    width: auto;
+    max-width: none;
+
+    min-width: 0;
+
+    padding: 10px;
+
+    z-index: 1000;
+
+    border-radius: 10px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  .toolbar-popup input {
+    min-width: 0;
+
+    height: 40px;
+
+    font-size: 14px;
+  }
+
+  .toolbar-popup button {
+    height: 40px;
+
+    padding: 0 11px;
+  }
+
+  /* ------------------------------------------
+     Editor
+  ------------------------------------------ */
 
   .story-editor-container {
     min-height: 180px;
@@ -702,21 +911,133 @@
     min-height: 140px;
 
     font-size: 16px;
+
+    line-height: 1.7;
   }
 
   .story-editor-content p {
+    margin-bottom: 0.9rem;
+
     font-size: 0.95rem;
+
+    line-height: 1.7;
   }
 
   .story-editor-content h1 {
+    margin: 1.5rem 0 0.8rem;
+
     font-size: 1.75rem;
   }
 
   .story-editor-content h2 {
+    margin: 1.4rem 0 0.7rem;
+
     font-size: 1.45rem;
   }
 
   .story-editor-content h3 {
+    margin: 1.2rem 0 0.6rem;
+
     font-size: 1.2rem;
+  }
+
+  .story-editor-content h4 {
+    font-size: 1.05rem;
+  }
+
+  .story-editor-content ul,
+  .story-editor-content ol {
+    padding-left: 1.5rem;
+  }
+
+  .story-editor-content blockquote {
+    margin: 1rem 0;
+
+    padding: 0.8rem 1rem;
+  }
+
+  .story-editor-content pre {
+    margin: 1rem 0;
+
+    padding: 0.8rem;
+
+    font-size: 13px;
+  }
+
+  /* ------------------------------------------
+     Footer
+  ------------------------------------------ */
+
+  .story-editor-footer {
+    min-height: 36px;
+
+    padding: 0 11px;
+
+    font-size: 10px;
+  }
+
+  /* ------------------------------------------
+     Submit
+  ------------------------------------------ */
+
+  .story-editor-submit {
+    justify-content: stretch;
+
+    min-height: auto;
+
+    padding: 12px;
+
+    border-radius: 0 0 10px 10px;
+  }
+
+  .story-submit-button {
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 46px;
+
+    padding: 11px 16px;
+
+    font-size: 15px;
+  }
+}
+
+/* ==================================================
+   VERY SMALL PHONES
+================================================== */
+
+@media (max-width: 360px) {
+  .story-editor-wrapper {
+    width: calc(100% - 10px);
+
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .story-editor-container {
+    padding: 16px 12px;
+  }
+
+  .story-editor-toolbar {
+    padding: 5px;
+  }
+
+  .toolbar-button {
+    min-width: 30px;
+
+    height: 30px;
+
+    padding: 0 5px;
+
+    font-size: 11px;
+  }
+
+  .story-submit-button {
+    font-size: 14px;
+  }
+
+  .story-editor-footer {
+    font-size: 9px;
   }
 }

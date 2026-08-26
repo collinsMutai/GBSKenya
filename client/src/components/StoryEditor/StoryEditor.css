@@ -1,0 +1,722 @@
+/* ==================================================
+   STORY EDITOR
+================================================== */
+
+.story-editor-wrapper {
+  width: min(100%, 900px);
+
+  /* Center horizontally + spacing vertically */
+  margin: 2rem auto 3rem;
+
+  background: #ffffff;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--shadow-md);
+
+  overflow: visible;
+}
+
+/* ==================================================
+   TOOLBAR
+================================================== */
+
+.story-editor-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  min-height: 52px;
+
+  padding: 8px 12px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid var(--line);
+
+  border-radius:
+    var(--radius-card)
+    var(--radius-card)
+    0
+    0;
+}
+
+/* ==================================================
+   TOOLBAR GROUP
+================================================== */
+
+.toolbar-group {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 2px;
+}
+
+/* ==================================================
+   TOOLBAR DIVIDER
+================================================== */
+
+.toolbar-divider {
+  width: 1px;
+  height: 28px;
+
+  margin: 0 5px;
+
+  background: var(--line);
+
+  flex-shrink: 0;
+}
+
+/* ==================================================
+   TOOLBAR BUTTON
+================================================== */
+
+.toolbar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 36px;
+  height: 36px;
+
+  padding: 0 9px;
+
+  border: 1px solid transparent;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: var(--ink-700);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+}
+
+.toolbar-button:hover {
+  background: var(--ivory-100);
+
+  color: var(--canopy-900);
+}
+
+.toolbar-button.active {
+  background: rgba(46, 158, 104, 0.12);
+
+  color: var(--marigold-600);
+
+  border-color: rgba(46, 158, 104, 0.2);
+}
+
+.toolbar-button:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+}
+
+.toolbar-button.bold {
+  font-weight: 800;
+}
+
+.toolbar-button.italic {
+  font-style: italic;
+}
+
+.toolbar-button.underline {
+  text-decoration: underline;
+}
+
+.toolbar-button.strike {
+  text-decoration: line-through;
+}
+
+/* ==================================================
+   TOOLBAR POPUP
+================================================== */
+
+.toolbar-popup {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  min-width: 300px;
+
+  padding: 9px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--line);
+
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-md);
+}
+
+.toolbar-popup input {
+  flex: 1;
+
+  min-width: 0;
+  height: 38px;
+
+  padding: 0 11px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: var(--ink-900);
+
+  font-family: var(--font-body);
+
+  font-size: 14px;
+}
+
+.toolbar-popup input:focus {
+  border-color: var(--marigold-500);
+
+  box-shadow:
+    0 0 0 3px rgba(46, 158, 104, 0.1);
+}
+
+.toolbar-popup button {
+  height: 38px;
+
+  padding: 0 13px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: var(--marigold-500);
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.toolbar-popup button:hover {
+  background: var(--marigold-600);
+}
+
+.toolbar-popup .popup-secondary {
+  background: var(--ivory-100);
+
+  color: var(--ink-700);
+}
+
+.toolbar-popup .popup-secondary:hover {
+  background: var(--cloud-100);
+}
+
+/* ==================================================
+   EDITOR CONTAINER
+================================================== */
+
+.story-editor-container {
+  /*
+    Initial editor height.
+    The editor can grow as content increases.
+  */
+  min-height: 220px;
+
+  /*
+    Maximum visible height.
+    Scrollbar appears after this height.
+  */
+  max-height: 600px;
+
+  padding: 24px 32px;
+
+  background: #ffffff;
+
+  /*
+    Vertical scrolling when content exceeds max-height.
+  */
+  overflow-y: auto;
+
+  /*
+    Prevent horizontal overflow.
+  */
+  overflow-x: hidden;
+
+  /*
+    Smooth scrolling.
+  */
+  scroll-behavior: smooth;
+
+  /*
+    Firefox scrollbar.
+  */
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    var(--canopy-600)
+    var(--ivory-100);
+}
+
+/* ==================================================
+   CUSTOM SCROLLBAR
+================================================== */
+
+.story-editor-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.story-editor-container::-webkit-scrollbar-track {
+  background: var(--ivory-100);
+
+  border-radius: 999px;
+}
+
+.story-editor-container::-webkit-scrollbar-thumb {
+  background: var(--canopy-600);
+
+  border-radius: 999px;
+}
+
+.story-editor-container::-webkit-scrollbar-thumb:hover {
+  background: var(--canopy-700);
+}
+
+/* ==================================================
+   TIPTAP CONTENT
+================================================== */
+
+.story-editor-content {
+  /*
+    No fixed height.
+    Content determines its own height.
+  */
+  min-height: 170px;
+
+  outline: none;
+
+  color: var(--ink-900);
+
+  font-family: var(--font-body);
+
+  font-size: 18px;
+
+  line-height: 1.85;
+
+  word-wrap: break-word;
+
+  overflow-wrap: break-word;
+}
+
+/* ==================================================
+   PLACEHOLDER
+================================================== */
+
+.story-editor-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+
+  float: left;
+
+  height: 0;
+
+  color: #9ca3af;
+
+  pointer-events: none;
+}
+
+/* ==================================================
+   PARAGRAPHS
+================================================== */
+
+.story-editor-content p {
+  margin: 0 0 1.1rem;
+
+  color: var(--ink-700);
+
+  font-family: var(--font-body);
+
+  font-size: 1rem;
+
+  line-height: 1.8;
+}
+
+/* ==================================================
+   HEADINGS
+================================================== */
+
+.story-editor-content h1,
+.story-editor-content h2,
+.story-editor-content h3,
+.story-editor-content h4 {
+  color: var(--ink-900);
+
+  font-family: var(--font-display);
+
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+}
+
+.story-editor-content h1 {
+  margin: 2rem 0 1rem;
+
+  font-size: 2.5rem;
+
+  line-height: 1.2;
+}
+
+.story-editor-content h2 {
+  margin: 1.8rem 0 0.8rem;
+
+  font-size: 2rem;
+
+  line-height: 1.25;
+}
+
+.story-editor-content h3 {
+  margin: 1.5rem 0 0.7rem;
+
+  font-size: 1.5rem;
+
+  line-height: 1.3;
+}
+
+.story-editor-content h4 {
+  margin: 1.3rem 0 0.6rem;
+
+  font-size: 1.25rem;
+
+  line-height: 1.4;
+}
+
+/* ==================================================
+   LISTS
+================================================== */
+
+.story-editor-content ul,
+.story-editor-content ol {
+  margin: 1rem 0;
+
+  padding-left: 2rem;
+
+  color: var(--ink-700);
+}
+
+.story-editor-content li {
+  margin: 0.35rem 0;
+}
+
+/* ==================================================
+   BLOCKQUOTE
+================================================== */
+
+.story-editor-content blockquote {
+  margin: 1.5rem 0;
+
+  padding: 1rem 1.25rem;
+
+  border-left: 4px solid var(--marigold-500);
+
+  border-radius: 0 8px 8px 0;
+
+  background: var(--ivory-100);
+
+  color: var(--ink-700);
+
+  font-style: italic;
+}
+
+/* ==================================================
+   LINKS
+================================================== */
+
+.story-editor-content a {
+  color: var(--canopy-600);
+
+  text-decoration: underline;
+
+  text-underline-offset: 3px;
+}
+
+.story-editor-content a:hover {
+  color: var(--marigold-600);
+}
+
+/* ==================================================
+   CODE
+================================================== */
+
+.story-editor-content code {
+  padding: 0.15rem 0.4rem;
+
+  border-radius: 5px;
+
+  background: var(--ivory-100);
+
+  color: var(--canopy-900);
+
+  font-family: var(--font-mono);
+
+  font-size: 0.88em;
+}
+
+.story-editor-content pre {
+  margin: 1.5rem 0;
+
+  padding: 1rem 1.2rem;
+
+  overflow-x: auto;
+
+  border-radius: 10px;
+
+  background: var(--canopy-900);
+
+  color: var(--ivory-50);
+}
+
+.story-editor-content pre code {
+  padding: 0;
+
+  background: transparent;
+
+  color: inherit;
+}
+
+/* ==================================================
+   IMAGES
+================================================== */
+
+.story-editor-content img {
+  display: block;
+
+  max-width: 100%;
+
+  height: auto;
+
+  margin: 1.5rem auto;
+
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.story-editor-content img.ProseMirror-selectednode {
+  outline: 3px solid var(--marigold-500);
+
+  outline-offset: 4px;
+}
+
+/* ==================================================
+   HORIZONTAL RULE
+================================================== */
+
+.story-editor-content hr {
+  margin: 2rem 0;
+
+  border: 0;
+
+  border-top: 1px solid var(--line);
+}
+
+/* ==================================================
+   TEXT SELECTION
+================================================== */
+
+.story-editor-content ::selection {
+  background: rgba(46, 158, 104, 0.2);
+
+  color: var(--ink-900);
+}
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.story-editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 38px;
+
+  padding: 0 14px;
+
+  background: #ffffff;
+
+  border-top: 1px solid var(--line);
+
+  color: var(--ink-700);
+
+  font-family: var(--font-mono);
+
+  font-size: 11px;
+
+  border-radius:
+    0
+    0
+    var(--radius-card)
+    var(--radius-card);
+}
+
+/* ==================================================
+   LOADING
+================================================== */
+
+.story-editor-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 220px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--line);
+
+  border-radius: var(--radius-card);
+
+  color: var(--ink-700);
+}
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 768px) {
+  .story-editor-wrapper {
+    width: 100%;
+
+    margin: 1.25rem auto 2rem;
+  }
+
+  .story-editor-toolbar {
+    position: relative;
+
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+
+    padding: 7px;
+
+    /*
+      Hide horizontal scrollbar for toolbar.
+    */
+    scrollbar-width: none;
+  }
+
+  .story-editor-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .toolbar-group {
+    flex-shrink: 0;
+  }
+
+  .toolbar-divider {
+    flex-shrink: 0;
+
+    margin: 0 3px;
+  }
+
+  .toolbar-button {
+    min-width: 34px;
+
+    height: 34px;
+
+    padding: 0 7px;
+  }
+
+  .story-editor-container {
+    min-height: 200px;
+
+    max-height: 500px;
+
+    padding: 20px 18px;
+  }
+
+  .story-editor-content {
+    min-height: 150px;
+
+    font-size: 16px;
+
+    line-height: 1.75;
+  }
+
+  .story-editor-content h1 {
+    font-size: 2rem;
+  }
+
+  .story-editor-content h2 {
+    font-size: 1.65rem;
+  }
+
+  .story-editor-content h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media (max-width: 480px) {
+  .story-editor-wrapper {
+    margin: 1rem auto 1.5rem;
+  }
+
+  .story-editor-container {
+    min-height: 180px;
+
+    max-height: 450px;
+
+    padding: 18px 15px;
+  }
+
+  .story-editor-content {
+    min-height: 140px;
+
+    font-size: 16px;
+  }
+
+  .story-editor-content p {
+    font-size: 0.95rem;
+  }
+
+  .story-editor-content h1 {
+    font-size: 1.75rem;
+  }
+
+  .story-editor-content h2 {
+    font-size: 1.45rem;
+  }
+
+  .story-editor-content h3 {
+    font-size: 1.2rem;
+  }
+}

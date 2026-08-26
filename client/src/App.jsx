@@ -30,6 +30,7 @@ import EventDetails from "./components/EventDetails/EventDetails.jsx";
 import PartnerWithUs from "./components/PartnerWithUs/PartnerWithUs.jsx";
 import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientCaregiverSurvey.jsx";
 import AllStories from "./components/AllStories/AllStories.jsx";
+import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
 
 function ComingSoon({ title }) {
   return (
@@ -142,6 +143,7 @@ export default function App() {
           ============================== */}
 
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/add-story" element={<StoryEditor />} />
         </Route>
       </Routes>
 

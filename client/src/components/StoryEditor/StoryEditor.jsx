@@ -1,6 +1,4 @@
-const apiUrl = `${import.meta.env.VITE_API_URL}/api/stories`;
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { EditorContent, Extension, useEditor } from "@tiptap/react";
 
 import StarterKit from "@tiptap/starter-kit";
@@ -11,6 +9,23 @@ import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 
 import "./StoryEditor.css";
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+/* ==================================================
+   SLUG HELPER
+================================================== */
+
+const slugify = (text = "") => {
+  return text
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+};
 
 /* ==================================================
    INDENT EXTENSION
@@ -30,7 +45,6 @@ const Indent = Extension.create({
 
             parseHTML: (element) => {
               const value = element.getAttribute("data-indent");
-
               return value ? parseInt(value, 10) : 0;
             },
 
@@ -58,7 +72,6 @@ const Indent = Extension.create({
         () =>
         ({ state, dispatch }) => {
           const { from, to } = state.selection;
-
           let changed = false;
 
           state.doc.nodesBetween(from, to, (node, pos) => {
@@ -69,16 +82,13 @@ const Indent = Extension.create({
             ) {
               const currentIndent = node.attrs.indent || 0;
 
-              if (currentIndent < 6) {
-                if (dispatch) {
-                  const transaction = state.tr.setNodeMarkup(pos, undefined, {
-                    ...node.attrs,
-                    indent: currentIndent + 1,
-                  });
+              if (currentIndent < 6 && dispatch) {
+                const transaction = state.tr.setNodeMarkup(pos, undefined, {
+                  ...node.attrs,
+                  indent: currentIndent + 1,
+                });
 
-                  dispatch(transaction);
-                }
-
+                dispatch(transaction);
                 changed = true;
               }
             }
@@ -91,7 +101,6 @@ const Indent = Extension.create({
         () =>
         ({ state, dispatch }) => {
           const { from, to } = state.selection;
-
           let changed = false;
 
           state.doc.nodesBetween(from, to, (node, pos) => {
@@ -102,16 +111,13 @@ const Indent = Extension.create({
             ) {
               const currentIndent = node.attrs.indent || 0;
 
-              if (currentIndent > 0) {
-                if (dispatch) {
-                  const transaction = state.tr.setNodeMarkup(pos, undefined, {
-                    ...node.attrs,
-                    indent: currentIndent - 1,
-                  });
+              if (currentIndent > 0 && dispatch) {
+                const transaction = state.tr.setNodeMarkup(pos, undefined, {
+                  ...node.attrs,
+                  indent: currentIndent - 1,
+                });
 
-                  dispatch(transaction);
-                }
-
+                dispatch(transaction);
                 changed = true;
               }
             }
@@ -128,52 +134,107 @@ const Indent = Extension.create({
 ================================================== */
 
 const StoryEditor = ({
+  storyId = null,
   value = null,
-
   onChange,
-
-  /*
-   * Optional callback that runs AFTER
-   * the backend request succeeds.
-   */
   onSubmit,
 
   /*
-   * Backend endpoint.
-   *
-   * Example:
-   *
-   * apiUrl="/api/stories"
+   * Initial story values
    */
-
+  slug: initialSlug = "",
+  title: initialTitle = "",
+  condition: initialCondition = "",
+  category: initialCategory = "",
+  image: initialImage = "",
+  excerpt: initialExcerpt = "",
+  published: initialPublished = false,
 
   /*
-   * HTTP method.
+   * API
    */
-  method = "POST",
-
-  submitLabel = "Submit Story",
-
+  apiEndpoint = "/api/stories",
+  method = storyId ? "PATCH" : "POST",
+  submitLabel = storyId ? "Update Story" : "Submit Story",
   placeholder = "Start writing your story...",
 }) => {
+  /* ==================================================
+     FORM STATE
+  ================================================== */
+
+  const [form, setForm] = useState({
+    slug: initialSlug,
+    title: initialTitle,
+    condition: initialCondition,
+    category: initialCategory,
+    image: initialImage,
+    excerpt: initialExcerpt,
+    published: initialPublished,
+  });
+
+  /*
+   * Track whether user has manually changed the slug.
+   *
+   * If false:
+   * title changes automatically update slug.
+   *
+   * If true:
+   * user's custom slug is preserved.
+   */
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(
+    Boolean(initialSlug)
+  );
+
+  /* ==================================================
+     TOOLBAR STATE
+  ================================================== */
+
   const [linkUrl, setLinkUrl] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
   const [showLinkInput, setShowLinkInput] = useState(false);
-
   const [showImageInput, setShowImageInput] = useState(false);
 
-  /*
-   * Submission state is managed internally.
-   */
+  /* ==================================================
+     SUBMIT STATE
+  ================================================== */
+
   const [submitting, setSubmitting] = useState(false);
-
   const [submitError, setSubmitError] = useState("");
-
   const [submitSuccess, setSubmitSuccess] = useState("");
 
   /* ==================================================
-     TIPTAP EDITOR
+     FORM HELPERS
+  ================================================== */
+
+  const updateField = (field, value) => {
+    setForm((current) => ({
+      ...current,
+      [field]: value,
+    }));
+  };
+
+  const handleTitleChange = (value) => {
+    setForm((current) => ({
+      ...current,
+      title: value,
+
+      /*
+       * Automatically generate slug until
+       * the user manually edits it.
+       */
+      slug: slugManuallyEdited ? current.slug : slugify(value),
+    }));
+  };
+
+  const handleSlugChange = (value) => {
+    setSlugManuallyEdited(true);
+
+    updateField("slug", slugify(value));
+  };
+
+  /* ==================================================
+     TIPTAP INITIALIZATION
   ================================================== */
 
   const editor = useEditor({
@@ -191,12 +252,6 @@ const StoryEditor = ({
       Image.configure({
         inline: false,
         allowBase64: false,
-        resize: {
-          enabled: true,
-          directions: ["top", "bottom", "left", "right"],
-          minWidth: 100,
-          minHeight: 100,
-        },
       }),
 
       TextAlign.configure({
@@ -212,11 +267,7 @@ const StoryEditor = ({
 
     content: value || {
       type: "doc",
-      content: [
-        {
-          type: "paragraph",
-        },
-      ],
+      content: [{ type: "paragraph" }],
     },
 
     editorProps: {
@@ -233,7 +284,7 @@ const StoryEditor = ({
   });
 
   /* ==================================================
-     UPDATE CONTENT FROM PARENT
+     UPDATE CONTENT DYNAMICALLY
   ================================================== */
 
   useEffect(() => {
@@ -249,7 +300,33 @@ const StoryEditor = ({
   }, [editor, value]);
 
   /* ==================================================
-     SUBMIT STORY
+     UPDATE FORM WHEN EDITING AN EXISTING STORY
+  ================================================== */
+
+  useEffect(() => {
+    setForm({
+      slug: initialSlug || "",
+      title: initialTitle || "",
+      condition: initialCondition || "",
+      category: initialCategory || "",
+      image: initialImage || "",
+      excerpt: initialExcerpt || "",
+      published: Boolean(initialPublished),
+    });
+
+    setSlugManuallyEdited(Boolean(initialSlug));
+  }, [
+    initialSlug,
+    initialTitle,
+    initialCondition,
+    initialCategory,
+    initialImage,
+    initialExcerpt,
+    initialPublished,
+  ]);
+
+  /* ==================================================
+     SUBMIT / UPDATE STORY
   ================================================== */
 
   const handleSubmit = async () => {
@@ -257,50 +334,112 @@ const StoryEditor = ({
       return;
     }
 
-    /*
-     * Reset previous messages.
-     */
     setSubmitError("");
     setSubmitSuccess("");
 
-    /*
-     * Get TipTap JSON.
-     */
+    /* -----------------------------------------------
+       Content
+    ------------------------------------------------ */
+
     const content = editor.getJSON();
 
-    /*
-     * Get plain text.
-     */
-    const text = editor.getText().replace(/\s+/g, " ").trim();
+    const text = editor
+      .getText()
+      .replace(/\s+/g, " ")
+      .trim();
+
+    /* -----------------------------------------------
+       Normalize form values
+    ------------------------------------------------ */
+
+    const title = form.title.trim();
+
+    const condition = form.condition.trim();
+
+    const category = form.category.trim();
+
+    const image = form.image.trim();
+
+    const excerpt = form.excerpt.trim();
 
     /*
-     * Prevent empty submission.
+     * Use custom slug if supplied.
+     * Otherwise generate it from title.
      */
+    const slug = slugify(form.slug || title);
+
+    /* -----------------------------------------------
+       Validation
+    ------------------------------------------------ */
+
     if (!text) {
       setSubmitError("Please write something before submitting.");
-
       return;
     }
 
-    /*
-     * Build request payload.
-     *
-     * Change/add fields here if your backend
-     * requires additional story properties.
-     */
+    if (!title) {
+      setSubmitError("Please enter a story title.");
+      return;
+    }
+
+    if (!slug) {
+      setSubmitError("Please enter a story slug.");
+      return;
+    }
+
+    if (!condition) {
+      setSubmitError("Please select a condition.");
+      return;
+    }
+
+    if (!category) {
+      setSubmitError("Please select a category.");
+      return;
+    }
+
+    if (!excerpt) {
+      setSubmitError("Please enter a story excerpt.");
+      return;
+    }
+
+    /* -----------------------------------------------
+       API payload
+       
+       IMPORTANT:
+       authorId is NOT included.
+       
+       Backend gets it from:
+       req.user._id
+    ------------------------------------------------ */
+
     const payload = {
+      slug,
+      title,
+      condition,
+      category,
+      image,
+      excerpt,
       content,
-      text,
+      published: Boolean(form.published),
     };
 
     try {
       setSubmitting(true);
 
-      console.log("Submitting story to:", apiUrl);
+      /*
+       * POST:
+       * /api/stories
+       *
+       * PATCH:
+       * /api/stories/:id
+       */
+      const targetPath = storyId
+        ? `${apiEndpoint}/${storyId}`
+        : apiEndpoint;
 
-      console.log("Story payload:", payload);
+      const endpoint = `${apiUrl}${targetPath}`;
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch(endpoint, {
         method,
 
         headers: {
@@ -309,19 +448,14 @@ const StoryEditor = ({
         },
 
         /*
-         * Sends cookies/session credentials.
-         *
-         * Remove this if your backend does not
-         * use cookie authentication.
+         * IMPORTANT:
+         * This sends the HTTP-only session cookie.
          */
         credentials: "include",
 
         body: JSON.stringify(payload),
       });
 
-      /*
-       * Read response body safely.
-       */
       const responseText = await response.text();
 
       let data = null;
@@ -336,36 +470,30 @@ const StoryEditor = ({
         }
       }
 
-      /*
-       * Handle backend errors.
-       */
       if (!response.ok) {
         throw new Error(
           data?.message ||
             data?.error ||
-            `Request failed with status ${response.status}`,
+            `Request failed with status ${response.status}`
         );
       }
 
-      /*
-       * Success.
-       */
-      setSubmitSuccess(data?.message || "Story submitted successfully.");
+      setSubmitSuccess(
+        data?.message ||
+          (storyId
+            ? "Story updated successfully."
+            : "Story submitted successfully.")
+      );
 
-      /*
-       * Optional callback.
-       *
-       * This receives the backend response,
-       * NOT the editor content.
-       */
       if (onSubmit) {
         await onSubmit(data);
       }
     } catch (error) {
-      console.error("Story submission failed:", error);
+      console.error("Story operation failed:", error);
 
       setSubmitError(
-        error?.message || "Unable to submit story. Please try again.",
+        error?.message ||
+          "Unable to save story. Please try again."
       );
     } finally {
       setSubmitting(false);
@@ -377,17 +505,18 @@ const StoryEditor = ({
   ================================================== */
 
   if (!editor) {
-    return <div className="story-editor-loading">Loading editor...</div>;
+    return (
+      <div className="story-editor-loading">
+        Loading editor...
+      </div>
+    );
   }
 
-  /* ==================================================
-     TOOLBAR HELPERS
-  ================================================== */
-
-  const isActive = (name, attributes = {}) => editor.isActive(name, attributes);
+  const isActive = (name, attributes = {}) =>
+    editor.isActive(name, attributes);
 
   /* ==================================================
-     LINK
+     LINK HANDLER
   ================================================== */
 
   const setLink = () => {
@@ -416,7 +545,7 @@ const StoryEditor = ({
   };
 
   /* ==================================================
-     IMAGE
+     IMAGE HANDLER
   ================================================== */
 
   const addImage = () => {
@@ -445,12 +574,162 @@ const StoryEditor = ({
 
   return (
     <div className="story-editor-wrapper">
+
+      {/* ==================================================
+          STORY DETAILS
+      ================================================== */}
+
+      <div className="story-form">
+
+        {/* TITLE */}
+
+        <div className="story-form-field">
+          <label htmlFor="story-title">
+            Title
+          </label>
+
+          <input
+            id="story-title"
+            type="text"
+            value={form.title}
+            onChange={(e) =>
+              handleTitleChange(e.target.value)
+            }
+            placeholder="Enter story title"
+          />
+        </div>
+
+        {/* SLUG */}
+
+        <div className="story-form-field">
+          <label htmlFor="story-slug">
+            Slug
+          </label>
+
+          <input
+            id="story-slug"
+            type="text"
+            value={form.slug}
+            onChange={(e) =>
+              handleSlugChange(e.target.value)
+            }
+            placeholder="story-url-slug"
+          />
+
+          <small>
+            Used in the story URL.
+          </small>
+        </div>
+
+        {/* CONDITION */}
+
+        <div className="story-form-field">
+          <label htmlFor="story-condition">
+            Condition
+          </label>
+
+          <input
+            id="story-condition"
+            type="text"
+            value={form.condition}
+            onChange={(e) =>
+              updateField(
+                "condition",
+                e.target.value
+              )
+            }
+            placeholder="e.g. GBS"
+          />
+        </div>
+
+        {/* CATEGORY */}
+
+        <div className="story-form-field">
+          <label htmlFor="story-category">
+            Category
+          </label>
+
+          <input
+            id="story-category"
+            type="text"
+            value={form.category}
+            onChange={(e) =>
+              updateField(
+                "category",
+                e.target.value
+              )
+            }
+            placeholder="e.g. Newly Diagnosed"
+          />
+        </div>
+
+        {/* IMAGE */}
+
+        <div className="story-form-field">
+          <label htmlFor="story-image">
+            Cover Image URL
+          </label>
+
+          <input
+            id="story-image"
+            type="url"
+            value={form.image}
+            onChange={(e) =>
+              updateField(
+                "image",
+                e.target.value
+              )
+            }
+            placeholder="https://example.com/image.jpg"
+          />
+        </div>
+
+        {/* EXCERPT */}
+
+        <div className="story-form-field">
+          <label htmlFor="story-excerpt">
+            Excerpt
+          </label>
+
+          <textarea
+            id="story-excerpt"
+            value={form.excerpt}
+            onChange={(e) =>
+              updateField(
+                "excerpt",
+                e.target.value
+              )
+            }
+            placeholder="Short description of the story"
+            rows={4}
+          />
+        </div>
+
+        {/* PUBLISHED */}
+
+        <label className="story-published">
+          <input
+            type="checkbox"
+            checked={form.published}
+            onChange={(e) =>
+              updateField(
+                "published",
+                e.target.checked
+              )
+            }
+          />
+
+          <span>
+            Publish this story
+          </span>
+        </label>
+      </div>
+
       {/* ==================================================
           TOOLBAR
       ================================================== */}
 
       <div className="story-editor-toolbar">
-        {/* History */}
 
         <div className="toolbar-group">
           <button
@@ -458,7 +737,9 @@ const StoryEditor = ({
             className="toolbar-button"
             title="Undo"
             disabled={!editor.can().undo()}
-            onClick={() => editor.chain().focus().undo().run()}
+            onClick={() =>
+              editor.chain().focus().undo().run()
+            }
           >
             ↶
           </button>
@@ -468,7 +749,9 @@ const StoryEditor = ({
             className="toolbar-button"
             title="Redo"
             disabled={!editor.can().redo()}
-            onClick={() => editor.chain().focus().redo().run()}
+            onClick={() =>
+              editor.chain().focus().redo().run()
+            }
           >
             ↷
           </button>
@@ -476,15 +759,21 @@ const StoryEditor = ({
 
         <div className="toolbar-divider" />
 
-        {/* Headings */}
-
         <div className="toolbar-group">
           <button
             type="button"
             className={`toolbar-button ${
-              isActive("paragraph") ? "active" : ""
+              isActive("paragraph")
+                ? "active"
+                : ""
             }`}
-            onClick={() => editor.chain().focus().setParagraph().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .setParagraph()
+                .run()
+            }
           >
             P
           </button>
@@ -494,15 +783,15 @@ const StoryEditor = ({
               key={level}
               type="button"
               className={`toolbar-button ${
-                isActive("heading", { level }) ? "active" : ""
+                isActive("heading", { level })
+                  ? "active"
+                  : ""
               }`}
               onClick={() =>
                 editor
                   .chain()
                   .focus()
-                  .toggleHeading({
-                    level,
-                  })
+                  .toggleHeading({ level })
                   .run()
               }
             >
@@ -513,15 +802,21 @@ const StoryEditor = ({
 
         <div className="toolbar-divider" />
 
-        {/* Text Formatting */}
-
         <div className="toolbar-group">
           <button
             type="button"
             className={`toolbar-button bold ${
-              isActive("bold") ? "active" : ""
+              isActive("bold")
+                ? "active"
+                : ""
             }`}
-            onClick={() => editor.chain().focus().toggleBold().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .toggleBold()
+                .run()
+            }
           >
             B
           </button>
@@ -529,9 +824,17 @@ const StoryEditor = ({
           <button
             type="button"
             className={`toolbar-button italic ${
-              isActive("italic") ? "active" : ""
+              isActive("italic")
+                ? "active"
+                : ""
             }`}
-            onClick={() => editor.chain().focus().toggleItalic().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .toggleItalic()
+                .run()
+            }
           >
             I
           </button>
@@ -539,9 +842,17 @@ const StoryEditor = ({
           <button
             type="button"
             className={`toolbar-button underline ${
-              isActive("underline") ? "active" : ""
+              isActive("underline")
+                ? "active"
+                : ""
             }`}
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .toggleUnderline()
+                .run()
+            }
           >
             U
           </button>
@@ -549,9 +860,17 @@ const StoryEditor = ({
           <button
             type="button"
             className={`toolbar-button strike ${
-              isActive("strike") ? "active" : ""
+              isActive("strike")
+                ? "active"
+                : ""
             }`}
-            onClick={() => editor.chain().focus().toggleStrike().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .toggleStrike()
+                .run()
+            }
           >
             S
           </button>
@@ -559,65 +878,63 @@ const StoryEditor = ({
 
         <div className="toolbar-divider" />
 
-        {/* Alignment */}
-
         <div className="toolbar-group">
           <button
             type="button"
-            className={`toolbar-button ${
-              isActive({
-                textAlign: "left",
-              })
-                ? "active"
-                : ""
-            }`}
+            className="toolbar-button"
             title="Align left"
-            onClick={() => editor.chain().focus().setTextAlign("left").run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .setTextAlign("left")
+                .run()
+            }
           >
             ≡
           </button>
 
           <button
             type="button"
-            className={`toolbar-button ${
-              isActive({
-                textAlign: "center",
-              })
-                ? "active"
-                : ""
-            }`}
-            title="Center"
-            onClick={() => editor.chain().focus().setTextAlign("center").run()}
+            className="toolbar-button"
+            title="Align center"
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .setTextAlign("center")
+                .run()
+            }
           >
             ≡
           </button>
 
           <button
             type="button"
-            className={`toolbar-button ${
-              isActive({
-                textAlign: "right",
-              })
-                ? "active"
-                : ""
-            }`}
+            className="toolbar-button"
             title="Align right"
-            onClick={() => editor.chain().focus().setTextAlign("right").run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .setTextAlign("right")
+                .run()
+            }
           >
             ≡
           </button>
 
           <button
             type="button"
-            className={`toolbar-button ${
-              isActive({
-                textAlign: "justify",
-              })
-                ? "active"
-                : ""
-            }`}
+            className="toolbar-button"
             title="Justify"
-            onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .setTextAlign("justify")
+                .run()
+            }
           >
             ☰
           </button>
@@ -625,14 +942,18 @@ const StoryEditor = ({
 
         <div className="toolbar-divider" />
 
-        {/* Indentation */}
-
         <div className="toolbar-group">
           <button
             type="button"
             className="toolbar-button"
             title="Decrease indentation"
-            onClick={() => editor.chain().focus().decreaseIndent().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .decreaseIndent()
+                .run()
+            }
           >
             ⇤
           </button>
@@ -641,7 +962,13 @@ const StoryEditor = ({
             type="button"
             className="toolbar-button"
             title="Increase indentation"
-            onClick={() => editor.chain().focus().increaseIndent().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .increaseIndent()
+                .run()
+            }
           >
             ⇥
           </button>
@@ -649,16 +976,21 @@ const StoryEditor = ({
 
         <div className="toolbar-divider" />
 
-        {/* Lists */}
-
         <div className="toolbar-group">
           <button
             type="button"
             className={`toolbar-button ${
-              isActive("bulletList") ? "active" : ""
+              isActive("bulletList")
+                ? "active"
+                : ""
             }`}
-            title="Bullet list"
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .toggleBulletList()
+                .run()
+            }
           >
             •☰
           </button>
@@ -666,10 +998,17 @@ const StoryEditor = ({
           <button
             type="button"
             className={`toolbar-button ${
-              isActive("orderedList") ? "active" : ""
+              isActive("orderedList")
+                ? "active"
+                : ""
             }`}
-            title="Numbered list"
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .toggleOrderedList()
+                .run()
+            }
           >
             1.
           </button>
@@ -677,16 +1016,21 @@ const StoryEditor = ({
 
         <div className="toolbar-divider" />
 
-        {/* Blockquote */}
-
         <div className="toolbar-group">
           <button
             type="button"
             className={`toolbar-button ${
-              isActive("blockquote") ? "active" : ""
+              isActive("blockquote")
+                ? "active"
+                : ""
             }`}
-            title="Blockquote"
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            onClick={() =>
+              editor
+                .chain()
+                .focus()
+                .toggleBlockquote()
+                .run()
+            }
           >
             ❝
           </button>
@@ -694,20 +1038,24 @@ const StoryEditor = ({
 
         <div className="toolbar-divider" />
 
-        {/* Link */}
+        {/* LINK */}
 
         <div className="toolbar-group">
           <button
             type="button"
-            className={`toolbar-button ${isActive("link") ? "active" : ""}`}
+            className={`toolbar-button ${
+              isActive("link")
+                ? "active"
+                : ""
+            }`}
             title="Add link"
             onClick={() => {
-              const previousUrl = editor.getAttributes("link").href || "";
+              const previousUrl =
+                editor.getAttributes("link").href ||
+                "";
 
               setLinkUrl(previousUrl);
-
               setShowLinkInput((current) => !current);
-
               setShowImageInput(false);
             }}
           >
@@ -719,18 +1067,23 @@ const StoryEditor = ({
               <input
                 type="url"
                 value={linkUrl}
-                onChange={(event) => setLinkUrl(event.target.value)}
+                onChange={(e) =>
+                  setLinkUrl(e.target.value)
+                }
                 placeholder="https://example.com"
                 autoFocus
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
                     setLink();
                   }
                 }}
               />
 
-              <button type="button" onClick={setLink}>
+              <button
+                type="button"
+                onClick={setLink}
+              >
                 Apply
               </button>
 
@@ -738,7 +1091,11 @@ const StoryEditor = ({
                 type="button"
                 className="popup-secondary"
                 onClick={() => {
-                  editor.chain().focus().unsetLink().run();
+                  editor
+                    .chain()
+                    .focus()
+                    .unsetLink()
+                    .run();
 
                   setLinkUrl("");
                   setShowLinkInput(false);
@@ -750,7 +1107,7 @@ const StoryEditor = ({
           )}
         </div>
 
-        {/* Image */}
+        {/* IMAGE */}
 
         <div className="toolbar-group">
           <button
@@ -759,7 +1116,6 @@ const StoryEditor = ({
             title="Add image"
             onClick={() => {
               setShowImageInput((current) => !current);
-
               setShowLinkInput(false);
             }}
           >
@@ -771,18 +1127,23 @@ const StoryEditor = ({
               <input
                 type="url"
                 value={imageUrl}
-                onChange={(event) => setImageUrl(event.target.value)}
+                onChange={(e) =>
+                  setImageUrl(e.target.value)
+                }
                 placeholder="Image URL"
                 autoFocus
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
                     addImage();
                   }
                 }}
               />
 
-              <button type="button" onClick={addImage}>
+              <button
+                type="button"
+                onClick={addImage}
+              >
                 Insert
               </button>
             </div>
@@ -803,23 +1164,31 @@ const StoryEditor = ({
       ================================================== */}
 
       <div className="story-editor-footer">
-        <span>{editor.getText().length} characters</span>
+        <span>
+          {editor.getText().length} characters
+        </span>
 
-        <span>Rich text editor</span>
+        <span>
+          Rich text editor
+        </span>
       </div>
 
       {/* ==================================================
-          SUBMIT AREA
+          SUBMIT
       ================================================== */}
 
       <div className="story-editor-submit">
         <div className="story-submit-status">
           {submitError && (
-            <div className="story-submit-error">{submitError}</div>
+            <div className="story-submit-error">
+              {submitError}
+            </div>
           )}
 
           {submitSuccess && (
-            <div className="story-submit-success">{submitSuccess}</div>
+            <div className="story-submit-success">
+              {submitSuccess}
+            </div>
           )}
         </div>
 
@@ -832,7 +1201,9 @@ const StoryEditor = ({
           {submitting ? (
             <>
               <span className="story-submit-spinner" />
-              Submitting...
+              {storyId
+                ? "Updating..."
+                : "Submitting..."}
             </>
           ) : (
             submitLabel

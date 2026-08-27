@@ -28,6 +28,279 @@
 }
 
 /* ==================================================
+   STORY FORM
+================================================== */
+
+.story-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+
+  width: 100%;
+
+  padding: 24px 28px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid var(--line);
+
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+/* ==================================================
+   FORM FIELD
+================================================== */
+
+.story-form-field {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  gap: 7px;
+}
+
+/* Full-width fields */
+.story-form-field:has(textarea),
+.story-form-field:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+/* ==================================================
+   FORM LABEL
+================================================== */
+
+.story-form-field label {
+  display: block;
+
+  color: var(--ink-900);
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+/* ==================================================
+   FORM INPUTS
+================================================== */
+
+.story-form-field input[type="text"],
+.story-form-field input[type="url"],
+.story-form-field input[type="email"],
+.story-form-field input[type="search"],
+.story-form-field textarea,
+.story-form-field select {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  border: 1px solid var(--line);
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: var(--ink-900);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+}
+
+/* Text inputs */
+.story-form-field input[type="text"],
+.story-form-field input[type="url"],
+.story-form-field input[type="email"],
+.story-form-field input[type="search"],
+.story-form-field select {
+  height: 44px;
+
+  padding: 0 13px;
+}
+
+/* Textarea */
+.story-form-field textarea {
+  min-height: 110px;
+
+  padding: 11px 13px;
+
+  resize: vertical;
+}
+
+/* ==================================================
+   INPUT HOVER
+================================================== */
+
+.story-form-field input:hover,
+.story-form-field textarea:hover,
+.story-form-field select:hover {
+  border-color: var(--cloud-300);
+}
+
+/* ==================================================
+   INPUT FOCUS
+================================================== */
+
+.story-form-field input:focus,
+.story-form-field textarea:focus,
+.story-form-field select:focus {
+  border-color: var(--marigold-500);
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(46, 158, 104, 0.1);
+}
+
+/* ==================================================
+   PLACEHOLDER
+================================================== */
+
+.story-form-field input::placeholder,
+.story-form-field textarea::placeholder {
+  color: #9ca3af;
+
+  opacity: 1;
+}
+
+/* ==================================================
+   FORM HELP TEXT
+================================================== */
+
+.story-form-field small {
+  display: block;
+
+  margin-top: -1px;
+
+  color: var(--ink-500, #6b7280);
+
+  font-family: var(--font-body);
+  font-size: 11px;
+
+  line-height: 1.45;
+}
+
+/* ==================================================
+   PUBLISHED CHECKBOX
+================================================== */
+
+.story-published {
+  grid-column: 1 / -1;
+
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+
+  gap: 10px;
+
+  margin-top: 1px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--line);
+  border-radius: 9px;
+
+  background: var(--ivory-100);
+
+  color: var(--ink-700);
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition);
+}
+
+.story-published:hover {
+  border-color: rgba(46, 158, 104, 0.25);
+
+  background: rgba(46, 158, 104, 0.06);
+
+  color: var(--canopy-900);
+}
+
+/* ==================================================
+   CUSTOM CHECKBOX
+================================================== */
+
+.story-published input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  display: grid;
+  place-content: center;
+
+  width: 19px;
+  height: 19px;
+
+  margin: 0;
+
+  border: 1px solid var(--line);
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.story-published input[type="checkbox"]::before {
+  content: "";
+
+  width: 9px;
+  height: 5px;
+
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+
+  transform: rotate(-45deg) scale(0);
+
+  transition: transform 0.15s ease;
+}
+
+.story-published input[type="checkbox"]:checked {
+  border-color: var(--marigold-500);
+
+  background: var(--marigold-500);
+}
+
+.story-published input[type="checkbox"]:checked::before {
+  transform: rotate(-45deg) scale(1);
+}
+
+.story-published input[type="checkbox"]:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(46, 158, 104, 0.12);
+}
+
+/* ==================================================
    TOOLBAR
 ================================================== */
 
@@ -48,8 +321,6 @@
   background: #ffffff;
 
   border-bottom: 1px solid var(--line);
-
-  border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
 
 /* ==================================================
@@ -120,6 +391,15 @@
 .toolbar-button:hover {
   background: var(--ivory-100);
   color: var(--canopy-900);
+}
+
+.toolbar-button:focus-visible {
+  outline: none;
+
+  border-color: var(--marigold-500);
+
+  box-shadow:
+    0 0 0 3px rgba(46, 158, 104, 0.1);
 }
 
 .toolbar-button.active {
@@ -208,7 +488,8 @@
 .toolbar-popup input:focus {
   border-color: var(--marigold-500);
 
-  box-shadow: 0 0 0 3px rgba(46, 158, 104, 0.1);
+  box-shadow:
+    0 0 0 3px rgba(46, 158, 104, 0.1);
 }
 
 .toolbar-popup button {
@@ -231,14 +512,26 @@
   cursor: pointer;
 
   flex-shrink: 0;
+
+  transition:
+    background var(--transition),
+    transform var(--transition);
 }
 
 .toolbar-popup button:hover {
   background: var(--marigold-600);
 }
 
+.toolbar-popup button:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(46, 158, 104, 0.12);
+}
+
 .toolbar-popup .popup-secondary {
   background: var(--ivory-100);
+
   color: var(--ink-700);
 }
 
@@ -580,8 +873,6 @@
   font-size: 11px;
 
   gap: 10px;
-
-  border-radius: 0 0 var(--radius-card) var(--radius-card);
 }
 
 /* ==================================================
@@ -607,13 +898,13 @@
 }
 
 /* ==================================================
-   STORY SUBMIT AREA
+   SUBMIT AREA
 ================================================== */
 
 .story-editor-submit {
   display: flex !important;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   width: 100%;
   min-height: 72px;
@@ -625,6 +916,47 @@
   border-top: 1px solid var(--line);
 
   border-radius: 0 0 var(--radius-card) var(--radius-card);
+
+  gap: 16px;
+}
+
+/* ==================================================
+   SUBMIT STATUS
+================================================== */
+
+.story-submit-status {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.story-submit-error,
+.story-submit-success {
+  padding: 9px 12px;
+
+  border-radius: 7px;
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+.story-submit-error {
+  border: 1px solid rgba(185, 28, 28, 0.15);
+
+  background: rgba(185, 28, 28, 0.06);
+
+  color: #b91c1c;
+}
+
+.story-submit-success {
+  border: 1px solid rgba(22, 101, 52, 0.15);
+
+  background: rgba(22, 101, 52, 0.06);
+
+  color: #166534;
 }
 
 /* ==================================================
@@ -671,6 +1003,14 @@
   box-shadow: var(--shadow-md);
 }
 
+.story-submit-button:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(46, 158, 104, 0.15),
+    var(--shadow-md);
+}
+
 .story-submit-button:disabled {
   opacity: 0.65;
 
@@ -678,6 +1018,10 @@
 
   transform: none;
 }
+
+/* ==================================================
+   SUBMIT SPINNER
+================================================== */
 
 .story-submit-spinner {
   width: 16px;
@@ -711,6 +1055,24 @@
     margin: 1.25rem 12px 2rem;
 
     border-radius: 12px;
+  }
+
+  /* ------------------------------------------
+     Story Form
+  ------------------------------------------ */
+
+  .story-form {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+
+    padding: 20px 18px;
+  }
+
+  .story-form-field:has(textarea),
+  .story-form-field:nth-child(5),
+  .story-published {
+    grid-column: auto;
   }
 
   /* ------------------------------------------
@@ -822,6 +1184,58 @@
     margin: 1rem 8px 1.5rem;
 
     border-radius: 10px;
+  }
+
+  /* ------------------------------------------
+     Story Form
+  ------------------------------------------ */
+
+  .story-form {
+    gap: 14px;
+
+    padding: 17px 14px;
+  }
+
+  .story-form-field {
+    gap: 6px;
+  }
+
+  .story-form-field label {
+    font-size: 12px;
+  }
+
+  .story-form-field input[type="text"],
+  .story-form-field input[type="url"],
+  .story-form-field input[type="email"],
+  .story-form-field input[type="search"],
+  .story-form-field select {
+    height: 42px;
+
+    padding: 0 11px;
+
+    font-size: 14px;
+  }
+
+  .story-form-field textarea {
+    min-height: 100px;
+
+    padding: 10px 11px;
+
+    font-size: 14px;
+  }
+
+  .story-form-field small {
+    font-size: 10px;
+  }
+
+  .story-published {
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 9px 10px;
+
+    font-size: 12px;
   }
 
   /* ------------------------------------------
@@ -981,6 +1395,9 @@
   ------------------------------------------ */
 
   .story-editor-submit {
+    flex-direction: column;
+    align-items: stretch;
+
     justify-content: stretch;
 
     min-height: auto;
@@ -988,6 +1405,12 @@
     padding: 12px;
 
     border-radius: 0 0 10px 10px;
+
+    gap: 10px;
+  }
+
+  .story-submit-status {
+    width: 100%;
   }
 
   .story-submit-button {
@@ -1013,6 +1436,34 @@
 
     margin-left: 5px;
     margin-right: 5px;
+  }
+
+  .story-form {
+    padding: 15px 11px;
+
+    gap: 12px;
+  }
+
+  .story-form-field input[type="text"],
+  .story-form-field input[type="url"],
+  .story-form-field input[type="email"],
+  .story-form-field input[type="search"],
+  .story-form-field select {
+    height: 40px;
+
+    padding: 0 10px;
+
+    font-size: 13px;
+  }
+
+  .story-form-field textarea {
+    min-height: 90px;
+
+    font-size: 13px;
+  }
+
+  .story-published {
+    font-size: 11px;
   }
 
   .story-editor-container {

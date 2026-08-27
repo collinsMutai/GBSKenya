@@ -86,10 +86,7 @@ const login = async (req, res, next) => {
       });
     }
 
-    const validPassword = await argon2.verify(
-      user.password,
-      password,
-    );
+    const validPassword = await argon2.verify(user.password, password);
 
     if (!validPassword) {
       return res.status(401).json({
@@ -150,7 +147,14 @@ const logout = (req, res, next) => {
       return next(error);
     }
 
-    res.clearCookie("sessionId");
+    const isProduction = process.env.NODE_ENV === "production";
+
+    res.clearCookie(isProduction ? "__Host-sessionId" : "sessionId", {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      path: "/",
+    });
 
     res.status(200).json({
       success: true,

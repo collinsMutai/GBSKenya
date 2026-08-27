@@ -109,9 +109,11 @@ if (!process.env.SESSION_SECRET) {
   throw new Error("SESSION_SECRET is not defined in environment variables");
 }
 
+const isProduction = process.env.NODE_ENV === "production";
+
 app.use(
   session({
-    name: "sessionId",
+    name: isProduction ? "__Host-sessionId" : "sessionId",
 
     secret: process.env.SESSION_SECRET,
 
@@ -127,11 +129,13 @@ app.use(
     cookie: {
       httpOnly: true,
 
-      secure: process.env.NODE_ENV === "production",
+      secure: isProduction,
 
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      sameSite: isProduction ? "none" : "lax",
 
       maxAge: 1000 * 60 * 60 * 24 * 7,
+
+      path: "/",
     },
   }),
 );

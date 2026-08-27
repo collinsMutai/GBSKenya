@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Phone, ChevronDown } from "lucide-react";
+import { Mail, Phone, ChevronDown, User } from "lucide-react";
+
+import LoginModal from "../loginmodal/LoginModal";
+
 import "./Navbar.css";
 import logo from "../../assets/logo.jpeg";
 
@@ -35,7 +38,7 @@ const links = [
     label: "Support resources",
     to: "/resources",
   },
-    {
+  {
     label: "Get Involved",
     to: "/get-involved",
     children: [
@@ -57,7 +60,6 @@ const links = [
     label: "Contact us",
     to: "/contact",
   },
-
 ];
 
 const iconBase = {
@@ -90,7 +92,13 @@ function InstagramIcon({ size = 24, ...props }) {
     <svg {...iconBase} width={size} height={size} {...props}>
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+      <circle
+        cx="17.5"
+        cy="6.5"
+        r="0.8"
+        fill="currentColor"
+        stroke="none"
+      />
     </svg>
   );
 }
@@ -112,6 +120,9 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(null);
 
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
   // Prevent page scrolling when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -124,6 +135,17 @@ export default function Navbar() {
   const closeMenu = () => {
     setOpen(false);
     setMobileDropdownOpen(null);
+  };
+
+  const openLogin = () => {
+    closeMenu();
+    setLoginOpen(true);
+  };
+
+  const handleLoginSuccess = (loggedInUser) => {
+    setUser(loggedInUser);
+
+    console.log("Logged in user:", loggedInUser);
   };
 
   return (
@@ -195,10 +217,15 @@ export default function Navbar() {
 
       <div className="container navbar__row">
         <Link to="/" className="navbar__brand" onClick={closeMenu}>
-          <img src={logo} alt="GBS Foundation Kenya" className="navbar__logo" />
+          <img
+            src={logo}
+            alt="GBS Foundation Kenya"
+            className="navbar__logo"
+          />
         </Link>
 
         {/* Desktop Navigation */}
+
         <nav className="navbar__links">
           {links.map((link) =>
             link.children ? (
@@ -234,14 +261,38 @@ export default function Navbar() {
                 </div>
               </div>
             ) : (
-              <Link key={link.to} to={link.to} className="navbar__link">
+              <Link
+                key={link.to}
+                to={link.to}
+                className="navbar__link"
+                onClick={closeMenu}
+              >
                 {link.label}
               </Link>
             ),
           )}
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* ==============================
+            Desktop Login
+        ============================== */}
+
+        <button
+          type="button"
+          className="navbar__login"
+          onClick={openLogin}
+          aria-label="Login"
+          title="Login"
+        >
+          <User size={19} />
+
+          <span>{user ? user.name : "Login"}</span>
+        </button>
+
+        {/* ==============================
+            Mobile Menu Button
+        ============================== */}
+
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -272,7 +323,7 @@ export default function Navbar() {
                   }
                   aria-expanded={mobileDropdownOpen === link.to}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
 
                   <ChevronDown
                     size={18}
@@ -313,8 +364,30 @@ export default function Navbar() {
               </Link>
             ),
           )}
+
+          {/* Mobile Login */}
+
+          <button
+            type="button"
+            className="navbar__mobile-login"
+            onClick={openLogin}
+          >
+            <User size={20} />
+
+            <span>{user ? user.name : "Login"}</span>
+          </button>
         </nav>
       )}
+
+      {/* ==============================
+          Login Modal
+      ============================== */}
+
+      <LoginModal
+        isOpen={loginOpen}
+        onClose={() => setLoginOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </header>
   );
 }

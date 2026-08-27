@@ -8,7 +8,6 @@
   z-index: 100;
 }
 
-
 /* ==============================
    Top Bar
 ============================== */
@@ -38,18 +37,17 @@
   gap: 6px;
 
   color: var(--ivory-100);
-  opacity: .85;
+  opacity: 0.85;
 
   transition:
-    color .25s ease,
-    opacity .25s ease;
+    color 0.25s ease,
+    opacity 0.25s ease;
 }
 
 .topbar__item:hover {
   color: var(--ivory-50);
   opacity: 1;
 }
-
 
 .topbar__socials {
   display: flex;
@@ -61,11 +59,11 @@
   display: flex;
 
   color: var(--ivory-100);
-  opacity: .85;
+  opacity: 0.85;
 
   transition:
-    color .25s ease,
-    opacity .25s ease;
+    color 0.25s ease,
+    opacity 0.25s ease;
 }
 
 .topbar__socials a:hover {
@@ -73,112 +71,82 @@
   opacity: 1;
 }
 
-
-@media(max-width:560px){
-
+@media (max-width: 560px) {
   .topbar__item span {
-    display:none;
+    display: none;
   }
-
 }
 
-
-@media(max-width:420px){
-
+@media (max-width: 420px) {
   .topbar {
-    display:none;
+    display: none;
   }
-
 }
-
-
 
 /* ==============================
    Main Navigation
 ============================== */
 
-
 .navbar__row {
+  display: flex;
 
-  display:flex;
+  align-items: center;
 
-  align-items:center;
+  justify-content: space-between;
 
-  justify-content:space-between;
-
-  height:120px;
-
+  height: 120px;
 }
-
-
 
 /* Logo */
 
 .navbar__brand {
+  display: flex;
 
-  display:flex;
+  align-items: center;
 
-  align-items:center;
-
-  flex-shrink:0;
+  flex-shrink: 0;
   height: 100%;
 
-  transition:opacity .25s ease;
-
+  transition: opacity 0.25s ease;
 }
-
 
 .navbar__logo {
+  display: block;
 
-  display:block;
+  max-height: 98px;
 
-  max-height:98px;
+  width: auto;
 
-  width:auto;
-
-  object-fit:contain;
-
+  object-fit: contain;
 }
-
-
 
 /* Desktop Links */
 
 .navbar__links {
+  display: flex;
 
-  display:flex;
+  align-items: center;
 
-  align-items:center;
-
-  gap:28px;
-
+  gap: 28px;
 }
-
 
 .navbar__link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 
-  display:flex;
-  align-items:center;
-  gap:4px;
+  color: var(--ivory-100);
 
-  color:var(--ivory-100);
+  font-size: 15px;
 
-  font-size:15px;
+  font-weight: 500;
 
-  font-weight:500;
-
-  transition:
-    color .25s ease;
+  transition: color 0.25s ease;
 }
-
 
 .navbar__link:hover {
-
-  color:var(--ivory-50);
-
+  color: var(--ivory-50);
 }
-
-
 
 /* ==============================
    Desktop Dropdown (About us / Get Involved)
@@ -258,7 +226,9 @@
   font-size: 14.5px;
   color: var(--ivory-100);
   white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .navbar__dropdown-link:hover {
@@ -266,49 +236,35 @@
   color: var(--ivory-50);
 }
 
-
-
 /* Mobile Toggle */
 
-
 .navbar__toggle {
+  display: none;
 
-  display:none;
+  align-items: center;
 
-  align-items:center;
+  justify-content: center;
 
-  justify-content:center;
+  width: 44px;
 
+  height: 44px;
 
-  width:44px;
+  color: var(--ivory-50);
 
-  height:44px;
+  font-size: 30px;
 
+  line-height: 1;
 
-  color:var(--ivory-50);
-
-  font-size:30px;
-
-  line-height:1;
-
-
-  cursor:pointer;
-
+  cursor: pointer;
 }
-
-
 
 /* ==============================
    Mobile Menu
 ============================== */
 
-
 .navbar__mobile {
-
-  display:none;
-
+  display: none;
 }
-
 
 /* Mobile collapsible group (About us / Get Involved) */
 
@@ -338,7 +294,9 @@
   font-size: clamp(1rem, 3.6vw, 1.2rem);
   font-weight: 500;
   opacity: 0.85;
-  transition: color 0.25s ease, opacity 0.25s ease;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
 }
 
 .navbar__mobile-sublink:hover {
@@ -346,279 +304,243 @@
   opacity: 1;
 }
 
+/* ==========================================
+   LOGIN BUTTON
+========================================== */
 
+.navbar__login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
 
+  margin-left: 20px;
+
+  padding: 9px 16px;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+
+  color: inherit;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.navbar__login:hover {
+  background: #0b6b4f;
+  border-color: #0b6b4f;
+  color: #fff;
+}
+
+.navbar__mobile-login {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 16px;
+  padding: 13px 16px;
+
+  border-radius: 8px;
+
+  background: #0b6b4f;
+  color: #fff;
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+.navbar__mobile-login:hover {
+  background: #095a43;
+}
 
 /* ==============================
    Mobile
 ============================== */
 
-@media(max-width:720px){
-
+@media (max-width: 720px) {
   .navbar {
-    position:relative;
+    position: relative;
   }
-
 
   /* Hide desktop navigation */
   .navbar__links {
-    display:none;
+    display: none;
   }
-
 
   /* Match new logo height */
   .navbar__row {
+    height: 88px;
 
-    height:88px;
-
-    padding-top:8px;
-    padding-bottom:8px;
-
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
-
 
   .navbar__brand {
+    height: 100%;
 
-    height:100%;
+    max-width: 220px;
 
-    max-width:220px;
-
-    overflow:hidden;
-
+    overflow: hidden;
   }
-
 
   .navbar__logo {
+    max-height: 62px;
 
-    max-height:62px;
-
-    width:auto;
-
+    width: auto;
   }
-
-
 
   .navbar__brand--hidden {
+    opacity: 0;
 
-    opacity:0;
+    visibility: hidden;
 
-    visibility:hidden;
-
-    pointer-events:none;
-
+    pointer-events: none;
   }
-
-
 
   /* Mobile menu button */
 
   .navbar__toggle {
+    display: flex;
 
-    display:flex;
+    align-items: center;
 
-    align-items:center;
+    justify-content: center;
 
-    justify-content:center;
+    position: relative;
 
+    z-index: 10002;
 
-    position:relative;
+    width: 44px;
 
-    z-index:10002;
+    height: 44px;
 
+    color: var(--ivory-50);
 
-    width:44px;
+    font-size: 30px;
 
-    height:44px;
-
-
-    color:var(--ivory-50);
-
-    font-size:30px;
-
-    line-height:1;
-
+    line-height: 1;
   }
-
 
   .navbar__toggle:hover {
-
-    color:var(--marigold-500);
-
+    color: var(--marigold-500);
   }
-
-
 
   /* Fullscreen mobile menu */
 
   .navbar__mobile {
+    position: fixed;
 
-    position:fixed;
+    inset: 0;
 
-    inset:0;
+    z-index: 10000;
 
+    width: 100vw;
 
-    z-index:10000;
+    height: 100dvh;
 
+    display: flex;
 
-    width:100vw;
+    flex-direction: column;
 
-    height:100dvh;
+    justify-content: center;
 
+    align-items: center;
 
-    display:flex;
+    gap: 2rem;
 
+    padding: 2rem;
 
-    flex-direction:column;
+    background: var(--canopy-900);
 
-
-    justify-content:center;
-
-    align-items:center;
-
-
-    gap:2rem;
-
-
-    padding:2rem;
-
-
-    background:var(--canopy-900);
-
-
-    animation:fadeMenu .3s ease;
-
+    animation: fadeMenu 0.3s ease;
   }
-
-
 
   .navbar__mobile .navbar__link {
+    color: var(--ivory-50);
 
-    color:var(--ivory-50);
+    font-size: clamp(1.35rem, 5vw, 1.8rem);
 
-
-    font-size:
-
-      clamp(1.35rem,5vw,1.8rem);
-
-
-    font-weight:600;
-
+    font-weight: 600;
 
     transition:
-
-      color .25s ease,
-
-      transform .25s ease;
-
+      color 0.25s ease,
+      transform 0.25s ease;
   }
-
-
 
   .navbar__mobile .navbar__link:hover {
+    color: var(--marigold-500);
 
-    color:var(--marigold-500);
-
-    transform:translateY(-3px);
-
+    transform: translateY(-3px);
   }
-
 
   .navbar__mobile-cta {
+    margin-top: 1rem;
 
-    margin-top:1rem;
+    width: 220px;
 
-    width:220px;
-
-    justify-content:center;
-
+    justify-content: center;
   }
-
 }
-
-
 
 /* ==============================
    Small Phones
 ============================== */
 
-@media(max-width:480px){
-
-
-  .navbar__row {
-
-    height:78px;
-
-    padding-top:6px;
-
-    padding-bottom:6px;
-
+@media (max-width: 480px) {
+  .navbar__login {
+    display: none;
   }
+  .navbar__row {
+    height: 78px;
 
+    padding-top: 6px;
 
+    padding-bottom: 6px;
+  }
 
   .navbar__brand {
-
-    max-width:180px;
-
+    max-width: 180px;
   }
-
-
 
   .navbar__logo {
-
-    max-height:52px;
-
+    max-height: 52px;
   }
-
-
 
   .navbar__toggle {
+    width: 40px;
 
-    width:40px;
+    height: 40px;
 
-    height:40px;
-
-    font-size:26px;
-
+    font-size: 26px;
   }
-
-
 
   .navbar__mobile {
-
-    gap:1.6rem;
-
+    gap: 1.6rem;
   }
-
-
 
   .navbar__mobile .navbar__link {
-
-    font-size:1.3rem;
-
+    font-size: 1.3rem;
   }
-
 }
-
 
 /* ==============================
    Animation
 ============================== */
 
-
 @keyframes fadeMenu {
-
   from {
-
-    opacity:0;
-
+    opacity: 0;
   }
-
 
   to {
-
-    opacity:1;
-
+    opacity: 1;
   }
-
 }

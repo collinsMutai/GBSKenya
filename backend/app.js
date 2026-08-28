@@ -152,6 +152,8 @@ app.use("/api/newsletter", require("./routes/newsletterRoutes"));
 
 app.use("/api/stories", require("./routes/storyRoutes"));
 
+app.use("/api/comments", require("./routes/commentRoutes"));
+
 // --------------------------------------------------
 // 404 Handler
 // --------------------------------------------------

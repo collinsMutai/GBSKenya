@@ -18,18 +18,42 @@ import "./StoryDetails.css";
 export default function StoryDetails() {
   const { slug } = useParams();
 
+  // --------------------------------------------------
+  // Story state
+  // --------------------------------------------------
+
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // --------------------------------------------------
+  // Like state
+  // --------------------------------------------------
+
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
+  // --------------------------------------------------
+  // Comment state
+  // --------------------------------------------------
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [commentsLoading, setCommentsLoading] = useState(false);
+  const [commentSubmitting, setCommentSubmitting] = useState(false);
+  const [commentError, setCommentError] = useState("");
+  const [commentMessage, setCommentMessage] = useState("");
+
+  // --------------------------------------------------
+  // Share state
+  // --------------------------------------------------
 
   const [copied, setCopied] = useState(false);
   const [shareMessage, setShareMessage] = useState("");
+
+  // --------------------------------------------------
+  // API
+  // --------------------------------------------------
 
   const API_URL = "http://localhost:5000/api";
 
@@ -45,21 +69,30 @@ export default function StoryDetails() {
 
         const response = await fetch(
           `${API_URL}/stories/${encodeURIComponent(slug)}`,
+          {
+            credentials: "include",
+          },
         );
 
         const result = await response.json();
 
         if (!response.ok) {
-          throw new Error(result.message || "Failed to load story");
+          throw new Error(
+            result.message || "Failed to load story",
+          );
         }
 
         setStory(result.data);
+
+        // Your current Story model does not yet contain
+        // a likes field, so this safely defaults to 0.
         setLikeCount(result.data?.likes || 0);
       } catch (err) {
         console.error("Failed to fetch story:", err);
 
         setError(
-          err.message || "Something went wrong while loading the story.",
+          err.message ||
+            "Something went wrong while loading the story.",
         );
       } finally {
         setLoading(false);
@@ -70,6 +103,50 @@ export default function StoryDetails() {
       fetchStory();
     }
   }, [slug]);
+
+  // --------------------------------------------------
+  // Fetch comments
+  // --------------------------------------------------
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      if (!story?._id) {
+        return;
+      }
+
+      try {
+        setCommentsLoading(true);
+        setCommentError("");
+
+        const response = await fetch(
+          `${API_URL}/comments/story/${story._id}`,
+          {
+            credentials: "include",
+          },
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            result.message || "Failed to load comments",
+          );
+        }
+
+        setComments(result.data || []);
+      } catch (err) {
+        console.error("Failed to fetch comments:", err);
+
+        setCommentError(
+          err.message || "Unable to load comments.",
+        );
+      } finally {
+        setCommentsLoading(false);
+      }
+    };
+
+    fetchComments();
+  }, [story]);
 
   // --------------------------------------------------
   // Story URL
@@ -87,7 +164,8 @@ export default function StoryDetails() {
   // Author
   // --------------------------------------------------
 
-  const authorName = story?.authorId?.name || "Anonymous";
+  const authorName =
+    story?.authorId?.name || "Anonymous";
 
   // --------------------------------------------------
   // TipTap helpers
@@ -154,11 +232,13 @@ export default function StoryDetails() {
     if (node.type === "bulletList") {
       return (
         <ul key={index}>
-          {node.content?.map((listItem, itemIndex) => (
-            <li key={itemIndex}>
-              {getNodeText(listItem)}
-            </li>
-          ))}
+          {node.content?.map(
+            (listItem, itemIndex) => (
+              <li key={itemIndex}>
+                {getNodeText(listItem)}
+              </li>
+            ),
+          )}
         </ul>
       );
     }
@@ -166,11 +246,13 @@ export default function StoryDetails() {
     if (node.type === "orderedList") {
       return (
         <ol key={index}>
-          {node.content?.map((listItem, itemIndex) => (
-            <li key={itemIndex}>
-              {getNodeText(listItem)}
-            </li>
-          ))}
+          {node.content?.map(
+            (listItem, itemIndex) => (
+              <li key={itemIndex}>
+                {getNodeText(listItem)}
+              </li>
+            ),
+          )}
         </ol>
       );
     }
@@ -178,8 +260,12 @@ export default function StoryDetails() {
     if (node.type === "blockquote") {
       return (
         <blockquote key={index}>
-          {node.content?.map((child, childIndex) =>
-            renderContentNode(child, childIndex),
+          {node.content?.map(
+            (child, childIndex) =>
+              renderContentNode(
+                child,
+                childIndex,
+              ),
           )}
         </blockquote>
       );
@@ -207,11 +293,15 @@ export default function StoryDetails() {
   const handleLike = () => {
     setLiked((previousLiked) => {
       if (previousLiked) {
-        setLikeCount((count) => Math.max(0, count - 1));
+        setLikeCount((count) =>
+          Math.max(0, count - 1),
+        );
+
         return false;
       }
 
       setLikeCount((count) => count + 1);
+
       return true;
     });
   };
@@ -236,8 +326,14 @@ export default function StoryDetails() {
         setShareMessage("");
       }, 2500);
     } catch (err) {
-      console.error("Failed to copy link:", err);
-      setShareMessage("Unable to copy the link.");
+      console.error(
+        "Failed to copy link:",
+        err,
+      );
+
+      setShareMessage(
+        "Unable to copy the link.",
+      );
     }
   };
 
@@ -252,7 +348,9 @@ export default function StoryDetails() {
 
     const shareData = {
       title: story.title,
-      text: story.excerpt || `Read ${story.title}`,
+      text:
+        story.excerpt ||
+        `Read ${story.title}`,
       url: storyUrl,
     };
 
@@ -265,7 +363,10 @@ export default function StoryDetails() {
       await copyStoryLink();
     } catch (err) {
       if (err?.name !== "AbortError") {
-        console.error("Share failed:", err);
+        console.error(
+          "Share failed:",
+          err,
+        );
       }
     }
   };
@@ -302,7 +403,9 @@ export default function StoryDetails() {
     openShareWindow(
       `https://twitter.com/intent/tweet?url=${encodeURIComponent(
         storyUrl,
-      )}&text=${encodeURIComponent(story.title)}`,
+      )}&text=${encodeURIComponent(
+        story.title,
+      )}`,
     );
   };
 
@@ -335,18 +438,19 @@ export default function StoryDetails() {
   // --------------------------------------------------
 
   const shareByEmail = () => {
-    window.location.href = `mailto:?subject=${encodeURIComponent(
-      story.title,
-    )}&body=${encodeURIComponent(
-      `I thought you might find this story helpful:\n\n${storyUrl}`,
-    )}`;
+    window.location.href =
+      `mailto:?subject=${encodeURIComponent(
+        story.title,
+      )}&body=${encodeURIComponent(
+        `I thought you might find this story helpful:\n\n${storyUrl}`,
+      )}`;
   };
 
   // --------------------------------------------------
-  // Comments
+  // Submit Comment
   // --------------------------------------------------
 
-  const handleCommentSubmit = (event) => {
+  const handleCommentSubmit = async (event) => {
     event.preventDefault();
 
     const trimmedComment = comment.trim();
@@ -355,16 +459,82 @@ export default function StoryDetails() {
       return;
     }
 
-    setComments((previousComments) => [
-      ...previousComments,
-      {
-        id: Date.now(),
-        text: trimmedComment,
-        author: "You",
-      },
-    ]);
+    if (!story?._id) {
+      setCommentError(
+        "Unable to identify this story.",
+      );
 
-    setComment("");
+      return;
+    }
+
+    try {
+      setCommentSubmitting(true);
+      setCommentError("");
+      setCommentMessage("");
+
+      const response = await fetch(
+        `${API_URL}/comments`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          credentials: "include",
+
+          body: JSON.stringify({
+            storyId: story._id,
+            text: trimmedComment,
+          }),
+        },
+      );
+
+      const result = await response.json();
+
+      // ------------------------------------------------
+      // Authentication error
+      // ------------------------------------------------
+
+      if (response.status === 401) {
+        throw new Error(
+          "Please log in before posting a comment.",
+        );
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.message ||
+            "Failed to submit comment",
+        );
+      }
+
+      // ------------------------------------------------
+      // Clear textarea
+      // ------------------------------------------------
+
+      setComment("");
+
+      // ------------------------------------------------
+      // Comment is awaiting moderation
+      // ------------------------------------------------
+
+      setCommentMessage(
+        "Your comment has been submitted and is awaiting moderation.",
+      );
+    } catch (err) {
+      console.error(
+        "Failed to submit comment:",
+        err,
+      );
+
+      setCommentError(
+        err.message ||
+          "Unable to submit your comment.",
+      );
+    } finally {
+      setCommentSubmitting(false);
+    }
   };
 
   // --------------------------------------------------
@@ -380,7 +550,10 @@ export default function StoryDetails() {
 
             <h2>Loading story...</h2>
 
-            <p>Preparing this patient story for you.</p>
+            <p>
+              Preparing this patient story
+              for you.
+            </p>
           </div>
         </div>
       </div>
@@ -412,7 +585,16 @@ export default function StoryDetails() {
     );
   }
 
-  const contentNodes = story.content?.content || [];
+  // --------------------------------------------------
+  // Story content
+  // --------------------------------------------------
+
+  const contentNodes =
+    story.content?.content || [];
+
+  // --------------------------------------------------
+  // Render
+  // --------------------------------------------------
 
   return (
     <>
@@ -451,12 +633,21 @@ export default function StoryDetails() {
             </div>
 
             {/* Hero */}
+
             {story.image && (
               <motion.div
                 className="story-detail__hero"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
+                initial={{
+                  opacity: 0,
+                  scale: 0.98,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 0.6,
+                }}
               >
                 <img
                   src={story.image}
@@ -474,11 +665,15 @@ export default function StoryDetails() {
             )}
 
             {/* Article */}
+
             <div className="story-detail__article">
 
               <div className="story-detail__author-row">
+
                 <div className="story-detail__avatar">
-                  {authorName.charAt(0).toUpperCase()}
+                  {authorName
+                    .charAt(0)
+                    .toUpperCase()}
                 </div>
 
                 <div>
@@ -486,8 +681,11 @@ export default function StoryDetails() {
                     Shared by
                   </span>
 
-                  <strong>{authorName}</strong>
+                  <strong>
+                    {authorName}
+                  </strong>
                 </div>
+
               </div>
 
               {story.excerpt && (
@@ -497,29 +695,45 @@ export default function StoryDetails() {
               )}
 
               <div className="story-detail__body">
-                {contentNodes.map((node, index) =>
-                  renderContentNode(node, index),
+                {contentNodes.map(
+                  (node, index) =>
+                    renderContentNode(
+                      node,
+                      index,
+                    ),
                 )}
               </div>
+
             </div>
 
             {/* Article actions */}
+
             <div className="story-detail__actions">
 
               <button
                 type="button"
                 className={`story-action ${
-                  liked ? "story-action--liked" : ""
+                  liked
+                    ? "story-action--liked"
+                    : ""
                 }`}
                 onClick={handleLike}
               >
-                {liked ? <FaHeart /> : <FaRegHeart />}
+                {liked ? (
+                  <FaHeart />
+                ) : (
+                  <FaRegHeart />
+                )}
 
                 <span>
-                  {liked ? "Liked" : "Like"}
+                  {liked
+                    ? "Liked"
+                    : "Like"}
                 </span>
 
-                <strong>{likeCount}</strong>
+                <strong>
+                  {likeCount}
+                </strong>
               </button>
 
               <button
@@ -529,7 +743,9 @@ export default function StoryDetails() {
               >
                 <FaShareNodes />
 
-                <span>Share story</span>
+                <span>
+                  Share story
+                </span>
               </button>
 
               <button
@@ -540,11 +756,14 @@ export default function StoryDetails() {
                 <FaLink />
 
                 <span>
-                  {copied ? "Copied" : "Copy link"}
+                  {copied
+                    ? "Copied"
+                    : "Copy link"}
                 </span>
               </button>
 
             </div>
+
           </article>
 
           {/* ==========================================
@@ -555,7 +774,10 @@ export default function StoryDetails() {
 
             <div className="story-sidebar">
 
-              {/* Author */}
+              {/* ======================================
+                  Author
+              ====================================== */}
+
               <section className="story-sidebar__card story-sidebar__author">
 
                 <span className="story-sidebar__eyebrow">
@@ -563,57 +785,85 @@ export default function StoryDetails() {
                 </span>
 
                 <div className="story-sidebar__author-avatar">
-                  {authorName.charAt(0).toUpperCase()}
+                  {authorName
+                    .charAt(0)
+                    .toUpperCase()}
                 </div>
 
-                <h3>{authorName}</h3>
+                <h3>
+                  {authorName}
+                </h3>
 
                 <p>
-                  A community member sharing their experience,
-                  perspective, and journey with others.
+                  A community member
+                  sharing their
+                  experience,
+                  perspective, and
+                  journey with
+                  others.
                 </p>
 
               </section>
 
-              {/* Like */}
+              {/* ======================================
+                  Like
+              ====================================== */}
+
               <section className="story-sidebar__card story-sidebar__like">
 
                 <div className="story-sidebar__card-heading">
+
                   <div>
                     <span className="story-sidebar__eyebrow">
                       Support this story
                     </span>
 
-                    <h3>Found this helpful?</h3>
+                    <h3>
+                      Found this helpful?
+                    </h3>
                   </div>
 
                   <FaHeart />
+
                 </div>
 
                 <p>
-                  Let the storyteller know their experience
-                  matters to the community.
+                  Let the storyteller
+                  know their experience
+                  matters to the
+                  community.
                 </p>
 
                 <button
                   type="button"
                   className={`story-like-button ${
-                    liked ? "story-like-button--liked" : ""
+                    liked
+                      ? "story-like-button--liked"
+                      : ""
                   }`}
                   onClick={handleLike}
                 >
-                  {liked ? <FaHeart /> : <FaRegHeart />}
+                  {liked ? (
+                    <FaHeart />
+                  ) : (
+                    <FaRegHeart />
+                  )}
 
                   {liked
                     ? "You liked this"
                     : "Like this story"}
 
-                  <span>{likeCount}</span>
+                  <span>
+                    {likeCount}
+                  </span>
                 </button>
 
               </section>
 
-              {/* Share */}
+              {/* ======================================
+                  Share
+              ====================================== */}
+
               <section className="story-sidebar__card story-sidebar__share">
 
                 <div className="story-sidebar__card-heading">
@@ -623,7 +873,9 @@ export default function StoryDetails() {
                       Spread the word
                     </span>
 
-                    <h3>Share this story</h3>
+                    <h3>
+                      Share this story
+                    </h3>
                   </div>
 
                   <FaShareNodes />
@@ -631,8 +883,10 @@ export default function StoryDetails() {
                 </div>
 
                 <p>
-                  Help someone else discover a story that may
-                  make them feel less alone.
+                  Help someone else
+                  discover a story
+                  that may make them
+                  feel less alone.
                 </p>
 
                 <div className="story-share-grid">
@@ -640,7 +894,9 @@ export default function StoryDetails() {
                   <button
                     type="button"
                     className="story-social story-social--facebook"
-                    onClick={shareOnFacebook}
+                    onClick={
+                      shareOnFacebook
+                    }
                     aria-label="Share on Facebook"
                     title="Share on Facebook"
                   >
@@ -660,7 +916,9 @@ export default function StoryDetails() {
                   <button
                     type="button"
                     className="story-social story-social--whatsapp"
-                    onClick={shareOnWhatsApp}
+                    onClick={
+                      shareOnWhatsApp
+                    }
                     aria-label="Share on WhatsApp"
                     title="Share on WhatsApp"
                   >
@@ -670,7 +928,9 @@ export default function StoryDetails() {
                   <button
                     type="button"
                     className="story-social story-social--linkedin"
-                    onClick={shareOnLinkedIn}
+                    onClick={
+                      shareOnLinkedIn
+                    }
                     aria-label="Share on LinkedIn"
                     title="Share on LinkedIn"
                   >
@@ -680,7 +940,9 @@ export default function StoryDetails() {
                   <button
                     type="button"
                     className="story-social story-social--email"
-                    onClick={shareByEmail}
+                    onClick={
+                      shareByEmail
+                    }
                     aria-label="Share by email"
                     title="Share by email"
                   >
@@ -690,7 +952,9 @@ export default function StoryDetails() {
                   <button
                     type="button"
                     className="story-social story-social--copy"
-                    onClick={copyStoryLink}
+                    onClick={
+                      copyStoryLink
+                    }
                     aria-label="Copy story link"
                     title="Copy story link"
                   >
@@ -707,7 +971,10 @@ export default function StoryDetails() {
 
               </section>
 
-              {/* Comments */}
+              {/* ======================================
+                  Comments
+              ====================================== */}
+
               <section className="story-sidebar__card story-sidebar__comments">
 
                 <div className="story-sidebar__card-heading">
@@ -717,7 +984,9 @@ export default function StoryDetails() {
                       Join the conversation
                     </span>
 
-                    <h3>Comments</h3>
+                    <h3>
+                      Comments
+                    </h3>
                   </div>
 
                   <span className="story-comment-count">
@@ -727,68 +996,151 @@ export default function StoryDetails() {
                 </div>
 
                 <p>
-                  Comments are moderated to keep this a safe
-                  and supportive community.
+                  Comments are moderated
+                  to keep this a safe
+                  and supportive
+                  community.
                 </p>
+
+                {/* Comment form */}
 
                 <form
                   className="story-comment-form"
-                  onSubmit={handleCommentSubmit}
+                  onSubmit={
+                    handleCommentSubmit
+                  }
                 >
                   <textarea
                     value={comment}
                     onChange={(event) =>
-                      setComment(event.target.value)
+                      setComment(
+                        event.target.value,
+                      )
                     }
                     placeholder="Share your thoughts..."
                     aria-label="Write a comment"
+                    maxLength={1000}
+                    disabled={
+                      commentSubmitting
+                    }
                   />
 
                   <button
                     type="submit"
                     className="button story-comment-submit"
-                    disabled={!comment.trim()}
+                    disabled={
+                      !comment.trim() ||
+                      commentSubmitting
+                    }
                   >
-                    Post comment
+                    {commentSubmitting
+                      ? "Posting..."
+                      : "Post comment"}
                   </button>
                 </form>
 
-                {comments.length > 0 && (
-                  <div className="story-comments-list">
+                {/* Comment success message */}
 
-                    {comments.map((item) => (
-                      <div
-                        className="story-comment"
-                        key={item.id}
-                      >
-                        <div className="story-comment__avatar">
-                          {item.author.charAt(0).toUpperCase()}
-                        </div>
-
-                        <div className="story-comment__content">
-                          <strong>{item.author}</strong>
-
-                          <p>{item.text}</p>
-                        </div>
-                      </div>
-                    ))}
-
+                {commentMessage && (
+                  <div className="story-share-message">
+                    {commentMessage}
                   </div>
                 )}
 
+                {/* Comment error */}
+
+                {commentError && (
+                  <div className="story-share-message">
+                    {commentError}
+                  </div>
+                )}
+
+                {/* Loading comments */}
+
+                {commentsLoading && (
+                  <div className="story-comments-loading">
+                    Loading comments...
+                  </div>
+                )}
+
+                {/* Comments */}
+
+                {!commentsLoading &&
+                  comments.length > 0 && (
+                    <div className="story-comments-list">
+
+                      {comments.map((item) => {
+                        const commentAuthor =
+                          item.userId?.name ||
+                          "Anonymous";
+
+                        return (
+                          <div
+                            className="story-comment"
+                            key={item._id}
+                          >
+                            <div className="story-comment__avatar">
+                              {commentAuthor
+                                .charAt(0)
+                                .toUpperCase()}
+                            </div>
+
+                            <div className="story-comment__content">
+
+                              <strong>
+                                {
+                                  commentAuthor
+                                }
+                              </strong>
+
+                              <p>
+                                {
+                                  item.text
+                                }
+                              </p>
+
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                    </div>
+                  )}
+
+                {/* No comments */}
+
+                {!commentsLoading &&
+                  comments.length === 0 &&
+                  !commentError && (
+                    <div className="story-comments-empty">
+                      <p>
+                        No comments yet.
+                        Be the first to
+                        join the
+                        conversation.
+                      </p>
+                    </div>
+                  )}
+
               </section>
 
-              {/* Follow */}
+              {/* ======================================
+                  Follow
+              ====================================== */}
+
               <section className="story-sidebar__card story-sidebar__follow">
 
                 <span className="story-sidebar__eyebrow">
                   Stay connected
                 </span>
 
-                <h3>Follow our community</h3>
+                <h3>
+                  Follow our community
+                </h3>
 
                 <p>
-                  Stay connected with stories, support, and
+                  Stay connected with
+                  stories, support, and
                   community updates.
                 </p>
 
@@ -827,7 +1179,9 @@ export default function StoryDetails() {
               </section>
 
             </div>
+
           </aside>
+
         </div>
       </motion.main>
     </>

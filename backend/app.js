@@ -9,7 +9,6 @@ const rateLimit = require("express-rate-limit");
 const session = require("express-session");
 const { MongoStore } = require("connect-mongo");
 
-
 const app = express();
 
 // Trust proxy
@@ -153,6 +152,8 @@ app.use("/api/newsletter", require("./routes/newsletterRoutes"));
 app.use("/api/stories", require("./routes/storyRoutes"));
 
 app.use("/api/comments", require("./routes/commentRoutes"));
+
+app.use("/api/admin/comments", require("./routes/adminCommentRoutes"));
 
 // --------------------------------------------------
 // 404 Handler

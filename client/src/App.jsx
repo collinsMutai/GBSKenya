@@ -32,6 +32,9 @@ import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientC
 import AllStories from "./components/AllStories/AllStories.jsx";
 import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
 
+// Admin
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
+
 function ComingSoon({ title }) {
   return (
     <div className="container section" style={{ minHeight: "40vh" }}>
@@ -53,16 +56,16 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* ==========================================
+            PUBLIC WEBSITE
+        ========================================== */}
+
         <Route element={<Layout />}>
-          {/* ==============================
-              HOME
-          ============================== */}
+          {/* HOME */}
 
           <Route path="/" element={<Home />} />
 
-          {/* ==============================
-              ABOUT
-          ============================== */}
+          {/* ABOUT */}
 
           <Route path="/about/who-we-are" element={<WhoWeAre />} />
 
@@ -73,17 +76,13 @@ export default function App() {
             element={<MedicalAdvisoryBoard />}
           />
 
-          {/* ==============================
-              RESILIENCE STORIES
-          ============================== */}
+          {/* STORIES */}
 
           <Route path="/stories" element={<AllStories />} />
 
           <Route path="/stories/:slug" element={<StoryDetails />} />
 
-          {/* ==============================
-              RESOURCES
-          ============================== */}
+          {/* RESOURCES */}
 
           <Route path="/resources" element={<ResourcesHome />} />
 
@@ -115,9 +114,7 @@ export default function App() {
 
           <Route path="/resources/global" element={<GlobalEducation />} />
 
-          {/* ==============================
-    Get Involved
-================================= */}
+          {/* GET INVOLVED */}
 
           <Route path="/get-involved" element={<GetInvolved />} />
 
@@ -138,12 +135,42 @@ export default function App() {
             element={<ComingSoon title="Donate" />}
           />
 
-          {/* ==============================
-              CONTACT
-          ============================== */}
+          {/* CONTACT */}
 
           <Route path="/contact" element={<ContactPage />} />
+
+          {/* ADD STORY */}
+
           <Route path="/add-story" element={<StoryEditor />} />
+        </Route>
+
+        {/* ==========================================
+            ADMIN DASHBOARD
+        ========================================== */}
+
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route index element={<ComingSoon title="Dashboard Overview" />} />
+
+          <Route
+            path="stories"
+            element={<ComingSoon title="Manage Stories" />}
+          />
+
+          <Route
+            path="comments"
+            element={<ComingSoon title="Manage Comments" />}
+          />
+
+          <Route path="users" element={<ComingSoon title="Manage Users" />} />
+
+          <Route
+            path="authors"
+            element={<ComingSoon title="Manage Authors" />}
+          />
+
+          <Route path="reports" element={<ComingSoon title="Reports" />} />
+
+          <Route path="settings" element={<ComingSoon title="Settings" />} />
         </Route>
       </Routes>
 

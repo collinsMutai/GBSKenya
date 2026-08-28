@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Comment = require("../models/Comment");
 const Story = require("../models/Story");
 
+// --------------------------------------------------
+// Create comment
+// --------------------------------------------------
+
 const createComment = async (req, res, next) => {
   try {
     const { storyId, text } = req.body;
@@ -43,7 +47,7 @@ const createComment = async (req, res, next) => {
       .populate("userId", "name")
       .lean();
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "Comment submitted for moderation",
       data: populatedComment,
@@ -52,6 +56,10 @@ const createComment = async (req, res, next) => {
     next(error);
   }
 };
+
+// --------------------------------------------------
+// Get approved comments for story
+// --------------------------------------------------
 
 const getCommentsForStory = async (req, res, next) => {
   try {
@@ -72,7 +80,7 @@ const getCommentsForStory = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .lean();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       count: comments.length,
       data: comments,
@@ -82,7 +90,113 @@ const getCommentsForStory = async (req, res, next) => {
   }
 };
 
+// --------------------------------------------------
+// Get pending comments
+// --------------------------------------------------
+
+const getPendingComments = async (req, res, next) => {
+  try {
+    const comments = await Comment.find({
+      approved: false,
+    })
+      .populate("userId", "name email")
+      .populate("storyId", "title slug")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      count: comments.length,
+      data: comments,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// --------------------------------------------------
+// Approve comment
+// --------------------------------------------------
+
+const approveComment = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid comment ID",
+      });
+    }
+
+    const comment = await Comment.findByIdAndUpdate(
+      id,
+      {
+        approved: true,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
+      .populate("userId", "name email")
+      .populate("storyId", "title slug")
+      .lean();
+
+    if (!comment) {
+      return res.status(404).json({
+        success: false,
+        message: "Comment not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Comment approved successfully",
+      data: comment,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// --------------------------------------------------
+// Reject / delete comment
+// --------------------------------------------------
+
+const deleteComment = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid comment ID",
+      });
+    }
+
+    const comment = await Comment.findByIdAndDelete(id);
+
+    if (!comment) {
+      return res.status(404).json({
+        success: false,
+        message: "Comment not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Comment deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createComment,
   getCommentsForStory,
+  getPendingComments,
+  approveComment,
+  deleteComment,
 };

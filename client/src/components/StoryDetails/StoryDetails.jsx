@@ -167,6 +167,7 @@ export default function StoryDetails() {
   // --------------------------------------------------
   // Fetch related stories (same category, excluding this one)
   // --------------------------------------------------
+console.log('related');
 
   useEffect(() => {
     const fetchRelated = async () => {

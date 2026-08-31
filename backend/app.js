@@ -157,6 +157,8 @@ app.use("/api/admin/comments", require("./routes/adminCommentRoutes"));
 
 app.use("/api/admin/stories", require("./routes/adminStoryRoutes"));
 
+app.use("/api/admin/users", require("./routes/Adminuserroutes"));
+
 // --------------------------------------------------
 // 404 Handler
 // --------------------------------------------------

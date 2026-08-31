@@ -36,6 +36,7 @@ import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
 import AdminComments from "./components/AdminComments/AdminComments.jsx";
 import AdminStories from "./components/AdminStories/AdminStories.jsx";
+import AdminUsers from "./components/AdminUsers/AdminUsers.jsx";
 
 function ComingSoon({ title }) {
   return (
@@ -157,7 +158,7 @@ export default function App() {
 
           <Route path="comments" element={<AdminComments />} />
 
-          <Route path="users" element={<ComingSoon title="Manage Users" />} />
+          <Route path="users" element={<AdminUsers />} />
 
           <Route
             path="authors"

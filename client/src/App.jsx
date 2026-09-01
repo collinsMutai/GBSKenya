@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MessageCircle } from "lucide-react";
 
 import Layout from "./components/Layout/Layout.jsx";
 import Home from "./pages/Home.jsx";
+import "./App.css";
 
 /* ==========================================
    ABOUT
@@ -101,19 +103,11 @@ export default function App() {
         ========================================== */}
 
         <Route element={<Layout />}>
-          {/* ==========================================
-              HOME
-          ========================================== */}
-
           <Route path="/" element={<Home />} />
 
-          {/* ==========================================
-              ABOUT
-          ========================================== */}
+          {/* ABOUT */}
 
           <Route path="/about" element={<WhoWeAre />} />
-
-          {/* Optional About sub-pages */}
 
           <Route
             path="/about/who-we-are"
@@ -130,16 +124,12 @@ export default function App() {
             element={<MedicalAdvisoryBoard />}
           />
 
-          {/* Keep old URL working */}
-
           <Route
             path="/about/medical-advisory-board"
             element={<MedicalAdvisoryBoard />}
           />
 
-          {/* ==========================================
-              SERVICES
-          ========================================== */}
+          {/* SERVICES */}
 
           <Route
             path="/services"
@@ -186,10 +176,7 @@ export default function App() {
             element={<GlobalEducation />}
           />
 
-          {/* ==========================================
-              OLD RESOURCE URLS
-              Kept so existing links do not break
-          ========================================== */}
+          {/* OLD RESOURCE URLS */}
 
           <Route
             path="/resources"
@@ -236,9 +223,7 @@ export default function App() {
             element={<GlobalEducation />}
           />
 
-          {/* ==========================================
-              SURVIVOR STORIES
-          ========================================== */}
+          {/* SURVIVOR STORIES */}
 
           <Route
             path="/survivor-stories"
@@ -250,8 +235,6 @@ export default function App() {
             element={<StoryDetails />}
           />
 
-          {/* Keep old stories URLs working */}
-
           <Route
             path="/stories"
             element={<AllStories />}
@@ -262,27 +245,21 @@ export default function App() {
             element={<StoryDetails />}
           />
 
-          {/* ==========================================
-              CONTACT
-          ========================================== */}
+          {/* CONTACT */}
 
           <Route
             path="/contact"
             element={<ContactPage />}
           />
 
-          {/* ==========================================
-              STORY SUBMISSION
-          ========================================== */}
+          {/* STORY SUBMISSION */}
 
           <Route
             path="/add-story"
             element={<StoryEditor />}
           />
 
-          {/* ==========================================
-              LEGACY GET INVOLVED
-          ========================================== */}
+          {/* GET INVOLVED */}
 
           <Route
             path="/get-involved"
@@ -356,6 +333,26 @@ export default function App() {
           />
         </Route>
       </Routes>
+
+      {/* ==========================================
+          FLOATING WHATSAPP
+      ========================================== */}
+
+      <a
+        href="https://wa.me/254700000000"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="whatsapp-float"
+        aria-label="Chat with us on WhatsApp"
+        title="Chat with us on WhatsApp"
+      >
+        <MessageCircle
+          size={25}
+          strokeWidth={2.2}
+        />
+
+        <span className="whatsapp-float__pulse" />
+      </a>
 
       {/* ==========================================
           TOAST NOTIFICATIONS

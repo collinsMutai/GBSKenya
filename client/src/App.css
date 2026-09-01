@@ -1,0 +1,191 @@
+/* =========================================================
+   FLOATING WHATSAPP BUTTON
+========================================================= */
+
+.whatsapp-float {
+  position: fixed;
+
+  right: 26px;
+  bottom: 26px;
+
+  z-index: 999999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 62px;
+  height: 62px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: #25d366;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  isolation: isolate;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.20),
+    0 5px 15px rgba(37, 211, 102, 0.28);
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.whatsapp-float svg {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  width: 29px;
+  height: 29px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.whatsapp-float:hover {
+  background: #20bd5a;
+
+  transform: translateY(-5px) scale(1.05);
+
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.25),
+    0 6px 22px rgba(37, 211, 102, 0.38);
+}
+
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.whatsapp-float:active {
+  transform: translateY(-1px) scale(0.96);
+}
+
+
+/* =========================================================
+   PULSE RING
+========================================================= */
+
+.whatsapp-float__pulse {
+  position: absolute;
+
+  inset: -6px;
+
+  z-index: -1;
+
+  border: 2px solid rgba(37, 211, 102, 0.45);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  animation: whatsapp-pulse 2.5s ease-out infinite;
+}
+
+@keyframes whatsapp-pulse {
+  0% {
+    opacity: 0.75;
+    transform: scale(0.9);
+  }
+
+  65% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.whatsapp-float:focus-visible {
+  outline: 3px solid var(--marigold-500, #d9a441);
+  outline-offset: 5px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  .whatsapp-float {
+    right: 18px;
+    bottom: 18px;
+
+    width: 56px;
+    height: 56px;
+  }
+
+  .whatsapp-float svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .whatsapp-float__pulse {
+    inset: -5px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+  .whatsapp-float {
+    right: 14px;
+    bottom: 16px;
+
+    width: 52px;
+    height: 52px;
+  }
+
+  .whatsapp-float svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float {
+    transition: none;
+  }
+
+  .whatsapp-float__pulse {
+    animation: none;
+  }
+}

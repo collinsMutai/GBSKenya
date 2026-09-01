@@ -11,9 +11,7 @@ import "./App.css";
    ABOUT
 ========================================== */
 
-import WhoWeAre from "./components/WhoWeAre/WhoWeAre.jsx";
-import Leadership from "./components/Leadership/Leadership.jsx";
-import MedicalAdvisoryBoard from "./components/MedicalAdvisoryBoard/MedicalAdvisoryBoard.jsx";
+
 
 /* ==========================================
    SURVIVOR STORIES
@@ -61,6 +59,7 @@ import AdminComments from "./components/AdminComments/AdminComments.jsx";
 import AdminStories from "./components/AdminStories/AdminStories.jsx";
 import AdminUsers from "./components/AdminUsers/AdminUsers.jsx";
 import AdminAuthors from "./components/AdminAuthors/AdminAuthors.jsx";
+import AboutPage from "./components/AboutPage/AboutPage.jsx";
 
 /* ==========================================
    COMING SOON
@@ -107,34 +106,15 @@ export default function App() {
 
           {/* ABOUT */}
 
-          <Route path="/about" element={<WhoWeAre />} />
+          <Route path="/about" element={<AboutPage />} />
 
-          <Route
-            path="/about/who-we-are"
-            element={<WhoWeAre />}
-          />
+          
 
-          <Route
-            path="/about/leadership"
-            element={<Leadership />}
-          />
-
-          <Route
-            path="/about/advisory-board"
-            element={<MedicalAdvisoryBoard />}
-          />
-
-          <Route
-            path="/about/medical-advisory-board"
-            element={<MedicalAdvisoryBoard />}
-          />
+         
 
           {/* SERVICES */}
 
-          <Route
-            path="/services"
-            element={<ResourcesHome />}
-          />
+          <Route path="/services" element={<ResourcesHome />} />
 
           <Route
             path="/services/conditions"
@@ -151,37 +131,19 @@ export default function App() {
             element={<FinancialSupport />}
           />
 
-          <Route
-            path="/services/rehabilitation"
-            element={<Rehabilitation />}
-          />
+          <Route path="/services/rehabilitation" element={<Rehabilitation />} />
 
-          <Route
-            path="/services/mental-health"
-            element={<MentalHealth />}
-          />
+          <Route path="/services/mental-health" element={<MentalHealth />} />
 
-          <Route
-            path="/services/downloads"
-            element={<Downloads />}
-          />
+          <Route path="/services/downloads" element={<Downloads />} />
 
-          <Route
-            path="/services/faq"
-            element={<ResourcesFAQ />}
-          />
+          <Route path="/services/faq" element={<ResourcesFAQ />} />
 
-          <Route
-            path="/services/global"
-            element={<GlobalEducation />}
-          />
+          <Route path="/services/global" element={<GlobalEducation />} />
 
           {/* OLD RESOURCE URLS */}
 
-          <Route
-            path="/resources"
-            element={<ResourcesHome />}
-          />
+          <Route path="/resources" element={<ResourcesHome />} />
 
           <Route
             path="/resources/conditions"
@@ -203,73 +165,37 @@ export default function App() {
             element={<Rehabilitation />}
           />
 
-          <Route
-            path="/resources/mental-health"
-            element={<MentalHealth />}
-          />
+          <Route path="/resources/mental-health" element={<MentalHealth />} />
 
-          <Route
-            path="/resources/downloads"
-            element={<Downloads />}
-          />
+          <Route path="/resources/downloads" element={<Downloads />} />
 
-          <Route
-            path="/resources/faq"
-            element={<ResourcesFAQ />}
-          />
+          <Route path="/resources/faq" element={<ResourcesFAQ />} />
 
-          <Route
-            path="/resources/global"
-            element={<GlobalEducation />}
-          />
+          <Route path="/resources/global" element={<GlobalEducation />} />
 
           {/* SURVIVOR STORIES */}
 
-          <Route
-            path="/survivor-stories"
-            element={<AllStories />}
-          />
+          <Route path="/survivor-stories" element={<AllStories />} />
 
-          <Route
-            path="/survivor-stories/:slug"
-            element={<StoryDetails />}
-          />
+          <Route path="/survivor-stories/:slug" element={<StoryDetails />} />
 
-          <Route
-            path="/stories"
-            element={<AllStories />}
-          />
+          <Route path="/stories" element={<AllStories />} />
 
-          <Route
-            path="/stories/:slug"
-            element={<StoryDetails />}
-          />
+          <Route path="/stories/:slug" element={<StoryDetails />} />
 
           {/* CONTACT */}
 
-          <Route
-            path="/contact"
-            element={<ContactPage />}
-          />
+          <Route path="/contact" element={<ContactPage />} />
 
           {/* STORY SUBMISSION */}
 
-          <Route
-            path="/add-story"
-            element={<StoryEditor />}
-          />
+          <Route path="/add-story" element={<StoryEditor />} />
 
           {/* GET INVOLVED */}
 
-          <Route
-            path="/get-involved"
-            element={<GetInvolved />}
-          />
+          <Route path="/get-involved" element={<GetInvolved />} />
 
-          <Route
-            path="/get-involved/events/:slug"
-            element={<EventDetails />}
-          />
+          <Route path="/get-involved/events/:slug" element={<EventDetails />} />
 
           <Route
             path="/get-involved/patient-caregiver-survey"
@@ -291,46 +217,20 @@ export default function App() {
             ADMIN DASHBOARD
         ========================================== */}
 
-        <Route
-          path="/admin"
-          element={<AdminDashboard />}
-        >
-          <Route
-            index
-            element={
-              <ComingSoon title="Dashboard Overview" />
-            }
-          />
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route index element={<ComingSoon title="Dashboard Overview" />} />
 
-          <Route
-            path="stories"
-            element={<AdminStories />}
-          />
+          <Route path="stories" element={<AdminStories />} />
 
-          <Route
-            path="comments"
-            element={<AdminComments />}
-          />
+          <Route path="comments" element={<AdminComments />} />
 
-          <Route
-            path="users"
-            element={<AdminUsers />}
-          />
+          <Route path="users" element={<AdminUsers />} />
 
-          <Route
-            path="authors"
-            element={<AdminAuthors />}
-          />
+          <Route path="authors" element={<AdminAuthors />} />
 
-          <Route
-            path="reports"
-            element={<ComingSoon title="Reports" />}
-          />
+          <Route path="reports" element={<ComingSoon title="Reports" />} />
 
-          <Route
-            path="settings"
-            element={<ComingSoon title="Settings" />}
-          />
+          <Route path="settings" element={<ComingSoon title="Settings" />} />
         </Route>
       </Routes>
 
@@ -346,10 +246,7 @@ export default function App() {
         aria-label="Chat with us on WhatsApp"
         title="Chat with us on WhatsApp"
       >
-        <MessageCircle
-          size={25}
-          strokeWidth={2.2}
-        />
+        <MessageCircle size={25} strokeWidth={2.2} />
 
         <span className="whatsapp-float__pulse" />
       </a>
@@ -358,10 +255,7 @@ export default function App() {
           TOAST NOTIFICATIONS
       ========================================== */}
 
-      <ToastContainer
-        position="bottom-right"
-        autoClose={4000}
-      />
+      <ToastContainer position="bottom-right" autoClose={4000} />
     </BrowserRouter>
   );
 }

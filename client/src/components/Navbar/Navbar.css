@@ -35,8 +35,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
+
   color: var(--ivory-100);
   opacity: 0.85;
+
   text-decoration: none;
 
   transition:
@@ -57,16 +59,20 @@
 
 .topbar__socials a {
   display: flex;
+
   color: var(--ivory-100);
   opacity: 0.85;
+
   transition:
     color 0.25s ease,
-    opacity 0.25s ease;
+    opacity 0.25s ease,
+    transform 0.2s ease;
 }
 
 .topbar__socials a:hover {
   color: var(--marigold-500);
   opacity: 1;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 560px) {
@@ -89,7 +95,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 28px;
+
   height: 105px;
 }
 
@@ -99,6 +107,7 @@
 
 .navbar__brand {
   display: inline-flex;
+
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -154,8 +163,10 @@
 
 .navbar__links {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 24px;
 
   flex: 1;
@@ -163,8 +174,8 @@
 
 .navbar__link {
   display: flex;
+
   align-items: center;
-  gap: 4px;
 
   color: var(--ivory-100);
 
@@ -180,115 +191,28 @@
 }
 
 .navbar__link:hover {
-  color: var(--ivory-50);
+  color: var(--marigold-500);
+  transform: translateY(-1px);
 }
 
 /* ==============================
-   Desktop Dropdown
+   Account Area
 ============================== */
 
-.navbar__dropdown {
-  position: relative;
-}
+.navbar__account {
+  display: flex;
 
-/* Invisible bridge between trigger and dropdown */
-.navbar__dropdown::after {
-  content: "";
+  align-items: center;
 
-  position: absolute;
+  gap: 8px;
 
-  left: 0;
-  right: 0;
-  top: 100%;
+  flex-shrink: 0;
 
-  height: 16px;
-}
-
-.navbar__dropdown-trigger svg {
-  transition: transform 0.2s ease;
-}
-
-.navbar__dropdown:hover .navbar__dropdown-trigger svg,
-.navbar__dropdown:focus-within .navbar__dropdown-trigger svg {
-  transform: rotate(180deg);
-}
-
-.navbar__dropdown-panel {
-  position: absolute;
-
-  top: calc(100% + 14px);
-  left: 50%;
-
-  transform: translateX(-50%) translateY(-6px);
-
-  min-width: 260px;
-  padding: 10px;
-
-  background: var(--canopy-700);
-
-  border: 1px solid var(--line-on-dark);
-  border-radius: 12px;
-
-  box-shadow: 0 16px 32px rgba(7, 42, 74, 0.28);
-
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    visibility 0.2s ease;
-}
-
-.navbar__dropdown-panel.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-
-  transform: translateX(-50%) translateY(0);
-}
-
-/* Right aligned dropdown */
-
-.navbar__dropdown-panel--right {
-  left: auto;
-  right: 0;
-
-  transform: translateY(-6px);
-}
-
-.navbar__dropdown-panel--right.is-open {
-  transform: translateY(0);
-}
-
-.navbar__dropdown-link {
-  display: block;
-
-  padding: 10px 14px;
-
-  border-radius: 8px;
-
-  color: var(--ivory-100);
-
-  font-size: 14.5px;
-  font-weight: 500;
-
-  text-decoration: none;
-  white-space: nowrap;
-
-  transition:
-    background 0.15s ease,
-    color 0.15s ease;
-}
-
-.navbar__dropdown-link:hover {
-  background: rgba(250, 247, 239, 0.08);
-  color: var(--ivory-50);
+  margin-left: 5px;
 }
 
 /* ==============================
-   Login Button
+   Login / User Button
 ============================== */
 
 .navbar__login {
@@ -299,9 +223,7 @@
 
   gap: 7px;
 
-  flex-shrink: 0;
-
-  margin-left: 5px;
+  min-height: 40px;
 
   padding: 9px 16px;
 
@@ -327,10 +249,70 @@
 
 .navbar__login:hover {
   background: #0b6b4f;
+
   border-color: #0b6b4f;
+
   color: #fff;
 
   transform: translateY(-1px);
+}
+
+/* ==============================
+   Logout Button
+============================== */
+
+.navbar__logout {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  border: 1px solid rgba(250, 247, 239, 0.22);
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  color: var(--ivory-100);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.navbar__logout svg {
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.navbar__logout:hover {
+  background: rgba(220, 53, 69, 0.15);
+
+  border-color: rgba(220, 53, 69, 0.55);
+
+  color: #ff6b6b;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
+}
+
+.navbar__logout:hover svg {
+  transform: translateX(2px);
+}
+
+.navbar__logout:active {
+  transform: translateY(0);
 }
 
 /* ==============================
@@ -349,6 +331,7 @@
   padding: 0;
 
   border: none;
+
   background: transparent;
 
   color: var(--ivory-50);
@@ -358,7 +341,9 @@
 
   cursor: pointer;
 
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .navbar__toggle:hover {
@@ -373,66 +358,37 @@
   display: none;
 }
 
-/* Mobile collapsible group */
+/* ==============================
+   Mobile User
+============================== */
 
-.navbar__mobile-group {
+.navbar__mobile-user {
   display: flex;
 
-  flex-direction: column;
-
   align-items: center;
-}
-
-.navbar__mobile-group-trigger {
   justify-content: center;
 
-  width: 100%;
+  gap: 10px;
 
-  background: none;
-  border: none;
+  margin-top: 8px;
 
-  cursor: pointer;
+  width: 220px;
 
-  font-family: inherit;
-}
+  padding: 12px 16px;
 
-.navbar__mobile-submenu {
-  display: flex;
+  border: 1px solid rgba(250, 247, 239, 0.15);
+  border-radius: 8px;
 
-  flex-direction: column;
+  background: rgba(255, 255, 255, 0.04);
 
-  align-items: center;
+  color: var(--ivory-50);
 
-  gap: 1.1rem;
-
-  margin-top: 1.1rem;
-}
-
-.navbar__mobile-sublink {
-  color: var(--ivory-100);
-
-  font-size: clamp(1rem, 3.6vw, 1.2rem);
-  font-weight: 500;
-
-  text-decoration: none;
-
-  opacity: 0.85;
-
-  transition:
-    color 0.25s ease,
-    opacity 0.25s ease,
-    transform 0.25s ease;
-}
-
-.navbar__mobile-sublink:hover {
-  color: var(--marigold-500);
-  opacity: 1;
-
-  transform: translateY(-2px);
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 /* ==============================
-   Mobile Login
+   Mobile Login / Logout
 ============================== */
 
 .navbar__mobile-login {
@@ -443,7 +399,7 @@
 
   gap: 10px;
 
-  margin-top: 16px;
+  margin-top: 8px;
 
   width: 220px;
 
@@ -453,6 +409,7 @@
   border-radius: 8px;
 
   background: #0b6b4f;
+
   color: #fff;
 
   font-family: inherit;
@@ -463,12 +420,34 @@
 
   transition:
     background 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .navbar__mobile-login:hover {
   background: #095a43;
+
   transform: translateY(-2px);
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* Logout state */
+
+.navbar__mobile-user + .navbar__mobile-login {
+  background: rgba(220, 53, 69, 0.12);
+
+  border: 1px solid rgba(220, 53, 69, 0.45);
+
+  color: #ff7777;
+}
+
+.navbar__mobile-user + .navbar__mobile-login:hover {
+  background: rgba(220, 53, 69, 0.2);
+
+  border-color: rgba(220, 53, 69, 0.7);
+
+  color: #ff8a8a;
 }
 
 /* ==============================
@@ -497,10 +476,11 @@
     gap: 16px;
   }
 
-  /* Text logo */
+  /* Logo */
 
   .navbar__brand {
     min-width: 0;
+
     max-width: 220px;
 
     overflow: hidden;
@@ -514,12 +494,13 @@
     margin-top: 5px;
 
     font-size: 0.53rem;
+
     letter-spacing: 0.13em;
   }
 
-  /* Login is hidden on mobile */
+  /* Hide desktop account */
 
-  .navbar__login {
+  .navbar__account {
     display: none;
   }
 
@@ -570,6 +551,8 @@
     animation: fadeMenu 0.3s ease;
   }
 
+  /* Mobile links */
+
   .navbar__mobile .navbar__link {
     justify-content: center;
 
@@ -592,12 +575,14 @@
     transform: translateY(-3px);
   }
 
-  .navbar__mobile-cta {
-    margin-top: 1rem;
+  /* Mobile account spacing */
 
-    width: 220px;
+  .navbar__mobile-user {
+    margin-top: 0;
+  }
 
-    justify-content: center;
+  .navbar__mobile-login {
+    margin-top: 0;
   }
 }
 
@@ -625,6 +610,7 @@
     margin-top: 4px;
 
     font-size: 0.45rem;
+
     letter-spacing: 0.105em;
   }
 
@@ -643,9 +629,9 @@
     font-size: 1.3rem;
   }
 
-  .navbar__mobile-submenu {
-    gap: 0.9rem;
-    margin-top: 0.9rem;
+  .navbar__mobile-user,
+  .navbar__mobile-login {
+    width: min(220px, 85vw);
   }
 }
 
@@ -664,6 +650,7 @@
 
   .navbar__logo-sub {
     font-size: 0.4rem;
+
     letter-spacing: 0.08em;
   }
 }

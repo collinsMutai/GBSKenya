@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Phone, User } from "lucide-react";
+import { Mail, Phone, User, LogOut } from "lucide-react";
 
 import LoginModal from "../loginmodal/LoginModal";
 
@@ -98,9 +98,53 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const [loginOpen, setLoginOpen] = useState(false);
+
   const [user, setUser] = useState(null);
 
-  /* Prevent page scrolling when mobile menu is open */
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  /* ==============================
+     Check Existing Session
+  ============================== */
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/auth/me`,
+          {
+            method: "GET",
+            credentials: "include",
+          },
+        );
+
+        if (!response.ok) {
+          setUser(null);
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.data?.user) {
+          setUser(data.data.user);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+        setUser(null);
+      } finally {
+        setCheckingAuth(false);
+      }
+    };
+
+    checkAuthentication();
+  }, []);
+
+  /* ==============================
+     Prevent page scrolling
+  ============================== */
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
 
@@ -109,48 +153,105 @@ export default function Navbar() {
     };
   }, [open]);
 
-  /* Close mobile menu */
+  /* ==============================
+     Close Mobile Menu
+  ============================== */
+
   const closeMenu = () => {
     setOpen(false);
   };
 
-  /* Open login modal */
+  /* ==============================
+     Open Login
+  ============================== */
+
   const openLogin = () => {
     closeMenu();
+
+    /*
+      If the user is already logged in,
+      do NOT open the login modal.
+    */
+
+    if (user) {
+      return;
+    }
+
     setLoginOpen(true);
   };
 
-  /* Login success */
+  /* ==============================
+     Login Success
+  ============================== */
+
   const handleLoginSuccess = (loggedInUser) => {
     setUser(loggedInUser);
+    setLoginOpen(false);
 
     console.log("Logged in user:", loggedInUser);
   };
 
+  /* ==============================
+     Logout
+  ============================== */
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+
+      setUser(null);
+      closeMenu();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <header className="navbar">
+
       {/* ==============================
           Top Bar
       ============================== */}
 
       <div className="topbar">
         <div className="container topbar__row">
+
           <div className="topbar__contact">
+
             <a
               href="mailto:info@gbvfoundationkenya.org"
               className="topbar__item"
             >
               <Mail size={14} />
-              <span>info@gbvfoundationkenya.org</span>
+              <span>
+                info@gbvfoundationkenya.org
+              </span>
             </a>
 
-            <a href="tel:+254700000000" className="topbar__item">
+            <a
+              href="tel:+254700000000"
+              className="topbar__item"
+            >
               <Phone size={14} />
-              <span>+254 700 000 000</span>
+              <span>
+                +254 700 000 000
+              </span>
             </a>
+
           </div>
 
           <div className="topbar__socials">
+
             <a
               href="https://facebook.com"
               target="_blank"
@@ -186,16 +287,20 @@ export default function Navbar() {
             >
               <LinkedinIcon size={15} />
             </a>
+
           </div>
+
         </div>
       </div>
+
 
       {/* ==============================
           Main Navigation
       ============================== */}
 
       <div className="container navbar__row">
-        {/* Text Logo */}
+
+        {/* Logo */}
 
         <Link
           to="/"
@@ -203,15 +308,22 @@ export default function Navbar() {
           onClick={closeMenu}
           aria-label="GBV Foundation Kenya Home"
         >
-          <span className="navbar__logo-main">GBV</span>
-          <span className="navbar__logo-sub">FOUNDATION KENYA</span>
+          <span className="navbar__logo-main">
+            GBV
+          </span>
+
+          <span className="navbar__logo-sub">
+            FOUNDATION KENYA
+          </span>
         </Link>
 
-        {/* ==============================
-            Desktop Navigation
-        ============================== */}
 
-        <nav className="navbar__links" aria-label="Main navigation">
+        {/* Desktop Navigation */}
+
+        <nav
+          className="navbar__links"
+          aria-label="Main navigation"
+        >
           {links.map((link) => (
             <Link
               key={link.to}
@@ -224,43 +336,83 @@ export default function Navbar() {
           ))}
         </nav>
 
+
         {/* ==============================
-            Desktop Login
+            Desktop Login / User
         ============================== */}
+
+        {!checkingAuth && (
+          <div className="navbar__account">
+
+            <button
+              type="button"
+              className="navbar__login"
+              onClick={openLogin}
+              aria-label={
+                user
+                  ? `Logged in as ${user.name}`
+                  : "Login"
+              }
+              title={
+                user
+                  ? `Logged in as ${user.name}`
+                  : "Login"
+              }
+            >
+              <User size={19} />
+
+              <span>
+                {user ? user.name : "Login"}
+              </span>
+            </button>
+
+            {user && (
+              <button
+                type="button"
+                className="navbar__logout"
+                onClick={handleLogout}
+                aria-label="Logout"
+                title="Logout"
+              >
+                <LogOut size={17} />
+              </button>
+            )}
+
+          </div>
+        )}
+
+
+        {/* Mobile Menu Button */}
 
         <button
           type="button"
-          className="navbar__login"
-          onClick={openLogin}
-          aria-label="Login"
-          title="Login"
-        >
-          <User size={19} />
-
-          <span>{user ? user.name : "Login"}</span>
-        </button>
-
-        {/* ==============================
-            Mobile Menu Button
-        ============================== */}
-
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={
+            open
+              ? "Close menu"
+              : "Open menu"
+          }
           aria-expanded={open}
           className="navbar__toggle"
-          onClick={() => setOpen((prev) => !prev)}
+          onClick={() =>
+            setOpen((prev) => !prev)
+          }
         >
           {open ? "✕" : "☰"}
         </button>
+
       </div>
+
 
       {/* ==============================
           Mobile Menu
       ============================== */}
 
       {open && (
-        <nav className="navbar__mobile" aria-label="Mobile navigation">
+        <nav
+          className="navbar__mobile"
+          aria-label="Mobile navigation"
+        >
+
           {links.map((link) => (
             <Link
               key={link.to}
@@ -272,29 +424,65 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Mobile Login */}
 
-          <button
-            type="button"
-            className="navbar__mobile-login"
-            onClick={openLogin}
-          >
-            <User size={20} />
+          {/* Mobile Account */}
 
-            <span>{user ? user.name : "Login"}</span>
-          </button>
+          {user ? (
+            <>
+              <div className="navbar__mobile-user">
+                <User size={20} />
+
+                <span>
+                  {user.name}
+                </span>
+              </div>
+
+              <button
+                type="button"
+                className="navbar__mobile-login"
+                onClick={handleLogout}
+              >
+                <LogOut size={20} />
+
+                <span>
+                  Logout
+                </span>
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="navbar__mobile-login"
+              onClick={openLogin}
+            >
+              <User size={20} />
+
+              <span>
+                Login
+              </span>
+            </button>
+          )}
+
         </nav>
       )}
+
 
       {/* ==============================
           Login Modal
       ============================== */}
 
-      <LoginModal
-        isOpen={loginOpen}
-        onClose={() => setLoginOpen(false)}
-        onLoginSuccess={handleLoginSuccess}
-      />
+      {!user && (
+        <LoginModal
+          isOpen={loginOpen}
+          onClose={() =>
+            setLoginOpen(false)
+          }
+          onLoginSuccess={
+            handleLoginSuccess
+          }
+        />
+      )}
+
     </header>
   );
 }

@@ -38,6 +38,7 @@ import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientC
    ADMIN
 ========================================== */
 
+import RequireAdmin from "./components/Requireadmin/Requireadmin.jsx";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
 import AdminOverview from "./components/Adminoverview/Adminoverview.jsx";
 import AdminComments from "./components/AdminComments/AdminComments.jsx";
@@ -138,20 +139,22 @@ export default function App() {
             ADMIN DASHBOARD
         ========================================== */}
 
-        <Route path="/admin" element={<AdminDashboard />}>
-          <Route index element={<AdminOverview />} />
+        <Route path="/admin" element={<RequireAdmin />}>
+          <Route element={<AdminDashboard />}>
+            <Route index element={<AdminOverview />} />
 
-          <Route path="stories" element={<AdminStories />} />
+            <Route path="stories" element={<AdminStories />} />
 
-          <Route path="comments" element={<AdminComments />} />
+            <Route path="comments" element={<AdminComments />} />
 
-          <Route path="users" element={<AdminUsers />} />
+            <Route path="users" element={<AdminUsers />} />
 
-          <Route path="authors" element={<AdminAuthors />} />
+            <Route path="authors" element={<AdminAuthors />} />
 
-          <Route path="reports" element={<ComingSoon title="Reports" />} />
+            <Route path="reports" element={<ComingSoon title="Reports" />} />
 
-          <Route path="settings" element={<ComingSoon title="Settings" />} />
+            <Route path="settings" element={<ComingSoon title="Settings" />} />
+          </Route>
         </Route>
       </Routes>
 

@@ -1,0 +1,30 @@
+.admin-guard {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ivory-50);
+}
+
+.admin-guard__spinner {
+  width: 36px;
+  height: 36px;
+
+  border: 3px solid var(--cloud-100);
+  border-top-color: var(--canopy-600);
+  border-radius: 50%;
+
+  animation: admin-guard-spin 0.8s linear infinite;
+}
+
+@keyframes admin-guard-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-guard__spinner {
+    animation: none;
+  }
+}

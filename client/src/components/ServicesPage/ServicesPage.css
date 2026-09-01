@@ -1,0 +1,585 @@
+/* =========================================================
+   SERVICES PAGE
+========================================================= */
+
+.services-page {
+  background: var(--ivory-50, #faf8f3);
+}
+
+.services-page__section {
+  padding-top: 72px;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.services-page__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 80px;
+  align-items: end;
+
+  padding-bottom: 56px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.services-page__intro h2 {
+  max-width: 680px;
+
+  margin: 14px 0 0;
+
+  color: var(--canopy-900);
+
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.services-page__intro h2 span {
+  color: var(--marigold-600);
+}
+
+.services-page__intro > p {
+  max-width: 370px;
+
+  margin: 0;
+
+  color: var(--ink-700);
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   SERVICES GRID
+========================================================= */
+
+.services-page__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+
+  margin-top: 24px;
+}
+
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
+.services-page__card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 330px;
+  padding: 30px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid var(--line);
+
+  color: var(--ink-900);
+
+  text-decoration: none;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.services-page__card::after {
+  content: "";
+
+  position: absolute;
+
+  right: -70px;
+  bottom: -70px;
+
+  width: 180px;
+  height: 180px;
+
+  border: 1px solid rgba(11, 107, 79, 0.07);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  transition: transform 0.4s ease;
+}
+
+.services-page__card:hover {
+  transform: translateY(-5px);
+
+  border-color: rgba(11, 107, 79, 0.25);
+
+  box-shadow: 0 18px 45px rgba(19, 45, 37, 0.08);
+}
+
+.services-page__card:hover::after {
+  transform: scale(1.25);
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.services-page__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.services-page__number {
+  color: var(--ink-400);
+
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.services-page__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  border: 1px solid rgba(11, 107, 79, 0.14);
+  border-radius: 50%;
+
+  background: rgba(11, 107, 79, 0.05);
+
+  color: var(--canopy-700);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.services-page__card-content {
+  position: relative;
+  z-index: 1;
+
+  margin-top: auto;
+  margin-bottom: 35px;
+}
+
+.services-page__card-content h3 {
+  margin: 0 0 12px;
+
+  color: var(--canopy-900);
+
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.1;
+
+  letter-spacing: -0.035em;
+}
+
+.services-page__card-content p {
+  max-width: 340px;
+
+  margin: 0;
+
+  color: var(--ink-600);
+
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   CARD LINK
+========================================================= */
+
+.services-page__card-link {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-top: 15px;
+
+  border-top: 1px solid var(--line);
+
+  color: var(--canopy-700);
+
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.services-page__card-link svg {
+  transition: transform 0.25s ease;
+}
+
+.services-page__card:hover .services-page__card-link svg {
+  transform: translate(3px, -3px);
+}
+
+
+/* =========================================================
+   FEATURE
+========================================================= */
+
+.services-page__feature {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 50px;
+
+  margin-top: 24px;
+  padding: 55px;
+
+  background: var(--canopy-900);
+
+  color: var(--ivory-50);
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.services-page__feature::before {
+  content: "";
+
+  position: absolute;
+
+  width: 360px;
+  height: 360px;
+
+  right: -120px;
+  top: -170px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 50%;
+}
+
+.services-page__feature-content {
+  position: relative;
+  z-index: 1;
+}
+
+.services-page__feature-content .eyebrow {
+  color: var(--marigold-500);
+}
+
+.services-page__feature h3 {
+  max-width: 700px;
+
+  margin: 15px 0 20px;
+
+  color: var(--ivory-50);
+
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 500;
+  line-height: 1.02;
+
+  letter-spacing: -0.045em;
+}
+
+.services-page__feature h3 span {
+  color: var(--marigold-500);
+}
+
+.services-page__feature p {
+  max-width: 620px;
+
+  margin: 0;
+
+  color: var(--ivory-100);
+
+  opacity: 0.75;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   FEATURE BUTTON
+========================================================= */
+
+.services-page__feature-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 30px;
+  padding: 13px 19px;
+
+  border-radius: 999px;
+
+  background: var(--marigold-500);
+  color: var(--canopy-900);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.services-page__feature-button:hover {
+  background: var(--marigold-400, #e4b63d);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   FEATURE SIDE
+========================================================= */
+
+.services-page__feature-side {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.services-page__feature-line {
+  width: 1px;
+  height: 150px;
+
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.services-page__feature-side > span {
+  color: var(--ivory-100);
+
+  opacity: 0.45;
+
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+
+  line-height: 2;
+
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   HELP STRIP
+========================================================= */
+
+.services-page__help {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+
+  margin-top: 24px;
+  padding: 22px 26px;
+
+  background: #f2e9df;
+
+  border-left: 3px solid var(--ember-600);
+}
+
+.services-page__help-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: rgba(179, 64, 45, 0.1);
+
+  color: var(--ember-600);
+}
+
+.services-page__help-copy > span {
+  color: var(--ink-900);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.services-page__help-copy p {
+  max-width: 700px;
+
+  margin: 4px 0 0;
+
+  color: var(--ink-700);
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.services-page__help-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  white-space: nowrap;
+
+  color: var(--ink-900);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.services-page__help-link:hover {
+  color: var(--canopy-700);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+  .services-page__intro {
+    grid-template-columns: 1fr 300px;
+    gap: 45px;
+  }
+
+  .services-page__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .services-page__feature {
+    grid-template-columns: 1fr;
+  }
+
+  .services-page__feature-side {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .services-page__section {
+    padding-top: 50px;
+  }
+
+  .services-page__intro {
+    display: block;
+
+    padding-bottom: 40px;
+  }
+
+  .services-page__intro h2 {
+    font-size: clamp(38px, 11vw, 52px);
+  }
+
+  .services-page__intro > p {
+    margin-top: 22px;
+  }
+
+  .services-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-page__card {
+    min-height: 300px;
+    padding: 27px 24px;
+  }
+
+  .services-page__feature {
+    padding: 35px 27px;
+  }
+
+  .services-page__feature h3 {
+    font-size: 38px;
+  }
+
+  .services-page__help {
+    grid-template-columns: auto 1fr;
+  }
+
+  .services-page__help-link {
+    grid-column: 1 / -1;
+    justify-content: center;
+
+    padding-top: 15px;
+
+    border-top: 1px solid rgba(179, 64, 45, 0.15);
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .services-page__card {
+    padding: 25px 20px;
+  }
+
+  .services-page__feature {
+    padding: 30px 22px;
+  }
+
+  .services-page__feature h3 {
+    font-size: 34px;
+  }
+
+  .services-page__help {
+    padding: 20px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.services-page__card:focus-visible,
+.services-page__feature-button:focus-visible,
+.services-page__help-link:focus-visible {
+  outline: 2px solid var(--marigold-500);
+  outline-offset: 4px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .services-page__card,
+  .services-page__card::after,
+  .services-page__card-link svg,
+  .services-page__feature-button {
+    transition: none;
+  }
+}

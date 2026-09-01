@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import PageHeader from "../PageHeader/PageHeader.jsx";
 import "./Leadership.css";
-import img2 from "../../assets/img2.jpeg"
-import Violet_Nelly_Amukonyi from "../../assets/Violet_Nelly_Amukonyi.jpeg"
-import Joseph_K_Yego from "../../assets/Joseph_K_Yego.jpeg"
-import Marylyn_Stacy_Kasandi_Alali from "../../assets/Marylyn_Stacy_Kasandi_Alali.jpeg"
+const img1 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/about-us-image-1.jpg";
+const img2 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/about-us-body-image.jpg";
+const img3 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/03/our-impact-image-2.jpg";
+const img4 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/about-us-image-2.jpg";
 
 
 
@@ -46,7 +46,7 @@ const leaders = [
   {
     name: "Joseph K Yego",
     role: "Chairperson",
-    image: Joseph_K_Yego,
+    image: img1,
     bio: "Provides strategic leadership, partnerships, and advocacy to strengthen support for people affected by GBS, CIDP, and MMN.",
     email: "chair@gbskenya.org",
     linkedin: "#",
@@ -54,7 +54,7 @@ const leaders = [
   {
     name: "Violet Nelly Amukonyi",
     role: "Vice Chairperson",
-    image: Violet_Nelly_Amukonyi,
+    image: img2,
     bio: "Supports governance, community engagement, and collaboration with healthcare partners.",
     email: "vicechair@gbskenya.org",
     linkedin: "#",
@@ -62,7 +62,7 @@ const leaders = [
   {
     name: "Koech Kiplangat Collins",
     role: "Secretary",
-    image: "https://i.pravatar.cc/600?img=68",
+    image: img3,
     bio: "Coordinates communication, administration, and stakeholder engagement.",
     email: "secretary@gbskenya.org",
     linkedin: "#",
@@ -70,7 +70,7 @@ const leaders = [
   {
     name: "Marylyn Stacy Kasandi Alali",
     role: "Treasurer",
-    image: Marylyn_Stacy_Kasandi_Alali,
+    image: img4,
     bio: "Provides financial oversight and supports sustainable programmes.",
     email: "treasurer@gbskenya.org",
     linkedin: "#",
@@ -78,7 +78,7 @@ const leaders = [
   {
     name: "Rose Mumbua Musyoka",
     role: "Treasurer",
-    image: img2,
+    image: img4,
     bio: "Provides financial oversight and supports sustainable programmes.",
     email: "treasurer@gbskenya.org",
     linkedin: "#",

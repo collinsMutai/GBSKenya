@@ -3,10 +3,10 @@ import { ArrowUpRight, Heart, MessageCircle } from "lucide-react";
 
 import "./SurvivorVoices.css";
 
-import img1 from "../../assets/Violet_Nelly_Amukonyi.jpeg";
-import img2 from "../../assets/Marylyn_Stacy_Kasandi_Alali.jpeg";
-import img3 from "../../assets/Joseph_K_Yego.jpeg";
-import img4 from "../../assets/img2.jpeg";
+const img1 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/about-us-image-1.jpg";
+const img2 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/about-us-body-image.jpg";
+const img3 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/03/our-impact-image-2.jpg";
+const img4 = "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/about-us-image-2.jpg";
 
 const stories = [
   {

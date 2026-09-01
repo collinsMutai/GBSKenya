@@ -1,0 +1,500 @@
+/* =========================================================
+   HELP NOW
+   Sticky / scroll-over intervention section
+========================================================= */
+
+.help-now {
+  position: relative;
+
+  min-height: 145vh;
+
+  background: #151b18;
+
+  overflow: visible;
+}
+
+
+/* =========================================================
+   STICKY FRAME
+========================================================= */
+
+.help-now__sticky {
+  position: sticky;
+  top: 0;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  padding: 70px 0;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(169, 67, 52, 0.16),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(224, 166, 52, 0.07),
+      transparent 28%
+    ),
+    #151b18;
+}
+
+
+/* =========================================================
+   BACKGROUND DETAIL
+========================================================= */
+
+.help-now__sticky::before {
+  content: "";
+
+  position: absolute;
+
+  width: 55vw;
+  height: 55vw;
+
+  max-width: 760px;
+  max-height: 760px;
+
+  right: -25vw;
+  top: -25vw;
+
+  border: 1px solid rgba(255, 255, 255, 0.055);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.help-now__sticky::after {
+  content: "";
+
+  position: absolute;
+
+  left: 7%;
+  bottom: 8%;
+
+  width: 90px;
+  height: 1px;
+
+  background: rgba(224, 166, 52, 0.5);
+
+  box-shadow:
+    0 10px 0 rgba(224, 166, 52, 0.15),
+    0 20px 0 rgba(224, 166, 52, 0.08);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.help-now__container {
+  position: relative;
+  z-index: 2;
+
+  width: min(1160px, calc(100% - 48px));
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   PANEL
+========================================================= */
+
+.help-now__panel {
+  position: relative;
+
+  padding: 48px 52px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.25);
+
+  backdrop-filter: blur(12px);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   TOPLINE
+========================================================= */
+
+.help-now__topline {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.help-now__alert {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: #e9a08e;
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+.help-now__alert svg {
+  color: #d96b54;
+}
+
+.help-now__pulse {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #d96b54;
+
+  box-shadow:
+    0 0 0 5px rgba(217, 107, 84, 0.1);
+}
+
+.help-now__label {
+  color: rgba(255, 255, 255, 0.45);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.help-now__header {
+  max-width: 780px;
+
+  padding: 45px 0 42px;
+}
+
+.help-now__header h2 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: clamp(48px, 6vw, 76px);
+
+  font-weight: 500;
+
+  line-height: 0.96;
+
+  letter-spacing: -0.055em;
+}
+
+.help-now__header h2 span {
+  color: #e18a76;
+}
+
+.help-now__header p {
+  max-width: 610px;
+
+  margin: 25px 0 0;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+.help-now__options {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.help-now__option {
+  position: relative;
+
+  min-height: 205px;
+
+  padding: 28px 30px 30px;
+}
+
+.help-now__option + .help-now__option {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.help-now__number {
+  display: block;
+
+  margin-bottom: 25px;
+
+  color: rgba(255, 255, 255, 0.3);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 10px;
+
+  letter-spacing: 0.12em;
+}
+
+.help-now__option-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  margin-bottom: 18px;
+
+  border: 1px solid rgba(225, 138, 118, 0.25);
+
+  color: #e18a76;
+
+  background: rgba(225, 138, 118, 0.07);
+}
+
+.help-now__option h3 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+.help-now__option p {
+  max-width: 270px;
+
+  margin: 9px 0 0;
+
+  color: rgba(255, 255, 255, 0.52);
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.help-now__footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  padding-top: 25px;
+}
+
+.help-now__note {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 11px;
+}
+
+.help-now__note-line {
+  width: 26px;
+  height: 1px;
+
+  background: #e0a634;
+}
+
+.help-now__link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    gap 0.25s ease;
+}
+
+.help-now__link:hover {
+  gap: 13px;
+
+  color: #e0a634;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .help-now {
+    min-height: auto;
+  }
+
+  .help-now__sticky {
+    position: relative;
+
+    min-height: auto;
+
+    padding: 70px 0;
+  }
+
+  .help-now__options {
+    grid-template-columns: 1fr;
+  }
+
+  .help-now__option {
+    min-height: auto;
+  }
+
+  .help-now__option + .help-now__option {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 0;
+  }
+
+  .help-now__option p {
+    max-width: 600px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  .help-now__sticky {
+    padding: 55px 0;
+  }
+
+  .help-now__container {
+    width: min(100% - 32px, 560px);
+  }
+
+  .help-now__panel {
+    padding: 28px 22px;
+  }
+
+  .help-now__topline {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .help-now__header {
+    padding: 34px 0;
+  }
+
+  .help-now__header h2 {
+    font-size: clamp(42px, 13vw, 58px);
+  }
+
+  .help-now__header p {
+    margin-top: 20px;
+
+    font-size: 13px;
+  }
+
+  .help-now__option {
+    padding: 23px 0;
+  }
+
+  .help-now__number {
+    margin-bottom: 18px;
+  }
+
+  .help-now__footer {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .help-now__link {
+    width: 100%;
+
+    justify-content: space-between;
+
+    padding-top: 17px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.help-now__link:focus-visible {
+  outline: 2px solid #e0a634;
+  outline-offset: 5px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .help-now__link {
+    transition: none;
+  }
+}

@@ -1,366 +1,571 @@
-/* ==============================
-   SAFE STEPS
-============================== */
+/* ==========================================
+   SAFE STEPS — DARK IMAGE PARALLAX
+========================================== */
 
 .safe-steps {
   position: relative;
+  isolation: isolate;
 
-  padding: 110px 0;
-
-  background: #ffffff;
+  min-height: 100vh;
+  padding: 120px 0;
 
   overflow: hidden;
+
+  /* Fallback if image fails */
+  background: #081914;
 }
 
+
 /* ==========================================
-   BACKGROUND DECORATION
+   PARALLAX BACKGROUND
+========================================== */
+
+.safe-steps__background {
+  position: absolute;
+  inset: 0;
+
+  z-index: -2;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.safe-steps__background-image {
+  position: absolute;
+
+  /*
+   * Slightly oversized so the image can move
+   * vertically without exposing empty space.
+   */
+  top: -14%;
+  left: -3%;
+
+  width: 106%;
+  height: 128%;
+
+  background-image: url("https://church-fund.cmsmasters.studio/wp-content/uploads/2025/08/landing-home.webp");
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /*
+   * Darken the actual image itself.
+   * This makes the background less distracting.
+   */
+  filter:
+    brightness(0.48)
+    saturate(0.72)
+    contrast(1.05);
+
+  will-change: transform;
+}
+
+
+/* ==========================================
+   MAIN DARK OVERLAY
+========================================== */
+
+.safe-steps__overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  /*
+   * Strong dark green overlay.
+   *
+   * Left = darkest for text
+   * Center = slightly lighter
+   * Right = lets some image through
+   */
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 20, 15, 0.96) 0%,
+      rgba(7, 25, 19, 0.91) 35%,
+      rgba(7, 25, 19, 0.84) 65%,
+      rgba(5, 20, 15, 0.90) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* ==========================================
+   SECONDARY CONTRAST OVERLAY
+========================================== */
+
+.safe-steps__gradient {
+  position: absolute;
+  inset: 0;
+
+  z-index: 2;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 15, 11, 0.82) 0%,
+      rgba(5, 20, 15, 0.25) 25%,
+      rgba(5, 20, 15, 0.18) 55%,
+      rgba(3, 15, 11, 0.92) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* ==========================================
+   SUBTLE GREEN ATMOSPHERE
 ========================================== */
 
 .safe-steps::before {
   content: "";
 
   position: absolute;
+  z-index: 2;
 
-  top: -180px;
-  left: -180px;
+  top: 10%;
+  right: -12%;
 
-  width: 430px;
-  height: 430px;
+  width: 600px;
+  height: 600px;
 
   border-radius: 50%;
 
-  background: rgba(11, 107, 79, 0.045);
+  background:
+    radial-gradient(
+      circle,
+      rgba(11, 107, 79, 0.18) 0%,
+      rgba(11, 107, 79, 0.07) 38%,
+      transparent 72%
+    );
+
+  filter: blur(25px);
 
   pointer-events: none;
 }
 
-.safe-steps::after {
-  content: "";
 
-  position: absolute;
+/* ==========================================
+   CONTENT
+========================================== */
 
-  right: -130px;
-  bottom: -180px;
-
-  width: 360px;
-  height: 360px;
-
-  border-radius: 50%;
-
-  background: rgba(224, 166, 52, 0.05);
-
-  pointer-events: none;
+.safe-steps__container {
+  position: relative;
+  z-index: 4;
 }
+
 
 /* ==========================================
    INTRO
 ========================================== */
 
 .safe-steps__intro {
-  position: relative;
-  z-index: 1;
-
   display: grid;
 
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 170px minmax(0, 1fr) 150px;
 
   align-items: end;
 
-  gap: 70px;
+  gap: 50px;
 
-  margin-bottom: 55px;
+  margin-bottom: 85px;
 }
 
-.safe-steps__eyebrow {
-  display: block;
+.safe-steps__intro-label {
+  display: flex;
+  align-items: center;
 
-  margin-bottom: 15px;
+  gap: 10px;
 
-  color: var(--canopy-700);
+  padding-bottom: 10px;
 
-  font-size: 0.72rem;
+  color: #e2bd61;
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
   font-weight: 800;
 
-  letter-spacing: 0.16em;
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+}
+
+.safe-steps__line {
+  width: 24px;
+  height: 1px;
+
+  background: #dcb04e;
+}
+
+.safe-steps__intro-main {
+  max-width: 760px;
 }
 
 .safe-steps__intro h2 {
-  max-width: 650px;
-
   margin: 0;
 
-  color: var(--ink-900);
+  color: #ffffff;
 
-  font-size: clamp(2.1rem, 4vw, 3.3rem);
+  font-size: clamp(48px, 6vw, 78px);
 
-  line-height: 1.08;
+  font-weight: 500;
 
-  letter-spacing: -0.04em;
+  line-height: 0.98;
+
+  letter-spacing: -0.06em;
+
+  text-shadow:
+    0 3px 20px rgba(0, 0, 0, 0.22);
 }
 
 .safe-steps__intro h2 span {
-  color: var(--canopy-700);
+  color: #e0b957;
 }
 
-.safe-steps__intro > p {
-  margin: 0;
+.safe-steps__intro-main p {
+  max-width: 570px;
 
-  color: var(--ink-600);
+  margin: 25px 0 0;
 
-  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.78);
+
+  font-size: 14px;
 
   line-height: 1.8;
+
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.25);
 }
+
+.safe-steps__scroll {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 7px;
+
+  padding-bottom: 8px;
+
+  color: rgba(255, 255, 255, 0.58);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+.safe-steps__scroll svg {
+  color: #dcb04e;
+}
+
 
 /* ==========================================
-   STEPS GRID
+   STEP CONTENT
 ========================================== */
 
-.safe-steps__grid {
+.safe-steps__content {
   position: relative;
-  z-index: 1;
 
-  display: grid;
+  max-width: 980px;
 
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 16px;
+  margin: 0 auto;
 }
+
+.safe-steps__rail {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: 90px;
+
+  width: 1px;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(220, 176, 78, 0.55) 10%,
+      rgba(220, 176, 78, 0.55) 90%,
+      transparent
+    );
+}
+
+.safe-steps__list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
 
 /* ==========================================
    STEP CARD
 ========================================== */
 
 .safe-step {
+  display: grid;
+
+  grid-template-columns: 70px 42px minmax(0, 1fr);
+
+  align-items: start;
+
+  gap: 20px;
+
   position: relative;
 
-  min-height: 245px;
+  padding: 28px 35px 28px 0;
 
-  padding: 27px;
+  /*
+   * Keep cards bright enough for readability,
+   * but slightly transparent so they belong
+   * visually to the image background.
+   */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(248, 246, 240, 0.91)
+    );
 
-  background: var(--ivory-50);
+  border: 1px solid rgba(255, 255, 255, 0.35);
 
-  border: 1px solid rgba(7, 42, 74, 0.08);
+  border-radius: 14px;
 
-  border-radius: 16px;
+  backdrop-filter: blur(12px);
 
-  box-shadow: 0 8px 28px rgba(7, 42, 74, 0.045);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.22);
 
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .safe-step:hover {
-  border-color: rgba(11, 107, 79, 0.18);
+  transform: translateX(7px);
 
-  box-shadow: 0 18px 35px rgba(7, 42, 74, 0.09);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.99),
+      rgba(255, 253, 248, 0.96)
+    );
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.30);
 }
+
 
 /* ==========================================
-   CARD TOP
+   NUMBER
 ========================================== */
 
-.safe-step__top {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  margin-bottom: 25px;
-}
-
 .safe-step__number {
-  color: rgba(11, 107, 79, 0.35);
+  padding-top: 7px;
 
-  font-size: 0.78rem;
-  font-weight: 900;
+  color: rgba(11, 107, 79, 0.48);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  text-align: right;
 
   letter-spacing: 0.08em;
 }
 
-.safe-step__icon {
+
+/* ==========================================
+   MARKER
+========================================== */
+
+.safe-step__marker {
+  position: relative;
+  z-index: 2;
+
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
 
-  border-radius: 12px;
+  margin-left: -1px;
 
-  background: rgba(11, 107, 79, 0.09);
+  border: 1px solid rgba(11, 107, 79, 0.20);
+
+  border-radius: 50%;
+
+  background: #ffffff;
 
   color: var(--canopy-700);
+
+  box-shadow:
+    0 0 0 7px rgba(248, 246, 240, 0.88);
 }
 
+
 /* ==========================================
-   CARD CONTENT
+   BODY
 ========================================== */
 
+.safe-step__body {
+  min-width: 0;
+}
+
+.safe-step__label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--canopy-600);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
 .safe-step h3 {
-  margin: 0 0 10px;
+  margin: 0;
 
   color: var(--ink-900);
 
-  font-size: 1.02rem;
+  font-size: 18px;
 
-  line-height: 1.35;
+  font-weight: 650;
+
+  letter-spacing: -0.02em;
 }
 
 .safe-step p {
-  margin: 0;
+  max-width: 690px;
+
+  margin: 9px 0 0;
 
   color: var(--ink-600);
 
-  font-size: 0.88rem;
+  font-size: 13px;
 
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
+
 /* ==========================================
-   REASSURANCE NOTICE
+   REASSURANCE
 ========================================== */
 
-.safe-steps__notice {
-  position: relative;
-  z-index: 1;
-
+.safe-steps__reassurance {
   display: flex;
 
   align-items: center;
 
   gap: 18px;
 
-  margin-top: 20px;
+  max-width: 980px;
 
-  padding: 25px 28px;
+  margin: 35px auto 0;
 
-  background: var(--canopy-900);
+  padding: 24px 28px;
 
-  border-radius: 16px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(5, 28, 21, 0.94),
+      rgba(8, 39, 29, 0.88)
+    );
 
-  color: var(--ivory-50);
+  border: 1px solid rgba(220, 176, 78, 0.25);
+
+  border-radius: 14px;
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.18);
+
+  color: #dcb04e;
 }
 
-.safe-steps__notice-icon {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
+.safe-steps__reassurance > svg {
   flex-shrink: 0;
-
-  width: 48px;
-  height: 48px;
-
-  border-radius: 50%;
-
-  background: rgba(224, 166, 52, 0.14);
-
-  color: var(--marigold-500);
 }
 
-.safe-steps__notice-content {
-  flex: 1;
+.safe-steps__reassurance strong {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 14px;
 }
 
-.safe-steps__notice-content h3 {
-  margin: 0 0 5px;
+.safe-steps__reassurance p {
+  margin: 4px 0 0;
 
-  color: var(--ivory-50);
+  color: rgba(255, 255, 255, 0.68);
 
-  font-size: 0.98rem;
+  font-size: 12px;
+
+  line-height: 1.6;
 }
 
-.safe-steps__notice-content p {
-  max-width: 720px;
-
-  margin: 0;
-
-  color: rgba(250, 247, 239, 0.7);
-
-  font-size: 0.82rem;
-
-  line-height: 1.65;
-}
-
-/* ==========================================
-   CONTROL MESSAGE
-========================================== */
-
-.safe-steps__notice-label {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: flex-end;
-
-  flex-shrink: 0;
-
-  gap: 4px;
-
-  min-width: 145px;
-
-  text-align: right;
-}
-
-.safe-steps__notice-label span {
-  color: var(--marigold-500);
-
-  font-size: 0.65rem;
-
-  font-weight: 800;
-
-  letter-spacing: 0.14em;
-}
-
-.safe-steps__notice-label strong {
-  color: var(--ivory-50);
-
-  font-size: 0.9rem;
-
-  font-weight: 700;
-}
 
 /* ==========================================
    TABLET
 ========================================== */
 
-@media (max-width: 980px) {
+@media (max-width: 900px) {
   .safe-steps {
-    padding: 90px 0;
+    padding: 95px 0;
   }
 
   .safe-steps__intro {
     grid-template-columns: 1fr;
 
-    gap: 20px;
+    gap: 22px;
 
-    margin-bottom: 42px;
+    margin-bottom: 55px;
   }
 
-  .safe-steps__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .safe-steps__scroll {
+    justify-content: flex-start;
+
+    padding-bottom: 0;
   }
 
-  .safe-steps__notice {
-    align-items: flex-start;
-
-    flex-wrap: wrap;
+  .safe-steps__rail {
+    left: 74px;
   }
 
-  .safe-steps__notice-label {
-    margin-left: 66px;
+  .safe-step {
+    grid-template-columns: 55px 42px minmax(0, 1fr);
 
-    align-items: flex-start;
+    gap: 16px;
 
-    text-align: left;
+    padding-right: 25px;
   }
 }
+
 
 /* ==========================================
    MOBILE
@@ -371,73 +576,122 @@
     padding: 75px 0;
   }
 
-  .safe-steps__intro {
-    gap: 16px;
+  .safe-steps__background-image {
+    /*
+     * Position the subject better on narrow screens.
+     */
+    background-position: 62% center;
 
-    margin-bottom: 34px;
+    filter:
+      brightness(0.40)
+      saturate(0.65)
+      contrast(1.08);
+  }
+
+  .safe-steps__overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(4, 18, 13, 0.96) 0%,
+        rgba(5, 22, 16, 0.88) 45%,
+        rgba(3, 15, 11, 0.95) 100%
+      );
+  }
+
+  .safe-steps__gradient {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(3, 15, 11, 0.55),
+        transparent 30%,
+        rgba(3, 15, 11, 0.90) 100%
+      );
+  }
+
+  .safe-steps__intro {
+    gap: 18px;
+
+    margin-bottom: 42px;
   }
 
   .safe-steps__intro h2 {
-    font-size: 2rem;
+    font-size: clamp(42px, 13vw, 58px);
   }
 
-  .safe-steps__intro > p {
-    font-size: 0.93rem;
+  .safe-steps__intro-main p {
+    margin-top: 20px;
+
+    font-size: 13px;
+  }
+
+  .safe-steps__rail {
+    left: 23px;
+  }
+
+  .safe-steps__list {
+    gap: 12px;
+  }
+
+  .safe-step {
+    grid-template-columns: 34px minmax(0, 1fr);
+
+    gap: 16px;
+
+    padding: 23px 20px 23px 0;
+
+    border-radius: 12px;
+
+    backdrop-filter: blur(10px);
+  }
+
+  .safe-step__number {
+    display: none;
+  }
+
+  .safe-step__marker {
+    width: 46px;
+    height: 46px;
+
+    margin-left: 0;
+  }
+
+  .safe-step__body {
+    padding-top: 2px;
+  }
+
+  .safe-step h3 {
+    font-size: 15px;
+  }
+
+  .safe-step p {
+    font-size: 12px;
 
     line-height: 1.7;
   }
 
-  .safe-steps__grid {
-    grid-template-columns: 1fr;
+  .safe-step__label {
+    font-size: 8px;
+  }
+
+  .safe-steps__reassurance {
+    align-items: flex-start;
 
     gap: 13px;
+
+    margin-top: 28px;
+
+    padding: 21px 20px;
   }
 
-  .safe-step {
-    min-height: auto;
-
-    padding: 22px;
-
-    border-radius: 14px;
+  .safe-steps__reassurance strong {
+    font-size: 13px;
   }
 
-  .safe-step__top {
-    margin-bottom: 20px;
-  }
-
-  .safe-step__icon {
-    width: 43px;
-    height: 43px;
-  }
-
-  .safe-step h3 {
-    font-size: 0.98rem;
-  }
-
-  .safe-step p {
-    font-size: 0.86rem;
-  }
-
-  .safe-steps__notice {
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 15px;
-
-    padding: 22px;
-
-    border-radius: 14px;
-  }
-
-  .safe-steps__notice-label {
-    align-items: flex-start;
-
-    margin-left: 0;
-
-    text-align: left;
+  .safe-steps__reassurance p {
+    font-size: 11px;
   }
 }
+
 
 /* ==========================================
    SMALL PHONES
@@ -449,24 +703,29 @@
   }
 
   .safe-steps__intro h2 {
-    font-size: 1.8rem;
+    font-size: 40px;
   }
 
   .safe-step {
-    padding: 20px;
+    padding-right: 16px;
   }
 
-  .safe-steps__notice {
-    padding: 20px;
+  .safe-step p {
+    font-size: 11.5px;
   }
 }
 
+
 /* ==========================================
-   REDUCED MOTION
+   ACCESSIBILITY
 ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .safe-step {
     transition: none;
+  }
+
+  .safe-steps__background-image {
+    transform: none !important;
   }
 }

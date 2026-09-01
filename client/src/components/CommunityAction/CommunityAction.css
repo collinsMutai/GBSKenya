@@ -1,0 +1,323 @@
+/* =========================================================
+   COMMUNITY ACTION
+   Minimal split-layout design
+========================================================= */
+
+.community-action {
+  padding: 100px 0;
+  background: var(--canopy-900, #123d31);
+  color: #fff;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.community-action__layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(60px, 9vw, 140px);
+}
+
+
+/* =========================================================
+   STATEMENT
+========================================================= */
+
+.community-action__statement {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.community-action__label {
+  margin-bottom: 28px;
+
+  color: #b9d8c9;
+
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.community-action__statement h2 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  font-weight: 450;
+
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+}
+
+.community-action__statement h2 em {
+  color: #b9d8c9;
+  font-style: normal;
+}
+
+.community-action__statement > p {
+  max-width: 390px;
+  margin: 32px 0 0;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.community-action__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-top: 34px;
+
+  color: #fff;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.community-action__cta-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.community-action__cta:hover .community-action__cta-icon {
+  background: #fff;
+  color: var(--canopy-900, #123d31);
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.community-action__actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.community-action__action {
+  position: relative;
+
+  min-height: 360px;
+  padding: 28px 28px 32px;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+
+  transition:
+    background-color 0.3s ease,
+    padding 0.3s ease;
+}
+
+.community-action__action:first-child {
+  border-left: 0;
+}
+
+.community-action__action:hover {
+  padding-top: 34px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+
+/* =========================================================
+   ACTION TOP
+========================================================= */
+
+.community-action__action-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.community-action__action-top > span {
+  color: #9fc8b5;
+
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.community-action__action-arrow {
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 12px;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.community-action__action:hover .community-action__action-arrow {
+  color: #fff;
+  transform: translate(3px, -3px);
+}
+
+
+/* =========================================================
+   ACTION CONTENT
+========================================================= */
+
+.community-action__action h3 {
+  margin: 150px 0 14px;
+
+  color: #fff;
+
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 500;
+
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.community-action__action p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.58);
+
+  font-size: 0.83rem;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .community-action {
+    padding: 80px 0;
+  }
+
+  .community-action__layout {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .community-action__statement h2 {
+    font-size: clamp(3.5rem, 9vw, 5.5rem);
+  }
+
+  .community-action__statement > p {
+    max-width: 500px;
+  }
+
+  .community-action__action {
+    min-height: 300px;
+  }
+
+  .community-action__action h3 {
+    margin-top: 110px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .community-action {
+    padding: 68px 0;
+  }
+
+  .community-action__layout {
+    gap: 45px;
+  }
+
+  .community-action__label {
+    margin-bottom: 22px;
+  }
+
+  .community-action__statement h2 {
+    font-size: clamp(3.4rem, 16vw, 5rem);
+  }
+
+  .community-action__statement > p {
+    margin-top: 26px;
+    font-size: 0.9rem;
+  }
+
+  .community-action__cta {
+    margin-top: 28px;
+  }
+
+  .community-action__actions {
+    display: block;
+  }
+
+  .community-action__action,
+  .community-action__action:first-child {
+    min-height: 0;
+    padding: 24px 0;
+
+    border-left: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .community-action__action:last-child {
+    border-bottom: 0;
+  }
+
+  .community-action__action:hover {
+    padding: 24px 0;
+    background: transparent;
+  }
+
+  .community-action__action h3 {
+    margin: 42px 0 8px;
+
+    font-size: 1.5rem;
+  }
+
+  .community-action__action p {
+    max-width: 400px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .community-action__cta-icon,
+  .community-action__action,
+  .community-action__action-arrow {
+    transition: none;
+  }
+}

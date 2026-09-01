@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Loader2 } from "lucide-react";
+import { ArrowUpRight, Loader2, Mail } from "lucide-react";
 import { toast } from "react-toastify";
 import axios from "axios";
+
 import "./NewsletterSignup.css";
 
 export default function NewsletterSignup() {
@@ -27,8 +28,7 @@ export default function NewsletterSignup() {
         },
       );
 
-      toast.success(data.message || "Successfully subscribed!");
-
+      toast.success(data.message || "You're now connected with us.");
       setEmail("");
     } catch (error) {
       toast.error(
@@ -41,58 +41,122 @@ export default function NewsletterSignup() {
   };
 
   return (
-    <section className="section newsletter">
-      <motion.div
-        className="container newsletter__inner"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.35 }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="newsletter__content">
-          <span className="eyebrow">Newsletter Sign-Up</span>
+    <section
+      className="newsletter"
+      aria-labelledby="newsletter-title"
+    >
+      <div className="container newsletter__container">
 
-          <h2 className="newsletter__title">Stay Connected</h2>
+        {/* Top rule */}
 
-          <p className="newsletter__text">
-            Stay informed about GBS Foundation-Kenya's work, upcoming events,
-            patient stories and opportunities to get involved.
-          </p>
+        <div className="newsletter__top">
+          <span className="newsletter__label">
+            Stay connected
+          </span>
+
+          <span className="newsletter__index">
+            06 / COMMUNITY
+          </span>
         </div>
 
-        <form className="newsletter__form" onSubmit={handleSubscribe}>
-          <div className="newsletter__input">
-            <Mail size={18} />
+        {/* Main content */}
 
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={loading}
-            />
+        <motion.div
+          className="newsletter__main"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.65 }}
+        >
+          <div className="newsletter__statement">
+            <h2 id="newsletter-title">
+              Keep the conversation
+              <span> going.</span>
+            </h2>
+
+            <p>
+              Receive occasional updates about GBV awareness,
+              survivor support, community programmes, resources,
+              and opportunities to take action.
+            </p>
           </div>
 
-          <button className="btn btn-primary" type="submit" disabled={loading}>
-            {loading ? (
-              <>
-                <Loader2
-                  size={18}
-                  style={{ animation: "spin 1s linear infinite" }}
-                />
-                Subscribing...
-              </>
-            ) : (
-              "Subscribe"
-            )}
-          </button>
-        </form>
+          <div className="newsletter__action">
 
-        <p className="newsletter__privacy">
-          We respect your privacy. No spam, unsubscribe anytime.
-        </p>
-      </motion.div>
+            <div className="newsletter__action-heading">
+              <span>Receive updates</span>
+
+              <Mail size={17} />
+            </div>
+
+            <form
+              className="newsletter__form"
+              onSubmit={handleSubscribe}
+            >
+              <div className="newsletter__field">
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  autoComplete="email"
+                  required
+                  disabled={loading}
+                  aria-label="Email address"
+                />
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  aria-label="Subscribe to updates"
+                >
+                  {loading ? (
+                    <Loader2
+                      size={18}
+                      className="newsletter__spinner"
+                    />
+                  ) : (
+                    <ArrowUpRight size={19} />
+                  )}
+                </button>
+              </div>
+            </form>
+
+            <p className="newsletter__privacy">
+              Your information is kept private. Unsubscribe whenever
+              you choose.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Bottom statement */}
+
+        <div className="newsletter__bottom">
+          <span>
+            Awareness
+          </span>
+
+          <span className="newsletter__bottom-line" />
+
+          <span>
+            Support
+          </span>
+
+          <span className="newsletter__bottom-line" />
+
+          <span>
+            Prevention
+          </span>
+
+          <span className="newsletter__bottom-line" />
+
+          <span>
+            Community
+          </span>
+        </div>
+
+      </div>
     </section>
   );
 }

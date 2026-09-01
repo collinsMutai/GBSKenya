@@ -1,46 +1,320 @@
+/* =========================================================
+   FOOTER
+========================================================= */
+
 .footer {
-  background: var(--canopy-900);
-  color: var(--ivory-100);
-  /* margin-top: 80px; */
+  background: var(--canopy-900, #123d31);
+  color: var(--ivory-100, #eef3ed);
 }
 
-.footer__grid {
-  padding: 56px 24px 32px;
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.footer__main {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.4fr);
+  gap: clamp(60px, 10vw, 150px);
+
+  padding: 90px 0 80px;
 }
 
-.footer__brand { color: var(--ivory-50); font-size: 20px; }
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.footer__brand-column {
+  max-width: 480px;
+}
+
+.footer__label {
+  display: block;
+
+  color: #a9cbb9;
+
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+
+.footer__statement {
+  margin: 26px 0 0;
+
+  color: var(--ivory-50, #fafbf8);
+
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 450;
+
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+}
+
+.footer__statement em {
+  color: #a9cbb9;
+  font-style: normal;
+}
 
 .footer__blurb {
-  margin-top: 14px;
-  font-size: 14px;
-  color: var(--ivory-100);
-  opacity: 0.85;
-  max-width: 320px;
+  max-width: 400px;
+  margin: 30px 0 0;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.footer__navigation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+
+  padding-top: 5px;
 }
 
 .footer__links {
-  margin-top: 14px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: 14px;
+  align-items: flex-start;
+
+  gap: 13px;
+
+  margin-top: 22px;
 }
 
-.footer__links a:hover { color: var(--ivory-50); }
+.footer__links a {
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 0.88rem;
+  line-height: 1.4;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer__links a:hover {
+  color: #fff;
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.footer__contact-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 13px;
+
+  margin-top: 22px;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.footer__contact-info a {
+  color: rgba(255, 255, 255, 0.72);
+
+  text-decoration: none;
+
+  overflow-wrap: anywhere;
+
+  transition: color 0.2s ease;
+}
+
+.footer__contact-info a:hover {
+  color: #fff;
+}
+
+
+/* =========================================================
+   BOTTOM
+========================================================= */
 
 .footer__bottom {
-  border-top: 1px solid var(--line-on-dark);
-  padding: 20px 24px;
-  font-size: 13px;
-  color: var(--ivory-100);
-  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding: 22px 0;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.footer__bottom-inner { padding: 0; }
+.footer__bottom p {
+  margin: 0;
 
-@media (max-width: 720px) {
-  .footer__grid { grid-template-columns: 1fr; }
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 0.76rem;
+}
+
+.footer__bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer__bottom-links a {
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 0.76rem;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.footer__bottom-links a:hover {
+  color: #fff;
+}
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding-left: 24px;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.footer__top svg {
+  font-size: 11px;
+
+  transition: transform 0.2s ease;
+}
+
+.footer__top:hover svg {
+  transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+  .footer__main {
+    grid-template-columns: 1fr;
+    gap: 65px;
+
+    padding: 75px 0 65px;
+  }
+
+  .footer__brand-column {
+    max-width: 600px;
+  }
+
+  .footer__navigation {
+    max-width: 800px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .footer__main {
+    gap: 50px;
+
+    padding: 65px 0 50px;
+  }
+
+  .footer__statement {
+    margin-top: 20px;
+
+    font-size: clamp(2.8rem, 14vw, 4rem);
+  }
+
+  .footer__blurb {
+    margin-top: 25px;
+
+    font-size: 0.84rem;
+  }
+
+  .footer__navigation {
+    grid-template-columns: 1fr 1fr;
+    gap: 45px 30px;
+  }
+
+  .footer__contact {
+    grid-column: 1 / -1;
+  }
+
+  .footer__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+  .footer__bottom-links {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .footer__top {
+    padding-left: 18px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .footer__navigation {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .footer__contact {
+    grid-column: auto;
+  }
+
+  .footer__bottom-links {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__links a,
+  .footer__contact-info a,
+  .footer__bottom-links a,
+  .footer__top svg {
+    transition: none;
+  }
 }

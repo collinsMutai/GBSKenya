@@ -1,22 +1,235 @@
+/* =========================================================
+   PAGE HEADER — GBV IMAGE HERO
+========================================================= */
+
 .page-header {
-  background: var(--canopy-900);
+  position: relative;
+  isolation: isolate;
+
+  min-height: 430px;
+
+  display: flex;
+  align-items: flex-end;
+
+  overflow: hidden;
+
+  background:
+    var(--page-header-image)
+    center center /
+    cover
+    no-repeat;
+
+  color: var(--ivory-50);
 }
+
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.page-header__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(25, 28, 25, 0.82) 0%,
+      rgba(25, 28, 25, 0.66) 42%,
+      rgba(25, 28, 25, 0.32) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
 
 .page-header__inner {
-  padding: 72px 24px 56px;
-  max-width: 720px;
+  width: 100%;
+  max-width: 1240px;
+
+  padding: 110px 24px 72px;
 }
+
+.page-header__content {
+  max-width: 760px;
+}
+
+.page-header__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 0 20px;
+
+  color: var(--ivory-50);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.page-header__eyebrow::before {
+  content: "";
+
+  width: 28px;
+  height: 2px;
+
+  background: var(--marigold-500);
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
 
 .page-header__title {
-  font-size: clamp(30px, 4vw, 42px);
-  color: var(--ivory-50);
-  margin-top: 14px;
+  max-width: 760px;
+
+  margin: 0;
+
+  color: #fff;
+
+  font-family: var(--font-display);
+
+  font-size: clamp(48px, 7vw, 82px);
+  font-weight: 500;
+
+  line-height: 0.98;
+  letter-spacing: -0.055em;
 }
 
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
 .page-header__subtitle {
-  margin-top: 14px;
-  font-size: 16px;
-  color: var(--ivory-100);
-  opacity: 0.9;
-  max-width: 560px;
+  max-width: 620px;
+
+  margin: 24px 0 0;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   BOTTOM ACCENT
+========================================================= */
+
+.page-header__bottom {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 5px;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.page-header__bottom span {
+  display: block;
+
+  width: 120px;
+  height: 100%;
+
+  background: var(--marigold-500);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+  .page-header {
+    min-height: 390px;
+  }
+
+  .page-header__overlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(25, 28, 25, 0.84),
+        rgba(25, 28, 25, 0.55)
+      );
+  }
+
+  .page-header__inner {
+    padding: 100px 24px 62px;
+  }
+
+  .page-header__title {
+    font-size: clamp(44px, 9vw, 64px);
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+  .page-header {
+    min-height: 360px;
+
+    background-position: center;
+  }
+
+  .page-header__overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(25, 28, 25, 0.42) 0%,
+        rgba(25, 28, 25, 0.82) 100%
+      );
+  }
+
+  .page-header__inner {
+    padding: 92px 20px 52px;
+  }
+
+  .page-header__eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .page-header__title {
+    font-size: clamp(42px, 14vw, 58px);
+    line-height: 0.98;
+  }
+
+  .page-header__subtitle {
+    margin-top: 18px;
+
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .page-header__bottom span {
+    width: 80px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .page-header {
+    scroll-behavior: auto;
+  }
 }

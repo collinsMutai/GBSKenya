@@ -1,4 +1,9 @@
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import {
   ShieldCheck,
   PhoneCall,
@@ -6,6 +11,7 @@ import {
   Users,
   FileText,
   LockKeyhole,
+  ArrowDown,
 } from "lucide-react";
 
 import "./SafeSteps.css";
@@ -55,25 +61,14 @@ const steps = [
   },
 ];
 
-const container = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const item = {
+const itemVariants = {
   hidden: {
     opacity: 0,
-    y: 25,
+    y: 30,
   },
-
-  show: {
+  visible: {
     opacity: 1,
     y: 0,
-
     transition: {
       duration: 0.65,
       ease: [0.16, 1, 0.3, 1],
@@ -84,81 +79,224 @@ const item = {
 export default function SafeSteps() {
   const shouldReduceMotion = useReducedMotion();
 
+  const { scrollYProgress } = useScroll();
+
+  /*
+   * The image moves vertically slower than the page.
+   * This creates the parallax effect.
+   */
+  const backgroundY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["-12%", "12%"],
+  );
+
+  const imageScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1.08, 1.16],
+  );
+
+  const overlayOpacity = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0.58, 0.68],
+  );
+
   return (
-    <section className="safe-steps">
-      <div className="container">
+    <section
+      className="safe-steps"
+      aria-labelledby="safe-steps-title"
+    >
+      {/* ==========================================
+          PARALLAX IMAGE
+      ========================================== */}
+
+      <div
+        className="safe-steps__background"
+        aria-hidden="true"
+      >
+        <motion.div
+          className="safe-steps__background-image"
+          style={
+            shouldReduceMotion
+              ? {}
+              : {
+                  y: backgroundY,
+                  scale: imageScale,
+                }
+          }
+        />
+
+        <motion.div
+          className="safe-steps__overlay"
+          style={
+            shouldReduceMotion
+              ? {}
+              : {
+                  opacity: overlayOpacity,
+                }
+          }
+        />
+
+        <div className="safe-steps__gradient" />
+      </div>
+
+      <div className="container safe-steps__container">
         {/* ==========================================
             INTRO
         ========================================== */}
 
         <motion.div
           className="safe-steps__intro"
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 25 }}
-          whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7 }}
+          initial={
+            shouldReduceMotion
+              ? false
+              : {
+                  opacity: 0,
+                  y: 25,
+                }
+          }
+          whileInView={
+            shouldReduceMotion
+              ? {}
+              : {
+                  opacity: 1,
+                  y: 0,
+                }
+          }
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.7,
+            ease: [0.16, 1, 0.3, 1],
+          }}
         >
-          <div className="safe-steps__intro-copy">
-            <span className="safe-steps__eyebrow">
-              SAFETY &amp; PREPAREDNESS
-            </span>
+          <div className="safe-steps__intro-label">
+            <span className="safe-steps__line" />
+            <span>Safety &amp; preparedness</span>
+          </div>
 
-            <h2>
+          <div className="safe-steps__intro-main">
+            <h2 id="safe-steps-title">
               Small steps can make
               <span> a difference.</span>
             </h2>
+
+            <p>
+              If you or someone you know is experiencing gender-based
+              violence, there is no single right way to respond. Start
+              with the step that feels safest for you.
+            </p>
           </div>
 
-          <p>
-            If you or someone you know is experiencing gender-based violence,
-            there is no single right way to respond. Start with the step that
-            feels safest for you.
-          </p>
+          <div className="safe-steps__scroll">
+            <ArrowDown size={15} />
+            <span>Explore the steps</span>
+          </div>
         </motion.div>
 
         {/* ==========================================
-            SAFETY STEPS
+            STEPS
+        ========================================== */}
+
+        <div className="safe-steps__content">
+          <div
+            className="safe-steps__rail"
+            aria-hidden="true"
+          />
+
+          <div className="safe-steps__list">
+            {steps.map((step, index) => {
+              const Icon = step.icon;
+
+              return (
+                <motion.article
+                  key={step.number}
+                  className="safe-step"
+                  initial={
+                    shouldReduceMotion
+                      ? false
+                      : "hidden"
+                  }
+                  whileInView="visible"
+                  viewport={{
+                    once: true,
+                    amount: 0.2,
+                  }}
+                  variants={itemVariants}
+                >
+                  <div className="safe-step__number">
+                    {step.number}
+                  </div>
+
+                  <div className="safe-step__marker">
+                    <Icon
+                      size={20}
+                      strokeWidth={1.8}
+                    />
+                  </div>
+
+                  <div className="safe-step__body">
+                    <span className="safe-step__label">
+                      Step {index + 1}
+                    </span>
+
+                    <h3>{step.title}</h3>
+
+                    <p>{step.description}</p>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ==========================================
+            REASSURANCE
         ========================================== */}
 
         <motion.div
-          className="safe-steps__grid"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.12 }}
-        >
-          {steps.map((step) => {
-            const Icon = step.icon;
-
-            return (
-              <motion.article
-                key={step.number}
-                className="safe-step"
-                variants={item}
-                whileHover={
-                  shouldReduceMotion
-                    ? {}
-                    : {
-                        y: -5,
-                      }
+          className="safe-steps__reassurance"
+          initial={
+            shouldReduceMotion
+              ? false
+              : {
+                  opacity: 0,
+                  y: 20,
                 }
-              >
-                <div className="safe-step__top">
-                  <span className="safe-step__number">
-                    {step.number}
-                  </span>
+          }
+          whileInView={
+            shouldReduceMotion
+              ? {}
+              : {
+                  opacity: 1,
+                  y: 0,
+                }
+          }
+          viewport={{
+            once: true,
+            amount: 0.25,
+          }}
+          transition={{
+            duration: 0.65,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+        >
+          <ShieldCheck size={20} />
 
-                  <div className="safe-step__icon">
-                    <Icon size={22} strokeWidth={1.8} />
-                  </div>
-                </div>
+          <div>
+            <strong>
+              You are in control of your next step.
+            </strong>
 
-                <h3>{step.title}</h3>
-
-                <p>{step.description}</p>
-              </motion.article>
-            );
-          })}
+            <p>
+              You do not have to do everything at once. Choose
+              what feels safest and most manageable for you.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>

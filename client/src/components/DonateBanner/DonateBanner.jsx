@@ -1,49 +1,139 @@
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Heart, Smartphone, CreditCard, X } from 'lucide-react'
-import './DonateBanner.css'
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  CreditCard,
+  Heart,
+  Smartphone,
+  X,
+} from "lucide-react";
+
+import "./DonateBanner.css";
+
+const impactItems = [
+  {
+    value: "01",
+    label: "Patient education",
+  },
+  {
+    value: "02",
+    label: "Support & connection",
+  },
+  {
+    value: "03",
+    label: "Community outreach",
+  },
+];
 
 export default function DonateBanner() {
-  const [open, setOpen] = useState(false)
-  const [method, setMethod] = useState('mpesa')
+  const [open, setOpen] = useState(false);
+  const [method, setMethod] = useState("mpesa");
 
   return (
     <>
-      <section className="section donate-banner">
-        <motion.div
-          className="container donate-banner__inner"
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="donate-banner__text">
-            <h2 className="donate-banner__title">
-              Your support keeps this community going
+      <section
+        className="donate-banner"
+        aria-labelledby="donate-banner-title"
+      >
+        <div className="container donate-banner__container">
+          {/* ==========================================
+              LEFT — MESSAGE
+          ========================================== */}
+
+          <motion.div
+            className="donate-banner__message"
+            initial={{ opacity: 0, x: -25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="donate-banner__label">
+              <span className="donate-banner__label-dot" />
+              SUPPORT THE MISSION
+            </div>
+
+            <h2 id="donate-banner-title">
+              Help make sure
+              <span> no one walks alone.</span>
             </h2>
 
-            <p className="donate-banner__body">
-              Every contribution helps us reach more patients, run more support
-              groups, and expand access to diagnosis and care across Kenya.
+            <p>
+              Your contribution helps us create spaces where people affected
+              by gender-based violence can find information, connection,
+              practical support, and hope.
             </p>
-          </div>
 
-          <div className="donate-banner__actions">
+            <div className="donate-banner__impact">
+              {impactItems.map((item) => (
+                <div
+                  className="donate-banner__impact-item"
+                  key={item.value}
+                >
+                  <strong>{item.value}</strong>
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ==========================================
+              RIGHT — DONATION CARD
+          ========================================== */}
+
+          <motion.div
+            className="donate-banner__card"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.12 }}
+          >
+            <div className="donate-banner__card-top">
+              <div className="donate-banner__heart">
+                <Heart size={21} strokeWidth={1.8} />
+              </div>
+
+              <span>MAKE AN IMPACT</span>
+            </div>
+
+            <div className="donate-banner__card-content">
+              <h3>
+                Give what
+                <br />
+                <em>you can.</em>
+              </h3>
+
+              <p>
+                Every contribution, large or small, helps us continue
+                supporting survivors and strengthening communities.
+              </p>
+            </div>
+
             <button
               type="button"
-              className="donate-btn"
+              className="donate-banner__primary"
               onClick={() => setOpen(true)}
             >
-              <Heart size={18} />
-              Donate
+              <span>Donate now</span>
+
+              <span className="donate-banner__primary-icon">
+                <ArrowUpRight size={17} />
+              </span>
             </button>
 
-            <a href="/contact" className="btn btn-ghost">
-              Partner with us
+            <a
+              href="/contact"
+              className="donate-banner__partner"
+            >
+              <span>Interested in partnering?</span>
+              <ArrowUpRight size={14} />
             </a>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </section>
+
+      {/* ==========================================
+          DONATION MODAL
+      ========================================== */}
 
       <AnimatePresence>
         {open && (
@@ -56,69 +146,111 @@ export default function DonateBanner() {
           >
             <motion.div
               className="donate-modal"
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.25 }}
-              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="donate-modal-title"
+              initial={{ opacity: 0, y: 25, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 15, scale: 0.96 }}
+              transition={{
+                duration: 0.28,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              onClick={(event) => event.stopPropagation()}
             >
               <button
-                className="modal-close"
+                type="button"
+                className="donate-modal__close"
                 onClick={() => setOpen(false)}
+                aria-label="Close donation window"
               >
-                <X size={20} />
+                <X size={19} />
               </button>
 
-              <div className="modal-tabs">
+              <div className="donate-modal__header">
+                <span className="donate-modal__eyebrow">
+                  SUPPORT OUR WORK
+                </span>
+
+                <h3 id="donate-modal-title">
+                  Choose how you'd
+                  <br />
+                  like to <span>give.</span>
+                </h3>
+              </div>
+
+              {/* Payment methods */}
+
+              <div className="donate-modal__tabs">
                 <button
-                  className={method === 'mpesa' ? 'active' : ''}
-                  onClick={() => setMethod('mpesa')}
+                  type="button"
+                  className={method === "mpesa" ? "active" : ""}
+                  onClick={() => setMethod("mpesa")}
                 >
-                  <Smartphone size={16} />
-                  M-Pesa
+                  <Smartphone size={17} />
+                  <span>M-Pesa</span>
                 </button>
 
                 <button
-                  className={method === 'paypal' ? 'active' : ''}
-                  onClick={() => setMethod('paypal')}
+                  type="button"
+                  className={method === "paypal" ? "active" : ""}
+                  onClick={() => setMethod("paypal")}
                 >
-                  <CreditCard size={16} />
-                  PayPal
+                  <CreditCard size={17} />
+                  <span>PayPal</span>
                 </button>
               </div>
 
-              <div className="modal-body">
-                {method === 'mpesa' ? (
+              <div className="donate-modal__body">
+                {method === "mpesa" ? (
                   <>
-                    <h3>Donate via M-Pesa</h3>
+                    <div className="donate-modal__method-heading">
+                      <span>01</span>
 
-                    <p>Use the details below to make your donation.</p>
-
-                    <div className="payment-card">
-                      <strong>Paybill:</strong> 123456
+                      <div>
+                        <h4>Donate via M-Pesa</h4>
+                        <p>
+                          Use the details below to make your contribution.
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="payment-card">
-                      <strong>Account:</strong> CML Kenya
+                    <div className="donate-payment">
+                      <span>PAYBILL</span>
+                      <strong>123456</strong>
                     </div>
 
-                    <p className="payment-note">
-                      Thank you for supporting our mission.
+                    <div className="donate-payment">
+                      <span>ACCOUNT</span>
+                      <strong>CML Kenya</strong>
+                    </div>
+
+                    <p className="donate-modal__note">
+                      Thank you for helping us build stronger, safer
+                      communities.
                     </p>
                   </>
                 ) : (
                   <>
-                    <h3>Donate via PayPal</h3>
+                    <div className="donate-modal__method-heading">
+                      <span>02</span>
 
-                    <p>Donate securely using PayPal.</p>
+                      <div>
+                        <h4>Donate via PayPal</h4>
+                        <p>
+                          Continue securely through PayPal.
+                        </p>
+                      </div>
+                    </div>
 
                     <a
                       href="https://paypal.me/yourlink"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="paypal-btn"
+                      className="donate-paypal"
                     >
-                      Continue to PayPal
+                      <span>Continue to PayPal</span>
+                      <ArrowUpRight size={17} />
                     </a>
                   </>
                 )}
@@ -128,5 +260,5 @@ export default function DonateBanner() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }

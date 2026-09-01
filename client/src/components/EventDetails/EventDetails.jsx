@@ -1,503 +1,336 @@
-
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from "react-router-dom";
 import {
-  ArrowLeft,
-  ArrowUpRight,
-  CalendarDays,
-  Clock3,
-  MapPin,
-  UserRound,
-  Users,
-} from 'lucide-react'
-import './EventDetails.css'
+  FaArrowLeft,
+  FaArrowUpRightFromSquare,
+  FaClock,
+  FaLocationDot,
+  FaUser,
+  FaUsers,
+} from "react-icons/fa6";
+import "./EventDetails.css";
+
+// --------------------------------------------------
+// Placeholder events — slugs must match EventsPreview.jsx.
+// --------------------------------------------------
 
 const events = [
   {
-    slug: 'nairobi-support-group',
+    slug: "nairobi-survivor-support-circle",
 
-    date: '09',
-    month: 'AUG',
-    year: '2026',
+    date: "09",
+    month: "AUG",
+    year: "2026",
 
-    title: 'Nairobi support group meetup',
-    type: 'Community meetup',
+    title: "Nairobi survivor support circle",
+    type: "Community meetup",
 
-    time: '10:00 AM – 1:00 PM',
-    location: 'Nairobi, Kenya',
-    organiser: 'Community Support Team',
+    time: "10:00 AM – 1:00 PM",
+    location: "Nairobi, Kenya",
+    organiser: "Community Support Team",
 
     description:
-      'A welcoming support group meetup bringing together patients, caregivers, family members, and community supporters. The session provides an opportunity to connect, share experiences, learn from one another, and access practical support.',
+      "A welcoming support circle bringing together survivors, family members, friends, and community supporters. The session provides an opportunity to connect, share at your own pace, learn from one another, and access practical support.",
 
     audience:
-      'Patients, caregivers, family members, volunteers, and anyone supporting people living with CIDP and related conditions.',
+      "Survivors, family members, friends, volunteers, and anyone supporting someone affected by gender-based violence.",
 
     speakers: [
-      'Community support facilitators',
-      'Guest healthcare professionals',
-      'Patient and caregiver representatives',
+      "Community support facilitators",
+      "Counselors and case workers",
+      "Survivor and community advocates",
     ],
 
     registration:
-      'Registration is required to help us plan seating, materials, and refreshments. Please register before attending.',
+      "Registration is required to help us plan seating, materials, and refreshments. Please register before attending.",
 
-    registrationLink: '#',
+    registrationLink: "#",
 
     resources: [
       {
-        label: 'Event information',
-        href: '#',
+        label: "Event information",
+        href: "#",
       },
     ],
   },
 
   {
-    slug: 'cidp-webinar',
+    slug: "understanding-gbv-webinar",
 
-    date: '23',
-    month: 'AUG',
-    year: '2026',
+    date: "23",
+    month: "AUG",
+    year: "2026",
 
-    title: 'Understanding CIDP — webinar',
-    type: 'Online session',
+    title: "Understanding GBV — webinar",
+    type: "Online session",
 
-    time: '3:00 PM – 4:30 PM EAT',
-    location: 'Online — Zoom',
-    organiser: 'Community Support Team',
+    time: "3:00 PM – 4:30 PM EAT",
+    location: "Online — Zoom",
+    organiser: "Community Support Team",
 
     description:
-      'An educational online session exploring CIDP, treatment journeys, symptom management, rehabilitation, and ways patients and caregivers can access meaningful support. The session will also provide an opportunity for participants to ask questions.',
+      "An educational online session exploring what gender-based violence looks like, safety planning, available support services, and ways survivors and their communities can access meaningful help. The session includes time for participant questions.",
 
     audience:
-      'Patients, caregivers, families, healthcare professionals, students, volunteers, and anyone interested in learning more about CIDP.',
+      "Survivors, families, community members, service providers, students, volunteers, and anyone wanting to learn more about GBV.",
 
     speakers: [
-      'Neurology and healthcare professionals',
-      'Rehabilitation specialists',
-      'Patient and caregiver advocates',
+      "Counselors and legal advocates",
+      "Case workers and social workers",
+      "Survivor and community advocates",
     ],
 
     registration:
-      'Registration is required. Registered participants will receive the webinar access link and joining instructions before the event.',
+      "Registration is required. Registered participants will receive the webinar access link and joining instructions before the event.",
 
-    registrationLink: '#',
+    registrationLink: "#",
 
     resources: [
       {
-        label: 'Webinar information',
-        href: '#',
+        label: "Webinar information",
+        href: "#",
       },
     ],
   },
 
   {
-    slug: 'mombasa-coast-chapter',
+    slug: "mombasa-coast-chapter",
 
-    date: '06',
-    month: 'SEP',
-    year: '2026',
+    date: "06",
+    month: "SEP",
+    year: "2026",
 
-    title: 'Mombasa coast chapter meeting',
-    type: 'Chapter meeting',
+    title: "Mombasa coast chapter meeting",
+    type: "Chapter meeting",
 
-    time: '11:00 AM – 2:00 PM',
-    location: 'Mombasa, Kenya',
-    organiser: 'Coast Chapter Team',
+    time: "11:00 AM – 2:00 PM",
+    location: "Mombasa, Kenya",
+    organiser: "Coast Chapter Team",
 
     description:
-      'A local chapter meeting bringing together patients, caregivers, families, volunteers, and community partners across the coast. The meeting will focus on peer support, community connection, awareness, and planning future activities for the region.',
+      "A local chapter meeting bringing together survivors, families, volunteers, and community partners across the coast. The meeting focuses on peer support, community connection, awareness, and planning future activities for the region.",
 
     audience:
-      'Patients, caregivers, families, volunteers, community health partners, and supporters in Mombasa and surrounding counties.',
+      "Survivors, families, volunteers, community health partners, and supporters in Mombasa and surrounding counties.",
 
     speakers: [
-      'Coast Chapter representatives',
-      'Community support facilitators',
-      'Invited healthcare and community partners',
+      "Coast Chapter representatives",
+      "Community support facilitators",
+      "Invited health and community partners",
     ],
 
     registration:
-      'Registration is required. Venue and attendance details will be shared with registered participants before the meeting.',
+      "Registration is required. Venue and attendance details will be shared with registered participants before the meeting.",
 
-    registrationLink: '#',
+    registrationLink: "#",
 
     resources: [
       {
-        label: 'Chapter meeting information',
-        href: '#',
+        label: "Chapter meeting information",
+        href: "#",
       },
     ],
   },
-]
+];
 
 export default function EventDetails() {
-  const { slug } = useParams()
+  const { slug } = useParams();
 
-  const event = events.find(
-    (item) => item.slug === slug
-  )
+  const event = events.find((item) => item.slug === slug);
+
+  // --------------------------------------------------
+  // Not found
+  // --------------------------------------------------
 
   if (!event) {
     return (
       <main className="event-details event-details--not-found">
-        <div className="event-details__container">
+        <div className="container">
 
-          <p className="event-details__eyebrow">
-            Event
-          </p>
+          <p className="eyebrow">Event</p>
 
-          <h1>
-            Event not found.
-          </h1>
+          <h1>Event not found.</h1>
 
           <p>
-            The event you're looking for may have
-            been removed or is no longer available.
+            The event you're looking for may have been
+            removed or is no longer available.
           </p>
 
           <Link
             to="/get-involved"
             className="event-details__back"
           >
-            <ArrowLeft size={17} />
+            <FaArrowLeft />
             Back to events
           </Link>
 
         </div>
       </main>
-    )
+    );
   }
+
+  // --------------------------------------------------
+  // Render
+  // --------------------------------------------------
 
   return (
     <main className="event-details">
 
-      {/* =================================
+      {/* ==========================================
           HERO
-      ================================= */}
+      ========================================== */}
 
       <section className="event-details__hero">
-
-        <div className="event-details__container">
+        <div className="container">
 
           <Link
             to="/get-involved"
             className="event-details__back"
           >
-            <ArrowLeft size={17} />
+            <FaArrowLeft />
             Back to events
           </Link>
 
-          <div className="event-details__hero-grid">
+          <span className="eyebrow">{event.type}</span>
 
-            {/* Date */}
+          <h1>{event.title}</h1>
 
-            <div className="event-details__date">
+          <p className="event-details__lead">
+            Meet, learn, share, and connect with the
+            community.
+          </p>
 
-              <span className="event-details__day">
-                {event.date}
-              </span>
+          <div className="event-details__meta-row">
 
-              <span className="event-details__month">
-                {event.month}
-              </span>
+            <span>
+              <FaClock />
+              {event.month} {event.date}, {event.year}
+              {" · "}
+              {event.time}
+            </span>
 
-              <span className="event-details__year">
-                {event.year}
-              </span>
+            <span>
+              <FaLocationDot />
+              {event.location}
+            </span>
 
-            </div>
-
-            {/* Heading */}
-
-            <div className="event-details__hero-content">
-
-              <span className="event-details__type">
-                {event.type}
-              </span>
-
-              <h1>
-                {event.title}
-              </h1>
-
-              <p>
-                Meet, learn, share, and connect
-                with the community.
-              </p>
-
-            </div>
+            <span>
+              <FaUser />
+              {event.organiser}
+            </span>
 
           </div>
 
         </div>
-
       </section>
 
-
-      {/* =================================
-          EVENT META
-      ================================= */}
-
-      <section className="event-details__meta">
-
-        <div className="event-details__container">
-
-          <div className="event-details__meta-grid">
-
-            <div className="event-details__meta-item">
-
-              <Clock3 size={20} />
-
-              <div>
-                <span>
-                  Date &amp; time
-                </span>
-
-                <strong>
-                  {event.month} {event.date}, {event.year}
-                  <br />
-                  {event.time}
-                </strong>
-              </div>
-
-            </div>
-
-
-            <div className="event-details__meta-item">
-
-              <MapPin size={20} />
-
-              <div>
-                <span>
-                  Location
-                </span>
-
-                <strong>
-                  {event.location}
-                </strong>
-              </div>
-
-            </div>
-
-
-            <div className="event-details__meta-item">
-
-              <UserRound size={20} />
-
-              <div>
-                <span>
-                  Organiser
-                </span>
-
-                <strong>
-                  {event.organiser}
-                </strong>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* =================================
+      {/* ==========================================
           MAIN CONTENT
-      ================================= */}
+      ========================================== */}
 
-      <section className="event-details__content">
+      <section className="section event-details__content">
+        <div className="container event-details__content-grid">
 
-        <div className="event-details__container">
+          <div className="event-details__main">
 
-          <div className="event-details__content-grid">
+            <div className="event-details__section">
+              <span className="event-details__section-number">
+                01
+              </span>
 
-            {/* =================================
-                INFORMATION
-            ================================= */}
-
-            <div className="event-details__main">
-
-              {/* About */}
-
-              <section className="event-details__section">
-
-                <div className="event-details__section-number">
-                  01
-                </div>
-
-                <div>
-
-                  <h2>
-                    About this event
-                  </h2>
-
-                  <p>
-                    {event.description}
-                  </p>
-
-                </div>
-
-              </section>
-
-
-              {/* Who should attend */}
-
-              <section className="event-details__section">
-
-                <div className="event-details__section-number">
-                  02
-                </div>
-
-                <div>
-
-                  <h2>
-                    Who should attend
-                  </h2>
-
-                  <p>
-                    {event.audience}
-                  </p>
-
-                </div>
-
-              </section>
-
-
-              {/* Speakers */}
-
-              <section className="event-details__section">
-
-                <div className="event-details__section-number">
-                  03
-                </div>
-
-                <div>
-
-                  <h2>
-                    Speakers &amp; partners
-                  </h2>
-
-                  <ul className="event-details__list">
-
-                    {event.speakers.map((speaker) => (
-                      <li key={speaker}>
-                        {speaker}
-                      </li>
-                    ))}
-
-                  </ul>
-
-                </div>
-
-              </section>
-
+              <div>
+                <h2>About this event</h2>
+                <p>{event.description}</p>
+              </div>
             </div>
 
+            <div className="event-details__section">
+              <span className="event-details__section-number">
+                02
+              </span>
 
-            {/* =================================
-                SIDEBAR
-            ================================= */}
-
-            <aside className="event-details__sidebar">
-
-              {/* Registration */}
-
-              <div className="event-details__registration">
-
-                <Users
-                  size={24}
-                  strokeWidth={1.8}
-                />
-
-                <p className="event-details__registration-label">
-                  Reserve your place
-                </p>
-
-                <h2>
-                  Join the
-                  <br />
-                  community.
-                </h2>
-
-                <p>
-                  {event.registration}
-                </p>
-
-                <a
-                  href={event.registrationLink}
-                  className="event-details__register"
-                >
-                  <span>
-                    Register for this event
-                  </span>
-
-                  <ArrowUpRight size={18} />
-                </a>
-
+              <div>
+                <h2>Who should attend</h2>
+                <p>{event.audience}</p>
               </div>
+            </div>
 
+            <div className="event-details__section">
+              <span className="event-details__section-number">
+                03
+              </span>
 
-              {/* Resources */}
+              <div>
+                <h2>Speakers &amp; partners</h2>
 
-              {event.resources?.length > 0 && (
-
-                <div className="event-details__resources">
-
-                  <span>
-                    Resources
-                  </span>
-
-                  {event.resources.map((resource) => (
-
-                    <a
-                      key={resource.label}
-                      href={resource.href}
-                    >
-                      <span>
-                        {resource.label}
-                      </span>
-
-                      <ArrowUpRight size={16} />
-
-                    </a>
-
+                <ul className="event-details__list">
+                  {event.speakers.map((speaker) => (
+                    <li key={speaker}>{speaker}</li>
                   ))}
-
-                </div>
-
-              )}
-
-            </aside>
+                </ul>
+              </div>
+            </div>
 
           </div>
 
-        </div>
+          <aside className="event-details__sidebar">
 
+            <div className="event-details__registration">
+              <FaUsers />
+
+              <span className="event-details__registration-label">
+                Reserve your place
+              </span>
+
+              <h2>Join the community.</h2>
+
+              <p>{event.registration}</p>
+
+              <a
+                href={event.registrationLink}
+                className="event-details__register"
+              >
+                <span>Register for this event</span>
+                <FaArrowUpRightFromSquare />
+              </a>
+            </div>
+
+            {event.resources?.length > 0 && (
+              <div className="event-details__resources">
+                <span>Resources</span>
+
+                {event.resources.map((resource) => (
+                  <a
+                    key={resource.label}
+                    href={resource.href}
+                  >
+                    <span>{resource.label}</span>
+                    <FaArrowUpRightFromSquare />
+                  </a>
+                ))}
+              </div>
+            )}
+
+          </aside>
+
+        </div>
       </section>
 
-
-      {/* =================================
-          BACK TO EVENTS
-      ================================= */}
+      {/* ==========================================
+          FOOTER
+      ========================================== */}
 
       <section className="event-details__footer">
-
-        <div className="event-details__container">
-
+        <div className="container">
           <Link
             to="/get-involved"
             className="event-details__footer-link"
           >
-            <ArrowLeft size={18} />
+            <FaArrowLeft />
             View all upcoming events
           </Link>
-
         </div>
-
       </section>
 
     </main>
-  )
+  );
 }
-

@@ -1,106 +1,440 @@
+/* =========================================
+   NEWSLETTER / STAY CONNECTED
+========================================= */
+
 .newsletter {
-  background:var(--ivory-50);
+  position: relative;
+
+  padding: 105px 0 80px;
+
+  background: #ffffff;
+
+  overflow: hidden;
 }
 
-.newsletter__inner {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
+.newsletter__container {
+  position: relative;
 }
 
-.newsletter .eyebrow {
-  color: var(--marigold-600);
+
+/* =========================================
+   TOP
+========================================= */
+
+.newsletter__top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid var(--ink-200, #dce1dd);
 }
 
-.newsletter__title {
-  margin-top: 0.75rem;
-  color: var(--canopy-900);
-  font-size: clamp(2rem, 4vw, 3rem);
+.newsletter__label,
+.newsletter__index {
+  color: var(--canopy-700, #0b6b4f);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.14em;
 }
 
-.newsletter__text {
-  max-width: 620px;
-  margin: 1.25rem auto 2.5rem;
-  color: var(--ink-700);
-  font-size: 1.05rem;
+.newsletter__index {
+  color: var(--ink-400, #929c95);
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.newsletter__main {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+
+  gap: 90px;
+
+  padding: 65px 0 75px;
+}
+
+
+/* =========================================
+   STATEMENT
+========================================= */
+
+.newsletter__statement {
+  max-width: 760px;
+}
+
+.newsletter__statement h2 {
+  margin: 0;
+
+  color: var(--ink-900, #17221d);
+
+  font-size: clamp(3.2rem, 7vw, 7rem);
+
+  font-weight: 500;
+
+  line-height: 0.91;
+
+  letter-spacing: -0.065em;
+}
+
+.newsletter__statement h2 span {
+  color: var(--canopy-600, #0b6b4f);
+}
+
+.newsletter__statement p {
+  max-width: 570px;
+
+  margin: 35px 0 0;
+
+  color: var(--ink-600, #5f6962);
+
+  font-size: 15px;
+
   line-height: 1.8;
 }
 
-.newsletter__form {
+
+/* =========================================
+   ACTION
+========================================= */
+
+.newsletter__action {
+  align-self: end;
+
+  padding-bottom: 5px;
+}
+
+.newsletter__action-heading {
   display: flex;
+
   align-items: center;
-  gap: 1rem;
-  max-width: 700px;
-  margin: 0 auto;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+
+  color: var(--ink-900, #17221d);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
 }
 
-.newsletter__input {
-  flex: 1;
+.newsletter__action-heading svg {
+  color: var(--canopy-600, #0b6b4f);
+}
 
+
+/* =========================================
+   FORM
+========================================= */
+
+.newsletter__field {
   display: flex;
+
   align-items: center;
-  gap: 0.75rem;
 
-  background: #fff;
-  border: 1px solid var(--line);
-
-  border-radius: var(--radius-button);
-
-  padding: 0.9rem 1.2rem;
-
-  box-shadow: var(--shadow-sm);
-
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.newsletter__input:focus-within {
-  border-color: var(--marigold-500);
-  box-shadow: 0 0 0 4px rgba(46, 158, 104, 0.12);
-}
-
-.newsletter__input svg {
-  color: var(--canopy-600);
-  flex-shrink: 0;
-}
-
-.newsletter__input input {
   width: 100%;
 
+  border-bottom: 2px solid var(--canopy-700, #0b6b4f);
+
+  background: var(--ivory-50, #faf8f1);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.newsletter__field:focus-within {
+  background: #f3f6f2;
+
+  border-color: var(--marigold-500, #e0a634);
+}
+
+.newsletter__field input {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 17px 16px;
+
   border: none;
+
   outline: none;
 
   background: transparent;
 
-  color: var(--ink-900);
+  color: var(--ink-900, #17221d);
+
+  font-size: 14px;
 }
 
-.newsletter__input input::placeholder {
-  color: var(--ink-700);
+.newsletter__field input::placeholder {
+  color: var(--ink-400, #929c95);
 }
 
-.newsletter__form .btn {
+.newsletter__field button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   flex-shrink: 0;
-  min-width: 170px;
+
+  width: 54px;
+  height: 54px;
+
+  margin-right: 3px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: var(--canopy-700, #0b6b4f);
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
 }
+
+.newsletter__field button:hover:not(:disabled) {
+  background: var(--canopy-900, #063d2e);
+
+  transform: translate(2px, -2px);
+}
+
+.newsletter__field button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.65;
+}
+
+
+/* =========================================
+   PRIVACY
+========================================= */
 
 .newsletter__privacy {
-  margin-top: 1.5rem;
+  margin: 14px 0 0;
 
-  color: var(--ink-700);
+  color: var(--ink-400, #929c95);
 
-  font-size: 0.9rem;
+  font-size: 10px;
+
+  line-height: 1.6;
 }
 
-@media (max-width: 768px) {
-  .newsletter__form {
-    flex-direction: column;
+
+/* =========================================
+   SPINNER
+========================================= */
+
+.newsletter__spinner {
+  animation: newsletter-spin 1s linear infinite;
+}
+
+@keyframes newsletter-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================
+   BOTTOM
+========================================= */
+
+.newsletter__bottom {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid var(--ink-200, #dce1dd);
+
+  color: var(--ink-400, #929c95);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+}
+
+.newsletter__bottom-line {
+  width: 22px;
+  height: 1px;
+
+  background: var(--ink-200, #dce1dd);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .newsletter {
+    padding: 85px 0 65px;
   }
 
-  .newsletter__input {
+  .newsletter__main {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+
+    padding: 55px 0 60px;
+  }
+
+  .newsletter__statement h2 {
+    max-width: 700px;
+  }
+
+  .newsletter__action {
+    max-width: 560px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 640px) {
+  .newsletter {
+    padding: 70px 0 55px;
+  }
+
+  .newsletter__top {
+    padding-bottom: 15px;
+  }
+
+  .newsletter__label,
+  .newsletter__index {
+    font-size: 9px;
+  }
+
+  .newsletter__main {
+    gap: 40px;
+
+    padding: 45px 0 50px;
+  }
+
+  .newsletter__statement h2 {
+    font-size: clamp(3rem, 15vw, 4.6rem);
+
+    line-height: 0.92;
+  }
+
+  .newsletter__statement p {
+    margin-top: 25px;
+
+    font-size: 14px;
+  }
+
+  .newsletter__action {
     width: 100%;
   }
 
-  .newsletter__form .btn {
-    width: 100%;
+  .newsletter__field input {
+    padding: 16px 13px;
+
+    font-size: 13px;
+  }
+
+  .newsletter__field button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .newsletter__bottom {
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+  .newsletter__bottom-line {
+    width: 14px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+  .newsletter__index {
+    display: none;
+  }
+
+  .newsletter__statement h2 {
+    font-size: 3rem;
+  }
+
+  .newsletter__statement p {
+    font-size: 13px;
+
+    line-height: 1.7;
+  }
+
+  .newsletter__bottom {
+    font-size: 8px;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.newsletter__field button:focus-visible {
+  outline: 2px solid var(--marigold-500, #e0a634);
+
+  outline-offset: 4px;
+}
+
+.newsletter__field input:focus-visible {
+  outline: none;
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .newsletter__field,
+  .newsletter__field button {
+    transition: none;
+  }
+
+  .newsletter__spinner {
+    animation: none;
   }
 }

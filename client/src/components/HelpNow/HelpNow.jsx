@@ -1,9 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import {
   AlertCircle,
-  Phone,
-  Navigation,
-  MessageCircle,
   ArrowRight,
 } from "lucide-react";
 
@@ -11,19 +8,22 @@ import "./HelpNow.css";
 
 const options = [
   {
-    icon: Phone,
+    image:
+      "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/why-choose-us-image-2.jpg",
     number: "01",
     title: "Call for urgent help",
     text: "If you are in immediate danger, contact local emergency services or a trusted person who can help you get somewhere safe.",
   },
   {
-    icon: Navigation,
+    image:
+      "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/why-choose-us-image-1.jpg",
     number: "02",
     title: "Move somewhere safer",
     text: "If possible, go to a place where you feel protected. You do not need to make every decision at once.",
   },
   {
-    icon: MessageCircle,
+    image:
+      "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/our-benefit-image-1.jpg",
     number: "03",
     title: "Tell someone",
     text: "Reach out to someone you trust. You can simply say that you need help without explaining everything.",
@@ -35,9 +35,11 @@ const itemVariants = {
     opacity: 0,
     y: 25,
   },
+
   visible: {
     opacity: 1,
     y: 0,
+
     transition: {
       duration: 0.55,
       ease: [0.16, 1, 0.3, 1],
@@ -111,6 +113,7 @@ export default function HelpNow() {
               }}
               variants={{
                 hidden: {},
+
                 visible: {
                   transition: {
                     staggerChildren: 0.12,
@@ -118,41 +121,46 @@ export default function HelpNow() {
                 },
               }}
             >
-              {options.map((option) => {
-                const Icon = option.icon;
+              {options.map((option) => (
+                <motion.div
+                  key={option.title}
+                  className="help-now__option"
+                  variants={itemVariants}
+                >
+                  <span className="help-now__number">
+                    {option.number}
+                  </span>
 
-                return (
-                  <motion.div
-                    key={option.title}
-                    className="help-now__option"
-                    variants={itemVariants}
-                  >
-                    <span className="help-now__number">
-                      {option.number}
-                    </span>
+                  <div className="help-now__option-image">
+                    <img
+                      src={option.image}
+                      alt=""
+                      loading="lazy"
+                    />
+                  </div>
 
-                    <div className="help-now__option-icon">
-                      <Icon size={19} strokeWidth={1.8} />
-                    </div>
+                  <div className="help-now__option-content">
+                    <h3>{option.title}</h3>
 
-                    <div className="help-now__option-content">
-                      <h3>{option.title}</h3>
-                      <p>{option.text}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
+                    <p>{option.text}</p>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
 
             <div className="help-now__footer">
               <div className="help-now__note">
                 <span className="help-now__note-line" />
+
                 <span>
                   You are allowed to ask for help.
                 </span>
               </div>
 
-              <a href="/resources" className="help-now__link">
+              <a
+                href="/resources"
+                className="help-now__link"
+              >
                 Explore support resources
                 <ArrowRight size={17} />
               </a>

@@ -1,14 +1,17 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import "./Hero.css";
-import heroImage from "../../assets/hero.jpg";
+const heroImage =
+  "https://demo.awaikenthemes.com/aasha/wp-content/uploads/2026/02/post-1.jpg";
+
 import { useEffect, useState } from "react";
 
 const headlines = [
-  "Supporting Patients Across Kenya",
-  "Strengthening Awareness & Early Recognition",
-  "Advancing Multi-Stakeholder Collaboration",
-  "Building Sustainable Access to Treatment",
+  "Supporting Survivors Across Kenya",
+  "Strengthening Awareness & Prevention",
+  "Creating Safe Spaces for Survivors",
+  "Building Stronger Communities Together",
 ];
+
 const container = {
   hidden: {},
   show: {
@@ -45,6 +48,7 @@ export default function Hero() {
 
     return () => clearInterval(timer);
   }, []);
+
   return (
     <section className="hero">
       <motion.div
@@ -82,7 +86,9 @@ export default function Hero() {
         animate="show"
       >
         <h1 className="hero__title">
-          You Are Not Alone.
+          Ending GBV.
+          <br />
+          Supporting Survivors.
           <span className="hero__changing">
             <AnimatePresence mode="wait">
               <motion.span
@@ -110,12 +116,12 @@ export default function Hero() {
         </h1>
 
         <motion.p variants={item} className="hero__subtitle">
-          The GBS Foundation-Kenya is at the center of the care ecosystem,
-          bringing patients, healthcare professionals, government, industry and
-          other stakeholders together to improve outcomes by enhancing
-          awareness, patient support, and access to timely and affordable
-          treatment for people affected by GBS, CIDP and associated
-          neuropathies.
+          We are committed to preventing and responding to gender-based violence
+          by creating awareness, supporting survivors, promoting access to
+          essential services, and bringing communities, healthcare
+          professionals, government, organizations, and other stakeholders
+          together to build safer, stronger, and more inclusive communities
+          across Kenya.
         </motion.p>
 
         <motion.div variants={item} className="hero__actions">

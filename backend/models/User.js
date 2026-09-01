@@ -33,6 +33,42 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+
+    // ------------------------------------------------
+    // Author profile fields
+    //
+    // Only meaningful for role: "author", but left
+    // available on the schema generally rather than
+    // split into a separate model/collection - simplest
+    // option given how few fields these are.
+    // ------------------------------------------------
+
+    bio: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+      default: "",
+    },
+
+    socialLinks: {
+      twitter: {
+        type: String,
+        trim: true,
+        default: "",
+      },
+
+      linkedin: {
+        type: String,
+        trim: true,
+        default: "",
+      },
+
+      website: {
+        type: String,
+        trim: true,
+        default: "",
+      },
+    },
   },
   {
     timestamps: true,

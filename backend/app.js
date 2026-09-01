@@ -155,9 +155,11 @@ app.use("/api/comments", require("./routes/commentRoutes"));
 
 app.use("/api/admin/comments", require("./routes/adminCommentRoutes"));
 
-app.use("/api/admin/stories", require("./routes/adminStoryRoutes"));
+app.use("/api/admin/stories", require("./routes/Adminstoryroutes"));
 
-app.use("/api/admin/users", require("./routes/Adminuserroutes"));
+app.use("/api/admin/users", require("./routes/adminUserRoutes"));
+
+app.use("/api/admin/authors", require("./routes/Adminauthorroutes"));
 
 // --------------------------------------------------
 // 404 Handler

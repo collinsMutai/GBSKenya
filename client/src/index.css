@@ -2,32 +2,32 @@
 
 :root {
   /* ==============================
-     Kenya Foundation Color Palette
+     Brand Color Palette (GBV theme)
      ============================== */
 
-  /* Primary */
-  --canopy-900: #072A4A;
-  --canopy-700: #0A4A80;
-  --canopy-600: #0061B2;
+  /* Primary — deep plum / royal purple */
+  --canopy-900: #3B1249;
+  --canopy-700: #6B2D7A;
+  --canopy-600: #8B4A9C;
 
-  /* Secondary */
-  --marigold-500: #2E9E68;
-  --marigold-600: #217D50;
+  /* Secondary — warm gold / bronze */
+  --marigold-500: #C0862E;
+  --marigold-600: #9C6A1F;
 
-  /* Accent */
-  --ember-600: #C62828;
+  /* Accent — warm terracotta-red (softer than alarm-red) */
+  --ember-600: #B3402D;
 
-  /* Neutrals */
-  --ivory-50: #FAF7EF;
-  --ivory-100: #F3EEDF;
-  --cloud-100: #EDE7D8;
+  /* Neutrals — warm ivory / blush */
+  --ivory-50: #FAF7F5;
+  --ivory-100: #F3ECEF;
+  --cloud-100: #F1E9F0;
 
-  --ink-900: #111111;
-  --ink-700: #4B5563;
+  --ink-900: #241726;
+  --ink-700: #5C4A5E;
 
   /* Borders */
-  --line: rgba(17, 17, 17, 0.12);
-  --line-on-dark: rgba(250, 247, 239, 0.18);
+  --line: rgba(59, 18, 73, 0.12);
+  --line-on-dark: rgba(250, 247, 245, 0.18);
 
   /* Typography */
   --font-display: "Josefin Sans", sans-serif;
@@ -216,7 +216,7 @@ h6 {
 }
 
 .btn-ghost:hover {
-  background: rgba(250, 247, 239, .08);
+  background: rgba(250, 247, 245, .08);
 }
 
 .btn-outline {

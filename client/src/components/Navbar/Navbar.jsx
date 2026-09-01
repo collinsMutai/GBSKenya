@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Phone, ChevronDown, User } from "lucide-react";
+import { Mail, Phone, User } from "lucide-react";
 
 import LoginModal from "../loginmodal/LoginModal";
 
 import "./Navbar.css";
-import logo from "../../assets/logo.jpeg";
+
+/* ==============================
+   Navigation Links
+============================== */
 
 const links = [
   {
@@ -13,54 +16,26 @@ const links = [
     to: "/",
   },
   {
-    label: "About us",
-    to: "/about/who-we-are",
-    children: [
-      {
-        label: "Who We Are",
-        to: "/about/who-we-are",
-      },
-      {
-        label: "Leadership",
-        to: "/about/leadership",
-      },
-      {
-        label: "Our Medical Advisory Board",
-        to: "/about/medical-advisory-board",
-      },
-    ],
+    label: "About",
+    to: "/about",
   },
   {
-    label: "Resilience stories",
-    to: "/stories",
+    label: "Services",
+    to: "/services",
   },
   {
-    label: "Support resources",
-    to: "/resources",
+    label: "Survivor Stories",
+    to: "/survivor-stories",
   },
   {
-    label: "Get Involved",
-    to: "/get-involved",
-    children: [
-      {
-        label: "Patient and Caregiver Survey",
-        to: "/get-involved/patient-caregiver-survey",
-      },
-      {
-        label: "Partner with us",
-        to: "/get-involved/partner-with-us",
-      },
-      {
-        label: "Donate",
-        to: "/get-involved/donate",
-      },
-    ],
-  },
-  {
-    label: "Contact us",
+    label: "Contact Us",
     to: "/contact",
   },
 ];
+
+/* ==============================
+   Social Icons
+============================== */
 
 const iconBase = {
   viewBox: "0 0 24 24",
@@ -115,15 +90,17 @@ function LinkedinIcon({ size = 24, ...props }) {
   );
 }
 
+/* ==============================
+   Navbar
+============================== */
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(null);
 
   const [loginOpen, setLoginOpen] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Prevent page scrolling when mobile menu is open
+  /* Prevent page scrolling when mobile menu is open */
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
 
@@ -132,16 +109,18 @@ export default function Navbar() {
     };
   }, [open]);
 
+  /* Close mobile menu */
   const closeMenu = () => {
     setOpen(false);
-    setMobileDropdownOpen(null);
   };
 
+  /* Open login modal */
   const openLogin = () => {
     closeMenu();
     setLoginOpen(true);
   };
 
+  /* Login success */
   const handleLoginSuccess = (loggedInUser) => {
     setUser(loggedInUser);
 
@@ -158,11 +137,11 @@ export default function Navbar() {
         <div className="container topbar__row">
           <div className="topbar__contact">
             <a
-              href="mailto:info@gbsfoundationkenya.org"
+              href="mailto:info@gbvfoundationkenya.org"
               className="topbar__item"
             >
               <Mail size={14} />
-              <span>info@gbsfoundationkenya.org</span>
+              <span>info@gbvfoundationkenya.org</span>
             </a>
 
             <a href="tel:+254700000000" className="topbar__item">
@@ -216,61 +195,33 @@ export default function Navbar() {
       ============================== */}
 
       <div className="container navbar__row">
-        <Link to="/" className="navbar__brand" onClick={closeMenu}>
-          <img
-            src={logo}
-            alt="GBS Foundation Kenya"
-            className="navbar__logo"
-          />
+        {/* Text Logo */}
+
+        <Link
+          to="/"
+          className="navbar__brand navbar__text-logo"
+          onClick={closeMenu}
+          aria-label="GBV Foundation Kenya Home"
+        >
+          <span className="navbar__logo-main">GBV</span>
+          <span className="navbar__logo-sub">FOUNDATION KENYA</span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* ==============================
+            Desktop Navigation
+        ============================== */}
 
-        <nav className="navbar__links">
-          {links.map((link) =>
-            link.children ? (
-              <div
-                key={link.to}
-                className="navbar__dropdown"
-                onMouseEnter={() => setOpenDropdown(link.to)}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <Link
-                  to={link.to}
-                  className="navbar__link navbar__dropdown-trigger"
-                >
-                  {link.label}
-                  <ChevronDown size={14} />
-                </Link>
-
-                <div
-                  className={`navbar__dropdown-panel ${
-                    openDropdown === link.to ? "is-open" : ""
-                  }`}
-                >
-                  {link.children.map((child) => (
-                    <Link
-                      key={child.to}
-                      to={child.to}
-                      className="navbar__dropdown-link"
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      {child.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="navbar__link"
-                onClick={closeMenu}
-              >
-                {link.label}
-              </Link>
-            ),
-          )}
+        <nav className="navbar__links" aria-label="Main navigation">
+          {links.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className="navbar__link"
+              onClick={closeMenu}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         {/* ==============================
@@ -309,61 +260,17 @@ export default function Navbar() {
       ============================== */}
 
       {open && (
-        <nav className="navbar__mobile">
-          {links.map((link) =>
-            link.children ? (
-              <div key={link.to} className="navbar__mobile-group">
-                <button
-                  type="button"
-                  className="navbar__link navbar__mobile-group-trigger"
-                  onClick={() =>
-                    setMobileDropdownOpen((prev) =>
-                      prev === link.to ? null : link.to,
-                    )
-                  }
-                  aria-expanded={mobileDropdownOpen === link.to}
-                >
-                  <span>{link.label}</span>
-
-                  <ChevronDown
-                    size={18}
-                    strokeWidth={2}
-                    style={{
-                      transform:
-                        mobileDropdownOpen === link.to
-                          ? "rotate(180deg)"
-                          : "none",
-                      transition: "transform 0.2s ease",
-                    }}
-                  />
-                </button>
-
-                {mobileDropdownOpen === link.to && (
-                  <div className="navbar__mobile-submenu">
-                    {link.children.map((child) => (
-                      <Link
-                        key={child.to}
-                        to={child.to}
-                        className="navbar__mobile-sublink"
-                        onClick={closeMenu}
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="navbar__link"
-                onClick={closeMenu}
-              >
-                {link.label}
-              </Link>
-            ),
-          )}
+        <nav className="navbar__mobile" aria-label="Mobile navigation">
+          {links.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className="navbar__link"
+              onClick={closeMenu}
+            >
+              {link.label}
+            </Link>
+          ))}
 
           {/* Mobile Login */}
 

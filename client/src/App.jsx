@@ -5,12 +5,25 @@ import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/Layout/Layout.jsx";
 import Home from "./pages/Home.jsx";
 
+/* ==========================================
+   ABOUT
+========================================== */
+
 import WhoWeAre from "./components/WhoWeAre/WhoWeAre.jsx";
 import Leadership from "./components/Leadership/Leadership.jsx";
 import MedicalAdvisoryBoard from "./components/MedicalAdvisoryBoard/MedicalAdvisoryBoard.jsx";
 
-import ResilienceStories from "./components/ResilienceStories/ResilienceStories.jsx";
+/* ==========================================
+   SURVIVOR STORIES
+========================================== */
+
+import AllStories from "./components/AllStories/AllStories.jsx";
 import StoryDetails from "./components/StoryDetails/StoryDetails.jsx";
+import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
+
+/* ==========================================
+   SERVICES
+========================================== */
 
 import ResourcesHome from "./components/ResourcesHome/ResourcesHome.jsx";
 import UnderstandingConditions from "./components/UnderstandingConditions/UnderstandingConditions.jsx";
@@ -22,25 +35,45 @@ import Downloads from "./components/Downloads/Downloads.jsx";
 import ResourcesFAQ from "./components/ResourcesFAQ/ResourcesFAQ.jsx";
 import GlobalEducation from "./components/GlobalEducation/GlobalEducation.jsx";
 
+/* ==========================================
+   CONTACT
+========================================== */
+
 import ContactPage from "./components/ContactPage/ContactPage.jsx";
 
-// Get Involved
+/* ==========================================
+   LEGACY / OTHER PAGES
+========================================== */
+
 import GetInvolved from "./components/GetInvolved/GetInvolved.jsx";
 import EventDetails from "./components/EventDetails/EventDetails.jsx";
 import PartnerWithUs from "./components/PartnerWithUs/PartnerWithUs.jsx";
 import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientCaregiverSurvey.jsx";
-import AllStories from "./components/AllStories/AllStories.jsx";
-import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
 
-// Admin
+/* ==========================================
+   ADMIN
+========================================== */
+
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
 import AdminComments from "./components/AdminComments/AdminComments.jsx";
 import AdminStories from "./components/AdminStories/AdminStories.jsx";
 import AdminUsers from "./components/AdminUsers/AdminUsers.jsx";
+import AdminAuthors from "./components/AdminAuthors/AdminAuthors.jsx";
+
+/* ==========================================
+   COMING SOON
+========================================== */
 
 function ComingSoon({ title }) {
   return (
-    <div className="container section" style={{ minHeight: "40vh" }}>
+    <div
+      className="container section"
+      style={{
+        minHeight: "40vh",
+        paddingTop: "60px",
+        paddingBottom: "60px",
+      }}
+    >
       <h2 style={{ marginTop: 10 }}>{title}</h2>
 
       <p
@@ -55,6 +88,10 @@ function ComingSoon({ title }) {
   );
 }
 
+/* ==========================================
+   APP
+========================================== */
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -64,30 +101,100 @@ export default function App() {
         ========================================== */}
 
         <Route element={<Layout />}>
-          {/* HOME */}
+          {/* ==========================================
+              HOME
+          ========================================== */}
 
           <Route path="/" element={<Home />} />
 
-          {/* ABOUT */}
+          {/* ==========================================
+              ABOUT
+          ========================================== */}
 
-          <Route path="/about/who-we-are" element={<WhoWeAre />} />
+          <Route path="/about" element={<WhoWeAre />} />
 
-          <Route path="/about/leadership" element={<Leadership />} />
+          {/* Optional About sub-pages */}
+
+          <Route
+            path="/about/who-we-are"
+            element={<WhoWeAre />}
+          />
+
+          <Route
+            path="/about/leadership"
+            element={<Leadership />}
+          />
+
+          <Route
+            path="/about/advisory-board"
+            element={<MedicalAdvisoryBoard />}
+          />
+
+          {/* Keep old URL working */}
 
           <Route
             path="/about/medical-advisory-board"
             element={<MedicalAdvisoryBoard />}
           />
 
-          {/* STORIES */}
+          {/* ==========================================
+              SERVICES
+          ========================================== */}
 
-          <Route path="/stories" element={<AllStories />} />
+          <Route
+            path="/services"
+            element={<ResourcesHome />}
+          />
 
-          <Route path="/stories/:slug" element={<StoryDetails />} />
+          <Route
+            path="/services/conditions"
+            element={<UnderstandingConditions />}
+          />
 
-          {/* RESOURCES */}
+          <Route
+            path="/services/diagnosis-treatment"
+            element={<DiagnosisTreatment />}
+          />
 
-          <Route path="/resources" element={<ResourcesHome />} />
+          <Route
+            path="/services/financial-support"
+            element={<FinancialSupport />}
+          />
+
+          <Route
+            path="/services/rehabilitation"
+            element={<Rehabilitation />}
+          />
+
+          <Route
+            path="/services/mental-health"
+            element={<MentalHealth />}
+          />
+
+          <Route
+            path="/services/downloads"
+            element={<Downloads />}
+          />
+
+          <Route
+            path="/services/faq"
+            element={<ResourcesFAQ />}
+          />
+
+          <Route
+            path="/services/global"
+            element={<GlobalEducation />}
+          />
+
+          {/* ==========================================
+              OLD RESOURCE URLS
+              Kept so existing links do not break
+          ========================================== */}
+
+          <Route
+            path="/resources"
+            element={<ResourcesHome />}
+          />
 
           <Route
             path="/resources/conditions"
@@ -109,19 +216,83 @@ export default function App() {
             element={<Rehabilitation />}
           />
 
-          <Route path="/resources/mental-health" element={<MentalHealth />} />
+          <Route
+            path="/resources/mental-health"
+            element={<MentalHealth />}
+          />
 
-          <Route path="/resources/downloads" element={<Downloads />} />
+          <Route
+            path="/resources/downloads"
+            element={<Downloads />}
+          />
 
-          <Route path="/resources/faq" element={<ResourcesFAQ />} />
+          <Route
+            path="/resources/faq"
+            element={<ResourcesFAQ />}
+          />
 
-          <Route path="/resources/global" element={<GlobalEducation />} />
+          <Route
+            path="/resources/global"
+            element={<GlobalEducation />}
+          />
 
-          {/* GET INVOLVED */}
+          {/* ==========================================
+              SURVIVOR STORIES
+          ========================================== */}
 
-          <Route path="/get-involved" element={<GetInvolved />} />
+          <Route
+            path="/survivor-stories"
+            element={<AllStories />}
+          />
 
-          <Route path="/get-involved/events/:slug" element={<EventDetails />} />
+          <Route
+            path="/survivor-stories/:slug"
+            element={<StoryDetails />}
+          />
+
+          {/* Keep old stories URLs working */}
+
+          <Route
+            path="/stories"
+            element={<AllStories />}
+          />
+
+          <Route
+            path="/stories/:slug"
+            element={<StoryDetails />}
+          />
+
+          {/* ==========================================
+              CONTACT
+          ========================================== */}
+
+          <Route
+            path="/contact"
+            element={<ContactPage />}
+          />
+
+          {/* ==========================================
+              STORY SUBMISSION
+          ========================================== */}
+
+          <Route
+            path="/add-story"
+            element={<StoryEditor />}
+          />
+
+          {/* ==========================================
+              LEGACY GET INVOLVED
+          ========================================== */}
+
+          <Route
+            path="/get-involved"
+            element={<GetInvolved />}
+          />
+
+          <Route
+            path="/get-involved/events/:slug"
+            element={<EventDetails />}
+          />
 
           <Route
             path="/get-involved/patient-caregiver-survey"
@@ -137,41 +308,63 @@ export default function App() {
             path="/get-involved/donate"
             element={<ComingSoon title="Donate" />}
           />
-
-          {/* CONTACT */}
-
-          <Route path="/contact" element={<ContactPage />} />
-
-          {/* ADD STORY */}
-
-          <Route path="/add-story" element={<StoryEditor />} />
         </Route>
 
         {/* ==========================================
             ADMIN DASHBOARD
         ========================================== */}
 
-        <Route path="/admin" element={<AdminDashboard />}>
-          <Route index element={<ComingSoon title="Dashboard Overview" />} />
+        <Route
+          path="/admin"
+          element={<AdminDashboard />}
+        >
+          <Route
+            index
+            element={
+              <ComingSoon title="Dashboard Overview" />
+            }
+          />
 
-          <Route path="stories" element={<AdminStories />} />
+          <Route
+            path="stories"
+            element={<AdminStories />}
+          />
 
-          <Route path="comments" element={<AdminComments />} />
+          <Route
+            path="comments"
+            element={<AdminComments />}
+          />
 
-          <Route path="users" element={<AdminUsers />} />
+          <Route
+            path="users"
+            element={<AdminUsers />}
+          />
 
           <Route
             path="authors"
-            element={<ComingSoon title="Manage Authors" />}
+            element={<AdminAuthors />}
           />
 
-          <Route path="reports" element={<ComingSoon title="Reports" />} />
+          <Route
+            path="reports"
+            element={<ComingSoon title="Reports" />}
+          />
 
-          <Route path="settings" element={<ComingSoon title="Settings" />} />
+          <Route
+            path="settings"
+            element={<ComingSoon title="Settings" />}
+          />
         </Route>
       </Routes>
 
-      <ToastContainer position="bottom-right" autoClose={4000} />
+      {/* ==========================================
+          TOAST NOTIFICATIONS
+      ========================================== */}
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+      />
     </BrowserRouter>
   );
 }

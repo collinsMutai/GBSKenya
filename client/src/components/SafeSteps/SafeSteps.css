@@ -1,5 +1,5 @@
 /* ==========================================
-   SAFE STEPS — DARK IMAGE PARALLAX
+   SAFE STEPS — GLOBAL THEME + IMAGE PARALLAX
 ========================================== */
 
 .safe-steps {
@@ -11,8 +11,7 @@
 
   overflow: hidden;
 
-  /* Fallback if image fails */
-  background: #081914;
+  background: var(--canopy-900);
 }
 
 
@@ -34,10 +33,6 @@
 .safe-steps__background-image {
   position: absolute;
 
-  /*
-   * Slightly oversized so the image can move
-   * vertically without exposing empty space.
-   */
   top: -14%;
   left: -3%;
 
@@ -51,20 +46,20 @@
   background-size: cover;
 
   /*
-   * Darken the actual image itself.
-   * This makes the background less distracting.
+   * Dark + slightly desaturated so the image
+   * supports rather than competes with the content.
    */
   filter:
-    brightness(0.48)
-    saturate(0.72)
-    contrast(1.05);
+    brightness(0.42)
+    saturate(0.65)
+    contrast(1.08);
 
   will-change: transform;
 }
 
 
 /* ==========================================
-   MAIN DARK OVERLAY
+   PLUM OVERLAY
 ========================================== */
 
 .safe-steps__overlay {
@@ -73,20 +68,13 @@
 
   z-index: 1;
 
-  /*
-   * Strong dark green overlay.
-   *
-   * Left = darkest for text
-   * Center = slightly lighter
-   * Right = lets some image through
-   */
   background:
     linear-gradient(
       90deg,
-      rgba(5, 20, 15, 0.96) 0%,
-      rgba(7, 25, 19, 0.91) 35%,
-      rgba(7, 25, 19, 0.84) 65%,
-      rgba(5, 20, 15, 0.90) 100%
+      rgba(59, 18, 73, 0.97) 0%,
+      rgba(59, 18, 73, 0.91) 35%,
+      rgba(59, 18, 73, 0.82) 65%,
+      rgba(59, 18, 73, 0.91) 100%
     );
 
   pointer-events: none;
@@ -94,7 +82,7 @@
 
 
 /* ==========================================
-   SECONDARY CONTRAST OVERLAY
+   DARKNESS / CONTRAST GRADIENT
 ========================================== */
 
 .safe-steps__gradient {
@@ -106,10 +94,10 @@
   background:
     linear-gradient(
       180deg,
-      rgba(3, 15, 11, 0.82) 0%,
-      rgba(5, 20, 15, 0.25) 25%,
-      rgba(5, 20, 15, 0.18) 55%,
-      rgba(3, 15, 11, 0.92) 100%
+      rgba(36, 23, 38, 0.78) 0%,
+      rgba(59, 18, 73, 0.18) 24%,
+      rgba(59, 18, 73, 0.20) 58%,
+      rgba(36, 23, 38, 0.94) 100%
     );
 
   pointer-events: none;
@@ -117,7 +105,7 @@
 
 
 /* ==========================================
-   SUBTLE GREEN ATMOSPHERE
+   SUBTLE GOLD ATMOSPHERE
 ========================================== */
 
 .safe-steps::before {
@@ -126,19 +114,19 @@
   position: absolute;
   z-index: 2;
 
-  top: 10%;
-  right: -12%;
+  top: 5%;
+  right: -15%;
 
-  width: 600px;
-  height: 600px;
+  width: 650px;
+  height: 650px;
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(11, 107, 79, 0.18) 0%,
-      rgba(11, 107, 79, 0.07) 38%,
+      rgba(192, 134, 46, 0.14) 0%,
+      rgba(192, 134, 46, 0.05) 38%,
       transparent 72%
     );
 
@@ -149,7 +137,7 @@
 
 
 /* ==========================================
-   CONTENT
+   CONTAINER
 ========================================== */
 
 .safe-steps__container {
@@ -182,12 +170,12 @@
 
   padding-bottom: 10px;
 
-  color: #e2bd61;
+  color: var(--marigold-500);
 
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-mono);
 
-  font-size: 9px;
-  font-weight: 800;
+  font-size: 0.7rem;
+  font-weight: 500;
 
   letter-spacing: 0.13em;
 
@@ -198,7 +186,7 @@
   width: 24px;
   height: 1px;
 
-  background: #dcb04e;
+  background: var(--marigold-500);
 }
 
 .safe-steps__intro-main {
@@ -208,22 +196,24 @@
 .safe-steps__intro h2 {
   margin: 0;
 
-  color: #ffffff;
+  color: var(--ivory-50);
+
+  font-family: var(--font-display);
 
   font-size: clamp(48px, 6vw, 78px);
 
-  font-weight: 500;
+  font-weight: 600;
 
   line-height: 0.98;
 
   letter-spacing: -0.06em;
 
   text-shadow:
-    0 3px 20px rgba(0, 0, 0, 0.22);
+    0 4px 25px rgba(36, 23, 38, 0.35);
 }
 
 .safe-steps__intro h2 span {
-  color: #e0b957;
+  color: var(--marigold-500);
 }
 
 .safe-steps__intro-main p {
@@ -231,14 +221,13 @@
 
   margin: 25px 0 0;
 
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(250, 247, 245, 0.78);
 
-  font-size: 14px;
+  font-family: var(--font-body);
+
+  font-size: 0.9rem;
 
   line-height: 1.8;
-
-  text-shadow:
-    0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 .safe-steps__scroll {
@@ -251,12 +240,13 @@
 
   padding-bottom: 8px;
 
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(250, 247, 245, 0.58);
 
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-mono);
 
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 0.65rem;
+
+  font-weight: 500;
 
   letter-spacing: 0.08em;
 
@@ -264,7 +254,7 @@
 }
 
 .safe-steps__scroll svg {
-  color: #dcb04e;
+  color: var(--marigold-500);
 }
 
 
@@ -294,8 +284,8 @@
     linear-gradient(
       180deg,
       transparent,
-      rgba(220, 176, 78, 0.55) 10%,
-      rgba(220, 176, 78, 0.55) 90%,
+      rgba(192, 134, 46, 0.55) 10%,
+      rgba(192, 134, 46, 0.55) 90%,
       transparent
     );
 }
@@ -326,31 +316,27 @@
 
   padding: 28px 35px 28px 0;
 
-  /*
-   * Keep cards bright enough for readability,
-   * but slightly transparent so they belong
-   * visually to the image background.
-   */
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.96),
-      rgba(248, 246, 240, 0.91)
+      rgba(250, 247, 245, 0.97),
+      rgba(243, 236, 239, 0.94)
     );
 
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(250, 247, 245, 0.32);
 
-  border-radius: 14px;
+  border-radius: var(--radius-card);
 
   backdrop-filter: blur(12px);
 
   box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.22);
+    0 18px 50px rgba(36, 23, 38, 0.22);
 
   transition:
-    transform 0.3s ease,
-    background-color 0.3s ease,
-    box-shadow 0.3s ease;
+    transform var(--transition),
+    background var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
 }
 
 .safe-step:hover {
@@ -360,11 +346,13 @@
     linear-gradient(
       135deg,
       rgba(255, 255, 255, 0.99),
-      rgba(255, 253, 248, 0.96)
+      rgba(250, 247, 245, 0.98)
     );
 
+  border-color: rgba(192, 134, 46, 0.28);
+
   box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.30);
+    0 25px 60px rgba(36, 23, 38, 0.30);
 }
 
 
@@ -375,13 +363,13 @@
 .safe-step__number {
   padding-top: 7px;
 
-  color: rgba(11, 107, 79, 0.48);
+  color: rgba(107, 45, 122, 0.45);
 
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-mono);
 
-  font-size: 11px;
+  font-size: 0.7rem;
 
-  font-weight: 800;
+  font-weight: 500;
 
   text-align: right;
 
@@ -407,16 +395,20 @@
 
   margin-left: -1px;
 
-  border: 1px solid rgba(11, 107, 79, 0.20);
+  border: 1px solid rgba(107, 45, 122, 0.20);
 
   border-radius: 50%;
 
-  background: #ffffff;
+  background: var(--ivory-50);
 
   color: var(--canopy-700);
 
   box-shadow:
-    0 0 0 7px rgba(248, 246, 240, 0.88);
+    0 0 0 7px rgba(250, 247, 245, 0.88);
+}
+
+.safe-step__marker svg {
+  color: var(--canopy-700);
 }
 
 
@@ -433,13 +425,13 @@
 
   margin-bottom: 7px;
 
-  color: var(--canopy-600);
+  color: var(--marigold-600);
 
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-mono);
 
-  font-size: 9px;
+  font-size: 0.65rem;
 
-  font-weight: 800;
+  font-weight: 500;
 
   letter-spacing: 0.12em;
 
@@ -451,9 +443,11 @@
 
   color: var(--ink-900);
 
-  font-size: 18px;
+  font-family: var(--font-display);
 
-  font-weight: 650;
+  font-size: 1.1rem;
+
+  font-weight: 700;
 
   letter-spacing: -0.02em;
 }
@@ -463,9 +457,11 @@
 
   margin: 9px 0 0;
 
-  color: var(--ink-600);
+  color: var(--ink-700);
 
-  font-size: 13px;
+  font-family: var(--font-body);
+
+  font-size: 0.82rem;
 
   line-height: 1.75;
 }
@@ -491,40 +487,46 @@
   background:
     linear-gradient(
       135deg,
-      rgba(5, 28, 21, 0.94),
-      rgba(8, 39, 29, 0.88)
+      rgba(59, 18, 73, 0.96),
+      rgba(107, 45, 122, 0.88)
     );
 
-  border: 1px solid rgba(220, 176, 78, 0.25);
+  border: 1px solid rgba(192, 134, 46, 0.28);
 
-  border-radius: 14px;
+  border-radius: var(--radius-card);
 
   backdrop-filter: blur(14px);
 
   box-shadow:
-    0 15px 45px rgba(0, 0, 0, 0.18);
+    0 15px 45px rgba(36, 23, 38, 0.24);
 
-  color: #dcb04e;
+  color: var(--marigold-500);
 }
 
 .safe-steps__reassurance > svg {
   flex-shrink: 0;
+
+  color: var(--marigold-500);
 }
 
 .safe-steps__reassurance strong {
   display: block;
 
-  color: #ffffff;
+  color: var(--ivory-50);
 
-  font-size: 14px;
+  font-family: var(--font-display);
+
+  font-size: 0.95rem;
 }
 
 .safe-steps__reassurance p {
   margin: 4px 0 0;
 
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(250, 247, 245, 0.70);
 
-  font-size: 12px;
+  font-family: var(--font-body);
+
+  font-size: 0.75rem;
 
   line-height: 1.6;
 }
@@ -577,14 +579,11 @@
   }
 
   .safe-steps__background-image {
-    /*
-     * Position the subject better on narrow screens.
-     */
     background-position: 62% center;
 
     filter:
-      brightness(0.40)
-      saturate(0.65)
+      brightness(0.36)
+      saturate(0.60)
       contrast(1.08);
   }
 
@@ -592,9 +591,9 @@
     background:
       linear-gradient(
         180deg,
-        rgba(4, 18, 13, 0.96) 0%,
-        rgba(5, 22, 16, 0.88) 45%,
-        rgba(3, 15, 11, 0.95) 100%
+        rgba(59, 18, 73, 0.97) 0%,
+        rgba(59, 18, 73, 0.90) 45%,
+        rgba(36, 23, 38, 0.96) 100%
       );
   }
 
@@ -602,9 +601,9 @@
     background:
       linear-gradient(
         180deg,
-        rgba(3, 15, 11, 0.55),
+        rgba(36, 23, 38, 0.65),
         transparent 30%,
-        rgba(3, 15, 11, 0.90) 100%
+        rgba(36, 23, 38, 0.94) 100%
       );
   }
 
@@ -621,7 +620,7 @@
   .safe-steps__intro-main p {
     margin-top: 20px;
 
-    font-size: 13px;
+    font-size: 0.82rem;
   }
 
   .safe-steps__rail {
@@ -640,8 +639,6 @@
     padding: 23px 20px 23px 0;
 
     border-radius: 12px;
-
-    backdrop-filter: blur(10px);
   }
 
   .safe-step__number {
@@ -660,17 +657,17 @@
   }
 
   .safe-step h3 {
-    font-size: 15px;
+    font-size: 0.98rem;
   }
 
   .safe-step p {
-    font-size: 12px;
+    font-size: 0.75rem;
 
     line-height: 1.7;
   }
 
   .safe-step__label {
-    font-size: 8px;
+    font-size: 0.55rem;
   }
 
   .safe-steps__reassurance {
@@ -684,11 +681,11 @@
   }
 
   .safe-steps__reassurance strong {
-    font-size: 13px;
+    font-size: 0.85rem;
   }
 
   .safe-steps__reassurance p {
-    font-size: 11px;
+    font-size: 0.7rem;
   }
 }
 
@@ -711,7 +708,7 @@
   }
 
   .safe-step p {
-    font-size: 11.5px;
+    font-size: 0.7rem;
   }
 }
 
@@ -719,6 +716,12 @@
 /* ==========================================
    ACCESSIBILITY
 ========================================== */
+
+.safe-step:focus-within {
+  outline: 2px solid var(--marigold-500);
+
+  outline-offset: 4px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .safe-step {

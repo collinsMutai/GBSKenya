@@ -9,7 +9,9 @@ export default function Footer() {
 
         <div className="footer__main">
 
-          {/* Brand */}
+          {/* ==========================================
+              BRAND
+          ========================================== */}
 
           <div className="footer__brand-column">
             <span className="footer__label">
@@ -32,7 +34,9 @@ export default function Footer() {
           </div>
 
 
-          {/* Navigation */}
+          {/* ==========================================
+              NAVIGATION
+          ========================================== */}
 
           <div className="footer__navigation">
 
@@ -42,49 +46,34 @@ export default function Footer() {
               </span>
 
               <nav className="footer__links">
-                <Link to="/about/who-we-are">
-                  Who we are
+
+                <Link to="/">
+                  Home
                 </Link>
 
-                <Link to="/stories">
-                  Survivor stories
+                <Link to="/about">
+                  About
                 </Link>
 
-                <Link to="/resources">
-                  Resources
+                <Link to="/services">
+                  Services
                 </Link>
 
-                <Link to="/know-your-rights">
-                  Know your rights
-                </Link>
-              </nav>
-            </div>
-
-
-            <div className="footer__column">
-              <span className="footer__label">
-                Take action
-              </span>
-
-              <nav className="footer__links">
-                <Link to="/help-now">
-                  Get help
-                </Link>
-
-                <Link to="/get-involved">
-                  Get involved
-                </Link>
-
-                <Link to="/community-action">
-                  Community action
+                <Link to="/survivor-stories">
+                  Survivor Stories
                 </Link>
 
                 <Link to="/contact">
-                  Contact us
+                  Contact Us
                 </Link>
+
               </nav>
             </div>
 
+
+            {/* ==========================================
+                CONTACT
+            ========================================== */}
 
             <div className="footer__column footer__contact">
               <span className="footer__label">
@@ -92,23 +81,30 @@ export default function Footer() {
               </span>
 
               <div className="footer__contact-info">
-                <span>Nairobi, Kenya</span>
 
-                <a href="mailto:hello@gbsfoundationkenya.org">
+                <span>
+                  Nairobi, Kenya
+                </span>
+
+                <a href="mailto:hello@gbvfoundationkenya.org">
                   hello@gbvfoundationkenya.org
                 </a>
 
                 <a href="tel:+254700000000">
                   +254 700 000 000
                 </a>
+
               </div>
             </div>
 
           </div>
+
         </div>
 
 
-        {/* Bottom */}
+        {/* ==========================================
+            BOTTOM
+        ========================================== */}
 
         <div className="footer__bottom">
 
@@ -118,6 +114,7 @@ export default function Footer() {
           </p>
 
           <div className="footer__bottom-links">
+
             <Link to="/privacy">
               Privacy
             </Link>
@@ -131,9 +128,13 @@ export default function Footer() {
               className="footer__top"
               aria-label="Back to top"
             >
-              <span>Back to top</span>
+              <span>
+                Back to top
+              </span>
+
               <FaArrowUp />
             </a>
+
           </div>
 
         </div>

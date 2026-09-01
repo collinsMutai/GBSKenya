@@ -1,0 +1,400 @@
+/* ==============================
+   What Is GBV
+============================== */
+
+.what-is-gbv {
+  position: relative;
+
+  padding: clamp(5rem, 9vw, 8rem) 0;
+
+  background: var(--canopy-900);
+
+  color: var(--ivory-50);
+
+  overflow: hidden;
+}
+
+/* Decorative background */
+
+.what-is-gbv::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  top: -250px;
+  left: -220px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(250, 247, 239, 0.08);
+
+  pointer-events: none;
+}
+
+.what-is-gbv::after {
+  content: "";
+
+  position: absolute;
+
+  width: 360px;
+  height: 360px;
+
+  right: -180px;
+  bottom: -180px;
+
+  border-radius: 50%;
+
+  background: rgba(11, 107, 79, 0.35);
+
+  filter: blur(10px);
+
+  pointer-events: none;
+}
+
+/* ==============================
+   Layout
+============================== */
+
+.what-is-gbv__layout {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+
+  gap: clamp(3rem, 7vw, 7rem);
+
+  align-items: start;
+}
+
+/* ==============================
+   Intro
+============================== */
+
+.what-is-gbv__intro {
+  position: sticky;
+
+  top: 120px;
+}
+
+.what-is-gbv__eyebrow {
+  display: inline-block;
+
+  margin-bottom: 1.25rem;
+
+  color: var(--marigold-500);
+
+  font-size: 0.76rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+
+  line-height: 1;
+
+  text-transform: uppercase;
+}
+
+.what-is-gbv__title {
+  margin: 0;
+
+  max-width: 560px;
+
+  color: var(--ivory-50);
+
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+
+  font-weight: 800;
+
+  line-height: 1.08;
+
+  letter-spacing: -0.045em;
+}
+
+.what-is-gbv__description {
+  max-width: 550px;
+
+  margin: 1.5rem 0 0;
+
+  color: rgba(250, 247, 239, 0.76);
+
+  font-size: clamp(1rem, 1.4vw, 1.08rem);
+
+  line-height: 1.8;
+}
+
+/* ==============================
+   Statement
+============================== */
+
+.what-is-gbv__statement {
+  display: flex;
+
+  gap: 1rem;
+
+  max-width: 520px;
+
+  margin-top: 2.25rem;
+}
+
+.what-is-gbv__statement-line {
+  display: block;
+
+  flex-shrink: 0;
+
+  width: 3px;
+
+  min-height: 70px;
+
+  border-radius: 10px;
+
+  background: var(--marigold-500);
+}
+
+.what-is-gbv__statement p {
+  margin: 0;
+
+  color: var(--ivory-50);
+
+  font-size: 0.94rem;
+
+  font-weight: 600;
+
+  line-height: 1.7;
+}
+
+/* ==============================
+   Content
+============================== */
+
+.what-is-gbv__content {
+  min-width: 0;
+}
+
+.what-is-gbv__heading-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+
+  margin-bottom: 1.25rem;
+
+  color: rgba(250, 247, 239, 0.58);
+
+  font-size: 0.75rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+.what-is-gbv__heading-row::after {
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: rgba(250, 247, 239, 0.14);
+}
+
+/* ==============================
+   Cards
+============================== */
+
+.what-is-gbv__grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.what-is-gbv__card {
+  display: flex;
+
+  gap: 1rem;
+
+  min-height: 150px;
+
+  padding: 1.5rem;
+
+  background: rgba(250, 247, 239, 0.055);
+
+  border: 1px solid rgba(250, 247, 239, 0.1);
+
+  border-radius: 14px;
+
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.what-is-gbv__card:hover {
+  background: rgba(250, 247, 239, 0.09);
+
+  border-color: rgba(250, 247, 239, 0.18);
+
+  transform: translateY(-4px);
+}
+
+/* ==============================
+   Icon
+============================== */
+
+.what-is-gbv__icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 12px;
+
+  background: rgba(224, 164, 47, 0.12);
+
+  color: var(--marigold-500);
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.what-is-gbv__card:hover .what-is-gbv__icon {
+  background: var(--marigold-500);
+
+  color: var(--canopy-900);
+}
+
+/* ==============================
+   Card Text
+============================== */
+
+.what-is-gbv__card-body {
+  min-width: 0;
+}
+
+.what-is-gbv__card h3 {
+  margin: 0;
+
+  color: var(--ivory-50);
+
+  font-size: 1rem;
+
+  font-weight: 750;
+
+  line-height: 1.35;
+}
+
+.what-is-gbv__card p {
+  margin: 0.55rem 0 0;
+
+  color: rgba(250, 247, 239, 0.64);
+
+  font-size: 0.88rem;
+
+  line-height: 1.65;
+}
+
+/* ==============================
+   Tablet
+============================== */
+
+@media (max-width: 950px) {
+  .what-is-gbv__layout {
+    grid-template-columns: 1fr;
+
+    gap: 3.5rem;
+  }
+
+  .what-is-gbv__intro {
+    position: static;
+  }
+
+  .what-is-gbv__title {
+    max-width: 720px;
+  }
+
+  .what-is-gbv__description {
+    max-width: 720px;
+  }
+}
+
+/* ==============================
+   Mobile
+============================== */
+
+@media (max-width: 640px) {
+  .what-is-gbv {
+    padding: 4.5rem 0;
+  }
+
+  .what-is-gbv__title {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  .what-is-gbv__description {
+    margin-top: 1.25rem;
+
+    font-size: 0.98rem;
+
+    line-height: 1.7;
+  }
+
+  .what-is-gbv__statement {
+    margin-top: 1.75rem;
+  }
+
+  .what-is-gbv__grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .what-is-gbv__card {
+    min-height: auto;
+
+    padding: 1.25rem;
+  }
+}
+
+/* ==============================
+   Small Phones
+============================== */
+
+@media (max-width: 400px) {
+  .what-is-gbv__card {
+    gap: 0.8rem;
+  }
+
+  .what-is-gbv__icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .what-is-gbv__card p {
+    font-size: 0.84rem;
+  }
+}
+
+/* ==============================
+   Reduced Motion
+============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .what-is-gbv__card {
+    transition: none;
+  }
+}

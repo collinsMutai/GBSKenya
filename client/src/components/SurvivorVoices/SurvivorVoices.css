@@ -1,0 +1,826 @@
+/* =========================================
+   SURVIVOR VOICES
+========================================= */
+
+.survivor-voices {
+  position: relative;
+
+  width: 100%;
+  padding: 105px 0;
+
+  background: #ffffff;
+
+  overflow: hidden;
+}
+
+.survivor-voices::before {
+  content: "";
+
+  position: absolute;
+
+  top: -220px;
+  right: -180px;
+
+  width: 480px;
+  height: 480px;
+
+  border-radius: 50%;
+
+  background: rgba(11, 107, 79, 0.045);
+
+  pointer-events: none;
+}
+
+.survivor-voices__container {
+  position: relative;
+  z-index: 1;
+
+  width: min(1200px, calc(100% - 48px));
+
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.survivor-voices__header {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 60px;
+
+  margin-bottom: 48px;
+}
+
+.survivor-voices__heading-group {
+  max-width: 650px;
+}
+
+.survivor-voices__label {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 18px;
+
+  color: var(--canopy-600, #0b6b4f);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.14em;
+}
+
+.survivor-voices__label-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--marigold-500, #e0a634);
+
+  box-shadow: 0 0 0 5px rgba(224, 166, 52, 0.1);
+}
+
+.survivor-voices__header h2 {
+  margin: 0;
+
+  color: var(--ink-900, #17221d);
+
+  font-size: clamp(42px, 5vw, 64px);
+
+  font-weight: 500;
+
+  line-height: 0.98;
+
+  letter-spacing: -0.055em;
+}
+
+.survivor-voices__header h2 span {
+  color: var(--canopy-600, #0b6b4f);
+}
+
+.survivor-voices__header-right {
+  max-width: 350px;
+}
+
+.survivor-voices__header-right p {
+  margin: 0;
+
+  color: var(--ink-600, #5f6962);
+
+  font-size: 14px;
+
+  line-height: 1.75;
+}
+
+.survivor-voices__view-all {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 20px;
+
+  color: var(--ink-900, #17221d);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+
+.survivor-voices__view-all:hover {
+  gap: 11px;
+
+  color: var(--canopy-600, #0b6b4f);
+}
+
+
+/* =========================================
+   STORY GRID
+========================================= */
+
+.survivor-voices__grid {
+  display: grid;
+
+  grid-template-columns: 1.15fr 0.85fr;
+
+  gap: 18px;
+}
+
+
+/* =========================================
+   FEATURED STORY
+========================================= */
+
+.survivor-voices__featured {
+  min-width: 0;
+
+  background: var(--cloud-50, #f7faf7);
+
+  border: 1px solid var(--ink-200, #dce1dd);
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.survivor-voices__featured:hover {
+  box-shadow: 0 20px 50px rgba(7, 42, 74, 0.09);
+}
+
+.survivor-voices__featured-link {
+  display: grid;
+
+  grid-template-columns: 46% 54%;
+
+  min-height: 455px;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+.survivor-voices__featured-image-wrap {
+  position: relative;
+
+  min-height: 455px;
+
+  overflow: hidden;
+
+  background: #dce3de;
+}
+
+.survivor-voices__featured-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.survivor-voices__featured:hover .survivor-voices__featured-image {
+  transform: scale(1.035);
+}
+
+.survivor-voices__image-shade {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      rgba(0, 0, 0, 0.25)
+    );
+
+  pointer-events: none;
+}
+
+.survivor-voices__featured-badge {
+  position: absolute;
+
+  left: 20px;
+  bottom: 20px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 9px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(11, 107, 79, 0.9);
+
+  color: #ffffff;
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+.survivor-voices__featured-content {
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 40px;
+}
+
+.survivor-voices__story-meta {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  color: var(--canopy-600, #0b6b4f);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+}
+
+.survivor-voices__meta-dot {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--ink-300, #b5beb8);
+}
+
+.survivor-voices__featured-content h3 {
+  max-width: 460px;
+
+  margin: 28px 0 0;
+
+  color: var(--ink-900, #17221d);
+
+  font-size: clamp(28px, 3vw, 42px);
+
+  font-weight: 500;
+
+  line-height: 1.08;
+
+  letter-spacing: -0.04em;
+}
+
+.survivor-voices__featured-content p {
+  max-width: 430px;
+
+  margin: 18px 0 0;
+
+  color: var(--ink-600, #5f6962);
+
+  font-size: 14px;
+
+  line-height: 1.75;
+}
+
+.survivor-voices__read {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: auto;
+  padding-top: 25px;
+
+  color: var(--ink-900, #17221d);
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.survivor-voices__read-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 31px;
+  height: 31px;
+
+  border: 1px solid var(--ink-200, #dce1dd);
+
+  border-radius: 50%;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.survivor-voices__featured:hover .survivor-voices__read-icon {
+  border-color: var(--canopy-600, #0b6b4f);
+
+  background: var(--canopy-600, #0b6b4f);
+
+  color: #ffffff;
+
+  transform: translate(2px, -2px);
+}
+
+
+/* =========================================
+   SUPPORTING STORIES
+========================================= */
+
+.survivor-voices__side {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.survivor-voices__card {
+  flex: 1;
+
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid var(--ink-200, #dce1dd);
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.survivor-voices__card:hover {
+  box-shadow: 0 14px 35px rgba(7, 42, 74, 0.07);
+}
+
+.survivor-voices__card-link {
+  display: grid;
+
+  grid-template-columns: 145px 1fr;
+
+  height: 100%;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+.survivor-voices__card-image-wrap {
+  min-height: 150px;
+
+  overflow: hidden;
+
+  background: #dfe5df;
+}
+
+.survivor-voices__card-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.5s ease;
+}
+
+.survivor-voices__card:hover .survivor-voices__card-image {
+  transform: scale(1.04);
+}
+
+.survivor-voices__card-content {
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+
+  padding: 22px 24px;
+}
+
+.survivor-voices__card-content h3 {
+  margin: 10px 0 0;
+
+  color: var(--ink-900, #17221d);
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  line-height: 1.3;
+}
+
+.survivor-voices__card-content p {
+  margin: 8px 0 0;
+
+  color: var(--ink-600, #5f6962);
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+.survivor-voices__card-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: auto;
+  padding-top: 12px;
+
+  color: var(--ink-500, #7c867f);
+
+  font-family: var(--font-mono, monospace);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+.survivor-voices__small-arrow {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 27px;
+  height: 27px;
+
+  border: 1px solid var(--ink-200, #dce1dd);
+
+  border-radius: 50%;
+
+  color: var(--ink-700, #48534c);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.survivor-voices__card:hover .survivor-voices__small-arrow {
+  background: var(--canopy-600, #0b6b4f);
+
+  border-color: var(--canopy-600, #0b6b4f);
+
+  color: #ffffff;
+}
+
+
+/* =========================================
+   BOTTOM MESSAGE
+========================================= */
+
+.survivor-voices__bottom {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-top: 18px;
+
+  padding: 18px 22px;
+
+  background: var(--canopy-900, #064c39);
+
+  border-radius: 14px;
+
+  color: #ffffff;
+}
+
+.survivor-voices__bottom-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  color: var(--marigold-500, #e0a634);
+}
+
+.survivor-voices__bottom p {
+  flex: 1;
+
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+.survivor-voices__bottom a {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  flex-shrink: 0;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+
+.survivor-voices__bottom a:hover {
+  gap: 10px;
+
+  color: var(--marigold-500, #e0a634);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+  .survivor-voices {
+    padding: 85px 0;
+  }
+
+  .survivor-voices__header {
+    gap: 40px;
+  }
+
+  .survivor-voices__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .survivor-voices__featured-link {
+    grid-template-columns: 44% 56%;
+  }
+
+  .survivor-voices__side {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .survivor-voices__card-link {
+    grid-template-columns: 115px 1fr;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+  .survivor-voices {
+    padding: 70px 0;
+  }
+
+  .survivor-voices__container {
+    width: min(100% - 32px, 560px);
+  }
+
+  .survivor-voices__header {
+    display: block;
+
+    margin-bottom: 32px;
+  }
+
+  .survivor-voices__header h2 {
+    font-size: clamp(42px, 13vw, 58px);
+  }
+
+  .survivor-voices__header-right {
+    margin-top: 22px;
+  }
+
+  .survivor-voices__grid {
+    display: block;
+  }
+
+  .survivor-voices__featured-link {
+    display: block;
+
+    min-height: 0;
+  }
+
+  .survivor-voices__featured-image-wrap {
+    height: 300px;
+
+    min-height: 300px;
+  }
+
+  .survivor-voices__featured-content {
+    padding: 27px 24px 25px;
+  }
+
+  .survivor-voices__featured-content h3 {
+    margin-top: 20px;
+
+    font-size: 31px;
+  }
+
+  .survivor-voices__read {
+    margin-top: 25px;
+  }
+
+  .survivor-voices__side {
+    display: flex;
+
+    margin-top: 14px;
+
+    gap: 14px;
+  }
+
+  .survivor-voices__card-link {
+    grid-template-columns: 105px 1fr;
+  }
+
+  .survivor-voices__card-image-wrap {
+    min-height: 145px;
+  }
+
+  .survivor-voices__card-content {
+    padding: 18px;
+  }
+
+  .survivor-voices__card-content h3 {
+    font-size: 15px;
+  }
+
+  .survivor-voices__card-content p {
+    display: none;
+  }
+
+  .survivor-voices__bottom {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+
+    padding: 18px;
+  }
+
+  .survivor-voices__bottom p {
+    flex-basis: calc(100% - 52px);
+  }
+
+  .survivor-voices__bottom a {
+    width: 100%;
+
+    justify-content: flex-end;
+
+    padding-top: 4px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+  .survivor-voices {
+    padding: 58px 0;
+  }
+
+  .survivor-voices__featured-image-wrap {
+    height: 250px;
+
+    min-height: 250px;
+  }
+
+  .survivor-voices__featured-content {
+    padding: 24px 20px;
+  }
+
+  .survivor-voices__featured-content h3 {
+    font-size: 28px;
+  }
+
+  .survivor-voices__card-link {
+    grid-template-columns: 90px 1fr;
+  }
+
+  .survivor-voices__card-image-wrap {
+    min-height: 130px;
+  }
+
+  .survivor-voices__card-content {
+    padding: 15px;
+  }
+
+  .survivor-voices__card-content h3 {
+    font-size: 14px;
+  }
+
+  .survivor-voices__bottom {
+    gap: 10px;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.survivor-voices a:focus-visible {
+  outline: 2px solid var(--canopy-600, #0b6b4f);
+
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .survivor-voices__featured,
+  .survivor-voices__card,
+  .survivor-voices__featured-image,
+  .survivor-voices__card-image,
+  .survivor-voices__read-icon,
+  .survivor-voices__small-arrow,
+  .survivor-voices__view-all,
+  .survivor-voices__bottom a {
+    transition: none;
+  }
+}

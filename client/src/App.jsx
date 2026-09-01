@@ -39,6 +39,7 @@ import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientC
 ========================================== */
 
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
+import AdminOverview from "./components/Adminoverview/Adminoverview.jsx";
 import AdminComments from "./components/AdminComments/AdminComments.jsx";
 import AdminStories from "./components/AdminStories/AdminStories.jsx";
 import AdminUsers from "./components/AdminUsers/AdminUsers.jsx";
@@ -138,7 +139,7 @@ export default function App() {
         ========================================== */}
 
         <Route path="/admin" element={<AdminDashboard />}>
-          <Route index element={<ComingSoon title="Dashboard Overview" />} />
+          <Route index element={<AdminOverview />} />
 
           <Route path="stories" element={<AdminStories />} />
 

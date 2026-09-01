@@ -19,8 +19,6 @@ import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
    SERVICES
 ========================================== */
 
-
-
 /* ==========================================
    CONTACT
 ========================================== */
@@ -89,68 +87,35 @@ export default function App() {
         ========================================== */}
 
         <Route element={<Layout />}>
-
           {/* HOME */}
           <Route path="/" element={<Home />} />
 
           {/* ABOUT */}
-          <Route
-            path="/about"
-            element={
-              <AboutPage />
-            }
-          />
+          <Route path="/about" element={<AboutPage />} />
 
           {/* SERVICES */}
-          <Route
-            path="/services"
-            element={<ServicesPage />}
-          />
+          <Route path="/services" element={<ServicesPage />} />
 
           {/* SURVIVOR STORIES */}
-          <Route
-            path="/survivor-stories"
-            element={<AllStories />}
-          />
+          <Route path="/survivor-stories" element={<AllStories />} />
 
-          <Route
-            path="/survivor-stories/:slug"
-            element={<StoryDetails />}
-          />
+          <Route path="/survivor-stories/:slug" element={<StoryDetails />} />
 
           {/* OLD STORY URLS */}
-          <Route
-            path="/stories"
-            element={<AllStories />}
-          />
+          <Route path="/stories" element={<AllStories />} />
 
-          <Route
-            path="/stories/:slug"
-            element={<StoryDetails />}
-          />
+          <Route path="/stories/:slug" element={<StoryDetails />} />
 
           {/* CONTACT */}
-          <Route
-            path="/contact"
-            element={<ContactPage />}
-          />
+          <Route path="/contact" element={<ContactPage />} />
 
           {/* STORY SUBMISSION */}
-          <Route
-            path="/add-story"
-            element={<StoryEditor />}
-          />
+          <Route path="/add-story" element={<StoryEditor />} />
 
           {/* GET INVOLVED */}
-          <Route
-            path="/get-involved"
-            element={<GetInvolved />}
-          />
+          <Route path="/get-involved" element={<GetInvolved />} />
 
-          <Route
-            path="/get-involved/events/:slug"
-            element={<EventDetails />}
-          />
+          <Route path="/get-involved/events/:slug" element={<EventDetails />} />
 
           <Route
             path="/get-involved/patient-caregiver-survey"
@@ -166,53 +131,26 @@ export default function App() {
             path="/get-involved/donate"
             element={<ComingSoon title="Donate" />}
           />
-
         </Route>
 
         {/* ==========================================
             ADMIN DASHBOARD
         ========================================== */}
 
-        <Route
-          path="/admin"
-          element={<AdminDashboard />}
-        >
-          <Route
-            index
-            element={
-              <ComingSoon title="Dashboard Overview" />
-            }
-          />
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route index element={<ComingSoon title="Dashboard Overview" />} />
 
-          <Route
-            path="stories"
-            element={<AdminStories />}
-          />
+          <Route path="stories" element={<AdminStories />} />
 
-          <Route
-            path="comments"
-            element={<AdminComments />}
-          />
+          <Route path="comments" element={<AdminComments />} />
 
-          <Route
-            path="users"
-            element={<AdminUsers />}
-          />
+          <Route path="users" element={<AdminUsers />} />
 
-          <Route
-            path="authors"
-            element={<AdminAuthors />}
-          />
+          <Route path="authors" element={<AdminAuthors />} />
 
-          <Route
-            path="reports"
-            element={<ComingSoon title="Reports" />}
-          />
+          <Route path="reports" element={<ComingSoon title="Reports" />} />
 
-          <Route
-            path="settings"
-            element={<ComingSoon title="Settings" />}
-          />
+          <Route path="settings" element={<ComingSoon title="Settings" />} />
         </Route>
       </Routes>
 
@@ -228,10 +166,7 @@ export default function App() {
         aria-label="Chat with us on WhatsApp"
         title="Chat with us on WhatsApp"
       >
-        <MessageCircle
-          size={25}
-          strokeWidth={2.2}
-        />
+        <MessageCircle size={25} strokeWidth={2.2} />
 
         <span className="whatsapp-float__pulse" />
       </a>
@@ -240,10 +175,7 @@ export default function App() {
           TOAST NOTIFICATIONS
       ========================================== */}
 
-      <ToastContainer
-        position="bottom-right"
-        autoClose={4000}
-      />
+      <ToastContainer position="bottom-right" autoClose={4000} />
     </BrowserRouter>
   );
 }

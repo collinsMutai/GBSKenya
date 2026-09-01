@@ -167,7 +167,6 @@ export default function StoryDetails() {
   // --------------------------------------------------
   // Fetch related stories (same category, excluding this one)
   // --------------------------------------------------
-console.log('related');
 
   useEffect(() => {
     const fetchRelated = async () => {
@@ -369,6 +368,25 @@ console.log('related');
 
     if (node.type === "horizontalRule") {
       return <hr key={index} />;
+    }
+
+    if (node.type === "image") {
+      const { src, alt, title } = node.attrs || {};
+
+      if (!src) {
+        return null;
+      }
+
+      return (
+        <img
+          key={index}
+          src={src}
+          alt={alt || ""}
+          title={title || undefined}
+          className="story-detail__inline-image"
+          loading="lazy"
+        />
+      );
     }
 
     return null;

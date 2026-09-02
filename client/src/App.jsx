@@ -19,6 +19,14 @@ import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
    SERVICES
 ========================================== */
 
+import ServicesPage from "./components/ServicesPage/ServicesPage.jsx";
+
+/* ==========================================
+   ABOUT
+========================================== */
+
+import AboutPage from "./components/AboutPage/AboutPage.jsx";
+
 /* ==========================================
    CONTACT
 ========================================== */
@@ -26,7 +34,7 @@ import StoryEditor from "./components/StoryEditor/StoryEditor.jsx";
 import ContactPage from "./components/ContactPage/ContactPage.jsx";
 
 /* ==========================================
-   LEGACY / OTHER PAGES
+   OTHER PAGES
 ========================================== */
 
 import GetInvolved from "./components/GetInvolved/GetInvolved.jsx";
@@ -35,7 +43,7 @@ import PartnerWithUs from "./components/PartnerWithUs/PartnerWithUs.jsx";
 import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientCaregiverSurvey.jsx";
 
 /* ==========================================
-   ADMIN
+   ADMIN DASHBOARD
 ========================================== */
 
 import RequireAdmin from "./components/Requireadmin/Requireadmin.jsx";
@@ -45,8 +53,16 @@ import AdminComments from "./components/AdminComments/AdminComments.jsx";
 import AdminStories from "./components/AdminStories/AdminStories.jsx";
 import AdminUsers from "./components/AdminUsers/AdminUsers.jsx";
 import AdminAuthors from "./components/AdminAuthors/AdminAuthors.jsx";
-import ServicesPage from "./components/ServicesPage/ServicesPage.jsx";
-import AboutPage from "./components/AboutPage/AboutPage.jsx";
+
+/* ==========================================
+   AUTHOR DASHBOARD
+========================================== */
+
+// import RequireAuthor from "./components/RequireAuthor/RequireAuthor.jsx";
+import AuthorDashboard from "./components/AuthorDashboard/AuthorDashboard.jsx";
+// import AuthorOverview from "./components/AuthorOverview/AuthorOverview.jsx";
+// import AuthorStories from "./components/AuthorStories/AuthorStories.jsx";
+// import AuthorProfile from "./components/AuthorProfile/AuthorProfile.jsx";
 
 /* ==========================================
    COMING SOON
@@ -98,23 +114,36 @@ export default function App() {
           {/* SERVICES */}
           <Route path="/services" element={<ServicesPage />} />
 
-          {/* SURVIVOR STORIES */}
+          {/* ========================================
+              SURVIVOR STORIES
+          ======================================== */}
+
           <Route path="/survivor-stories" element={<AllStories />} />
 
           <Route path="/survivor-stories/:slug" element={<StoryDetails />} />
 
-          {/* OLD STORY URLS */}
+          {/* Legacy story URLs */}
+
           <Route path="/stories" element={<AllStories />} />
 
           <Route path="/stories/:slug" element={<StoryDetails />} />
 
-          {/* CONTACT */}
+          {/* ========================================
+              CONTACT
+          ======================================== */}
+
           <Route path="/contact" element={<ContactPage />} />
 
-          {/* STORY SUBMISSION */}
+          {/* ========================================
+              STORY SUBMISSION
+          ======================================== */}
+
           <Route path="/add-story" element={<StoryEditor />} />
 
-          {/* GET INVOLVED */}
+          {/* ========================================
+              GET INVOLVED
+          ======================================== */}
+
           <Route path="/get-involved" element={<GetInvolved />} />
 
           <Route path="/get-involved/events/:slug" element={<EventDetails />} />
@@ -136,23 +165,47 @@ export default function App() {
         </Route>
 
         {/* ==========================================
+            AUTHOR DASHBOARD
+        ========================================== */}
+
+        <Route path="/author" element={<AuthorDashboard />}>
+          {/* <Route element={<AuthorDashboard />}> */}
+            {/* /author */}
+            {/* <Route index element={<AuthorOverview />} /> */}
+
+            {/* /author/stories */}
+            {/* <Route path="stories" element={<AuthorStories />} /> */}
+
+            {/* /author/profile */}
+            {/* <Route path="profile" element={<AuthorProfile />} /> */}
+          {/* </Route> */}
+        </Route>
+
+        {/* ==========================================
             ADMIN DASHBOARD
         ========================================== */}
 
         <Route path="/admin" element={<RequireAdmin />}>
           <Route element={<AdminDashboard />}>
+            {/* /admin */}
             <Route index element={<AdminOverview />} />
 
+            {/* /admin/stories */}
             <Route path="stories" element={<AdminStories />} />
 
+            {/* /admin/comments */}
             <Route path="comments" element={<AdminComments />} />
 
+            {/* /admin/users */}
             <Route path="users" element={<AdminUsers />} />
 
+            {/* /admin/authors */}
             <Route path="authors" element={<AdminAuthors />} />
 
+            {/* /admin/reports */}
             <Route path="reports" element={<ComingSoon title="Reports" />} />
 
+            {/* /admin/settings */}
             <Route path="settings" element={<ComingSoon title="Settings" />} />
           </Route>
         </Route>

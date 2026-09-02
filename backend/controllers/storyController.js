@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Story = require("../models/Story");
 
 // --------------------------------------------------
@@ -15,19 +16,24 @@ const normalizeString = (value) => {
 const normalizeSlug = (value) => {
   return normalizeString(value)
     .toLowerCase()
-    .replace(/\s+/g, "-");
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 };
 
-/*
- * Get enum values directly from the Story schema.
- *
- * This keeps the controller synchronized with:
- * models/Story.js
- *
- * Example:
- * condition: ["GBS", "CIDP"]
- * category: ["Newly Diagnosed", "Living With GBS"]
- */
+const parseBoolean = (value) => {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    return value.toLowerCase() === "true";
+  }
+
+  return Boolean(value);
+};
+
 const getEnumValues = (field) => {
   const schemaType = Story.schema.path(field);
 
@@ -41,10 +47,6 @@ const getEnumValues = (field) => {
 const isValidEnumValue = (field, value) => {
   const allowedValues = getEnumValues(field);
 
-  /*
-   * If the schema does not define an enum,
-   * don't block the value here.
-   */
   if (!allowedValues.length) {
     return true;
   }
@@ -63,13 +65,19 @@ const getEnumErrorMessage = (field, value) => {
   }
 
   return `${label} "${value}" is invalid. Allowed values: ${allowedValues.join(
-    ", "
+    ", ",
   )}`;
+};
+
+const isValidStoryId = (id) => {
+  return mongoose.Types.ObjectId.isValid(id);
 };
 
 // --------------------------------------------------
 // GET /api/stories
 // Public
+//
+// Returns published stories only.
 // --------------------------------------------------
 
 const getStories = async (req, res, next) => {
@@ -85,20 +93,20 @@ const getStories = async (req, res, next) => {
     };
 
     if (category) {
-      filter.category = category;
+      filter.category = normalizeString(category);
     }
 
     if (condition) {
-      filter.condition = condition;
+      filter.condition = normalizeString(condition);
     }
 
     if (search) {
-      const safeSearch = String(search).trim();
+      const safeSearch = normalizeString(search);
 
       if (safeSearch) {
         const regex = new RegExp(
           safeSearch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-          "i"
+          "i",
         );
 
         filter.$or = [
@@ -113,7 +121,7 @@ const getStories = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .lean();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       count: stories.length,
       data: stories,
@@ -126,16 +134,36 @@ const getStories = async (req, res, next) => {
 // --------------------------------------------------
 // GET /api/stories/:slug
 // Public
+//
+// Returns one published story.
+// Increments views atomically.
 // --------------------------------------------------
 
 const getStoryBySlug = async (req, res, next) => {
   try {
     const slug = normalizeSlug(req.params.slug);
 
-    const story = await Story.findOne({
-      slug,
-      published: true,
-    })
+    if (!slug) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid story slug",
+      });
+    }
+
+    const story = await Story.findOneAndUpdate(
+      {
+        slug,
+        published: true,
+      },
+      {
+        $inc: {
+          views: 1,
+        },
+      },
+      {
+        new: true,
+      },
+    )
       .populate("authorId", "name")
       .lean();
 
@@ -146,7 +174,7 @@ const getStoryBySlug = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: story,
     });
@@ -156,12 +184,57 @@ const getStoryBySlug = async (req, res, next) => {
 };
 
 // --------------------------------------------------
+// GET /api/stories/mine
+// Protected
+//
+// Returns all stories owned by the logged-in user.
+// Includes drafts and published stories.
+// --------------------------------------------------
+
+const getMyStories = async (req, res, next) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    const stories = await Story.find({
+      authorId: req.user._id,
+    })
+      .populate("authorId", "name email")
+      .sort({ updatedAt: -1 })
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      count: stories.length,
+      data: stories,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// --------------------------------------------------
 // POST /api/stories
-// Protected: author/admin
+// Protected
+//
+// user    -> draft only
+// author  -> draft or published
+// admin   -> draft or published
 // --------------------------------------------------
 
 const createStory = async (req, res, next) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
     const {
       slug,
       title,
@@ -172,10 +245,6 @@ const createStory = async (req, res, next) => {
       content,
       published,
     } = req.body;
-
-    // ------------------------------------------------
-    // Normalize values
-    // ------------------------------------------------
 
     const normalizedSlug = normalizeSlug(slug);
     const normalizedTitle = normalizeString(title);
@@ -194,7 +263,8 @@ const createStory = async (req, res, next) => {
       !normalizedCondition ||
       !normalizedCategory ||
       !normalizedExcerpt ||
-      !content
+      content === undefined ||
+      content === null
     ) {
       return res.status(400).json({
         success: false,
@@ -203,13 +273,13 @@ const createStory = async (req, res, next) => {
     }
 
     // ------------------------------------------------
-    // Validate condition enum
+    // Validate condition
     // ------------------------------------------------
 
     if (
       !isValidEnumValue(
         "condition",
-        normalizedCondition
+        normalizedCondition,
       )
     ) {
       return res.status(400).json({
@@ -217,20 +287,20 @@ const createStory = async (req, res, next) => {
         field: "condition",
         message: getEnumErrorMessage(
           "condition",
-          normalizedCondition
+          normalizedCondition,
         ),
         allowedValues: getEnumValues("condition"),
       });
     }
 
     // ------------------------------------------------
-    // Validate category enum
+    // Validate category
     // ------------------------------------------------
 
     if (
       !isValidEnumValue(
         "category",
-        normalizedCategory
+        normalizedCategory,
       )
     ) {
       return res.status(400).json({
@@ -238,7 +308,7 @@ const createStory = async (req, res, next) => {
         field: "category",
         message: getEnumErrorMessage(
           "category",
-          normalizedCategory
+          normalizedCategory,
         ),
         allowedValues: getEnumValues("category"),
       });
@@ -255,21 +325,27 @@ const createStory = async (req, res, next) => {
     if (existingStory) {
       return res.status(409).json({
         success: false,
-        message:
-          "A story with this slug already exists",
+        field: "slug",
+        message: "A story with this slug already exists",
       });
     }
 
     // ------------------------------------------------
-    // Auth check
+    // Publication permissions
     // ------------------------------------------------
 
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({
-        success: false,
-        message: "Authentication required",
-      });
-    }
+    const requestedPublished = parseBoolean(published);
+
+    const canPublish =
+      req.user.role === "author" ||
+      req.user.role === "admin";
+
+    /*
+     * Normal users can create stories,
+     * but their stories are always drafts.
+     */
+    const shouldPublish =
+      canPublish && requestedPublished;
 
     // ------------------------------------------------
     // Create story
@@ -277,51 +353,39 @@ const createStory = async (req, res, next) => {
 
     const story = await Story.create({
       slug: normalizedSlug,
-
       title: normalizedTitle,
 
-      /*
-       * IMPORTANT:
-       * Never accept authorId from req.body.
-       */
+      // Never accept authorId from req.body.
       authorId: req.user._id,
 
       condition: normalizedCondition,
-
       category: normalizedCategory,
-
       image: normalizedImage,
-
       excerpt: normalizedExcerpt,
-
       content,
 
-      published: Boolean(published),
+      published: shouldPublish,
+
+      views: 0,
     });
 
-    // ------------------------------------------------
-    // Populate author
-    // ------------------------------------------------
-
     const populatedStory = await Story.findById(
-      story._id
+      story._id,
     )
       .populate("authorId", "name email")
       .lean();
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
-      message: "Story created successfully",
+      message: shouldPublish
+        ? "Story published successfully"
+        : "Story saved as a draft",
       data: populatedStory,
     });
   } catch (error) {
-    // ------------------------------------------------
-    // Mongoose validation fallback
-    // ------------------------------------------------
-
     if (error?.name === "ValidationError") {
       const validationErrors = Object.values(
-        error.errors || {}
+        error.errors || {},
       ).map((item) => ({
         field: item.path,
         value: item.value,
@@ -335,15 +399,11 @@ const createStory = async (req, res, next) => {
       });
     }
 
-    // ------------------------------------------------
-    // Duplicate key fallback
-    // ------------------------------------------------
-
     if (error?.code === 11000) {
       return res.status(409).json({
         success: false,
-        message:
-          "A story with this slug already exists",
+        field: "slug",
+        message: "A story with this slug already exists",
       });
     }
 
@@ -353,11 +413,29 @@ const createStory = async (req, res, next) => {
 
 // --------------------------------------------------
 // PATCH /api/stories/:id
-// Protected: owner/admin
+// Protected
+//
+// user    -> own stories, cannot publish
+// author  -> own stories, can publish
+// admin   -> any story, can publish
 // --------------------------------------------------
 
 const updateStory = async (req, res, next) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    if (!isValidStoryId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid story ID",
+      });
+    }
+
     const story = await Story.findById(req.params.id);
 
     if (!story) {
@@ -368,15 +446,8 @@ const updateStory = async (req, res, next) => {
     }
 
     // ------------------------------------------------
-    // Ownership check
+    // Ownership
     // ------------------------------------------------
-
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({
-        success: false,
-        message: "Authentication required",
-      });
-    }
 
     const isOwner =
       story.authorId &&
@@ -388,48 +459,59 @@ const updateStory = async (req, res, next) => {
     if (!isOwner && !isAdmin) {
       return res.status(403).json({
         success: false,
-        message:
-          "You can only edit your own stories",
+        message: "You can only edit your own stories",
       });
     }
 
     // ------------------------------------------------
-    // Normalize incoming values
+    // Slug
     // ------------------------------------------------
 
     if (req.body.slug !== undefined) {
-      story.slug = normalizeSlug(req.body.slug);
+      const slug = normalizeSlug(req.body.slug);
 
-      if (!story.slug) {
+      if (!slug) {
         return res.status(400).json({
           success: false,
           field: "slug",
           message: "Story slug cannot be empty",
         });
       }
+
+      story.slug = slug;
     }
 
-    if (req.body.title !== undefined) {
-      story.title = normalizeString(req.body.title);
+    // ------------------------------------------------
+    // Title
+    // ------------------------------------------------
 
-      if (!story.title) {
+    if (req.body.title !== undefined) {
+      const title = normalizeString(req.body.title);
+
+      if (!title) {
         return res.status(400).json({
           success: false,
           field: "title",
           message: "Story title cannot be empty",
         });
       }
+
+      story.title = title;
     }
+
+    // ------------------------------------------------
+    // Condition
+    // ------------------------------------------------
 
     if (req.body.condition !== undefined) {
       const condition = normalizeString(
-        req.body.condition
+        req.body.condition,
       );
 
       if (
         !isValidEnumValue(
           "condition",
-          condition
+          condition,
         )
       ) {
         return res.status(400).json({
@@ -437,7 +519,7 @@ const updateStory = async (req, res, next) => {
           field: "condition",
           message: getEnumErrorMessage(
             "condition",
-            condition
+            condition,
           ),
           allowedValues: getEnumValues("condition"),
         });
@@ -446,15 +528,19 @@ const updateStory = async (req, res, next) => {
       story.condition = condition;
     }
 
+    // ------------------------------------------------
+    // Category
+    // ------------------------------------------------
+
     if (req.body.category !== undefined) {
       const category = normalizeString(
-        req.body.category
+        req.body.category,
       );
 
       if (
         !isValidEnumValue(
           "category",
-          category
+          category,
         )
       ) {
         return res.status(400).json({
@@ -462,7 +548,7 @@ const updateStory = async (req, res, next) => {
           field: "category",
           message: getEnumErrorMessage(
             "category",
-            category
+            category,
           ),
           allowedValues: getEnumValues("category"),
         });
@@ -471,56 +557,93 @@ const updateStory = async (req, res, next) => {
       story.category = category;
     }
 
+    // ------------------------------------------------
+    // Image
+    // ------------------------------------------------
+
     if (req.body.image !== undefined) {
-      story.image = normalizeString(
-        req.body.image
-      );
+      story.image = normalizeString(req.body.image);
     }
 
+    // ------------------------------------------------
+    // Excerpt
+    // ------------------------------------------------
+
     if (req.body.excerpt !== undefined) {
-      story.excerpt = normalizeString(
-        req.body.excerpt
+      const excerpt = normalizeString(
+        req.body.excerpt,
       );
 
-      if (!story.excerpt) {
+      if (!excerpt) {
         return res.status(400).json({
           success: false,
           field: "excerpt",
-          message:
-            "Story excerpt cannot be empty",
+          message: "Story excerpt cannot be empty",
         });
       }
+
+      story.excerpt = excerpt;
     }
 
+    // ------------------------------------------------
+    // Content
+    // ------------------------------------------------
+
     if (req.body.content !== undefined) {
+      if (
+        req.body.content === null ||
+        req.body.content === ""
+      ) {
+        return res.status(400).json({
+          success: false,
+          field: "content",
+          message: "Story content cannot be empty",
+        });
+      }
+
       story.content = req.body.content;
     }
 
+    // ------------------------------------------------
+    // Publication
+    // ------------------------------------------------
+
     if (req.body.published !== undefined) {
-      story.published = Boolean(
-        req.body.published
+      const requestedPublished = parseBoolean(
+        req.body.published,
       );
+
+      const canPublish =
+        req.user.role === "author" ||
+        req.user.role === "admin";
+
+      // Normal users cannot publish.
+      if (requestedPublished && !canPublish) {
+        return res.status(403).json({
+          success: false,
+          message:
+            "Your story must be reviewed before it can be published",
+        });
+      }
+
+      story.published = requestedPublished;
     }
 
     // ------------------------------------------------
     // Slug uniqueness
     // ------------------------------------------------
 
-    if (story.slug) {
-      const duplicateStory =
-        await Story.findOne({
-          slug: story.slug,
-          _id: { $ne: story._id },
-        });
+    const duplicateStory = await Story.findOne({
+      slug: story.slug,
+      _id: { $ne: story._id },
+    });
 
-      if (duplicateStory) {
-        return res.status(409).json({
-          success: false,
-          field: "slug",
-          message:
-            "A story with this slug already exists",
-        });
-      }
+    if (duplicateStory) {
+      return res.status(409).json({
+        success: false,
+        field: "slug",
+        message: "A story with this slug already exists",
+      });
     }
 
     // ------------------------------------------------
@@ -529,28 +652,20 @@ const updateStory = async (req, res, next) => {
 
     await story.save();
 
-    // ------------------------------------------------
-    // Populate author
-    // ------------------------------------------------
-
     const updatedStory =
       await Story.findById(story._id)
         .populate("authorId", "name email")
         .lean();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Story updated successfully",
       data: updatedStory,
     });
   } catch (error) {
-    // ------------------------------------------------
-    // Mongoose validation fallback
-    // ------------------------------------------------
-
     if (error?.name === "ValidationError") {
       const validationErrors = Object.values(
-        error.errors || {}
+        error.errors || {},
       ).map((item) => ({
         field: item.path,
         value: item.value,
@@ -564,15 +679,11 @@ const updateStory = async (req, res, next) => {
       });
     }
 
-    // ------------------------------------------------
-    // Duplicate key fallback
-    // ------------------------------------------------
-
     if (error?.code === 11000) {
       return res.status(409).json({
         success: false,
-        message:
-          "A story with this slug already exists",
+        field: "slug",
+        message: "A story with this slug already exists",
       });
     }
 
@@ -582,11 +693,27 @@ const updateStory = async (req, res, next) => {
 
 // --------------------------------------------------
 // DELETE /api/stories/:id
-// Protected: owner/admin
+// Protected
+//
+// Owner or admin can delete.
 // --------------------------------------------------
 
 const deleteStory = async (req, res, next) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    if (!isValidStoryId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid story ID",
+      });
+    }
+
     const story = await Story.findById(req.params.id);
 
     if (!story) {
@@ -595,21 +722,6 @@ const deleteStory = async (req, res, next) => {
         message: "Story not found",
       });
     }
-
-    // ------------------------------------------------
-    // Auth check
-    // ------------------------------------------------
-
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({
-        success: false,
-        message: "Authentication required",
-      });
-    }
-
-    // ------------------------------------------------
-    // Ownership check
-    // ------------------------------------------------
 
     const isOwner =
       story.authorId &&
@@ -621,18 +733,13 @@ const deleteStory = async (req, res, next) => {
     if (!isOwner && !isAdmin) {
       return res.status(403).json({
         success: false,
-        message:
-          "You can only delete your own stories",
+        message: "You can only delete your own stories",
       });
     }
 
-    // ------------------------------------------------
-    // Delete
-    // ------------------------------------------------
-
     await story.deleteOne();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Story deleted successfully",
     });
@@ -648,6 +755,7 @@ const deleteStory = async (req, res, next) => {
 module.exports = {
   getStories,
   getStoryBySlug,
+  getMyStories,
   createStory,
   updateStory,
   deleteStory,

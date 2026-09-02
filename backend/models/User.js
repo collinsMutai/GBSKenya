@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
+      index: true,
     },
 
     password: {
@@ -27,20 +28,21 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["user", "author", "admin"],
       default: "user",
+      index: true,
     },
 
     isActive: {
       type: Boolean,
       default: true,
+      index: true,
     },
 
     // ------------------------------------------------
-    // Author profile fields
+    // Profile
     //
-    // Only meaningful for role: "author", but left
-    // available on the schema generally rather than
-    // split into a separate model/collection - simplest
-    // option given how few fields these are.
+    // These fields are available to all users.
+    // bio/socialLinks are primarily used by authors
+    // for their public author profile.
     // ------------------------------------------------
 
     bio: {

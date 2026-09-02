@@ -11,13 +11,14 @@ const { MongoStore } = require("connect-mongo");
 
 const app = express();
 
-// Trust proxy
-// Needed when deployed behind a reverse proxy such as Render,
-// Railway, Nginx, Cloudflare, etc.
+// --------------------------------------------------
+// TRUST PROXY
+// --------------------------------------------------
+
 app.set("trust proxy", 1);
 
 // --------------------------------------------------
-// Security Headers
+// SECURITY HEADERS
 // --------------------------------------------------
 
 app.use(helmet());
@@ -26,9 +27,10 @@ app.use(helmet());
 // CORS
 // --------------------------------------------------
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",").map((origin) =>
-  origin.trim(),
-);
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 app.use(
   cors({
@@ -48,17 +50,24 @@ app.use(
 
     credentials: true,
 
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
 
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
   }),
 );
 
-// Handle preflight requests
-app.options("*", cors());
-
 // --------------------------------------------------
-// Body Parser
+// BODY PARSER
 // --------------------------------------------------
 
 app.use(
@@ -68,19 +77,15 @@ app.use(
 );
 
 // --------------------------------------------------
-// Prevent NoSQL Injection
+// SECURITY SANITIZATION
 // --------------------------------------------------
 
 app.use(mongoSanitize());
 
-// --------------------------------------------------
-// Prevent HTTP Parameter Pollution
-// --------------------------------------------------
-
 app.use(hpp());
 
 // --------------------------------------------------
-// Rate Limiting
+// RATE LIMITING
 // --------------------------------------------------
 
 const limiter = rateLimit({
@@ -94,25 +99,37 @@ const limiter = rateLimit({
 
   message: {
     success: false,
-    message: "Too many requests. Please try again later.",
+    message:
+      "Too many requests. Please try again later.",
   },
 });
 
 app.use("/api", limiter);
 
 // --------------------------------------------------
-// Session Authentication
+// SESSION AUTHENTICATION
 // --------------------------------------------------
 
 if (!process.env.SESSION_SECRET) {
-  throw new Error("SESSION_SECRET is not defined in environment variables");
+  throw new Error(
+    "SESSION_SECRET is not defined in environment variables",
+  );
 }
 
-const isProduction = process.env.NODE_ENV === "production";
+if (!process.env.MONGO_URI) {
+  throw new Error(
+    "MONGO_URI is not defined in environment variables",
+  );
+}
+
+const isProduction =
+  process.env.NODE_ENV === "production";
 
 app.use(
   session({
-    name: isProduction ? "__Host-sessionId" : "sessionId",
+    name: isProduction
+      ? "__Host-sessionId"
+      : "sessionId",
 
     secret: process.env.SESSION_SECRET,
 
@@ -130,9 +147,16 @@ app.use(
 
       secure: isProduction,
 
-      sameSite: isProduction ? "none" : "lax",
+      sameSite: isProduction
+        ? "none"
+        : "lax",
 
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge:
+        1000 *
+        60 *
+        60 *
+        24 *
+        7,
 
       path: "/",
     },
@@ -140,35 +164,71 @@ app.use(
 );
 
 // --------------------------------------------------
-// Routes
+// PUBLIC ROUTES
 // --------------------------------------------------
 
-app.use("/api/auth", require("./routes/authRoutes"));
+app.use(
+  "/api/auth",
+  require("./routes/authRoutes"),
+);
 
-app.use("/api/contact", require("./routes/contactRoutes"));
 
-app.use("/api/newsletter", require("./routes/newsletterRoutes"));
+app.use(
+  "/api/newsletter",
+  require("./routes/newsletterRoutes"),
+);
 
-app.use("/api/stories", require("./routes/storyRoutes"));
-
-app.use("/api/comments", require("./routes/commentRoutes"));
-
-app.use("/api/admin/comments", require("./routes/adminCommentRoutes"));
-
-app.use("/api/admin/stories", require("./routes/Adminstoryroutes"));
-
-app.use("/api/admin/users", require("./routes/adminUserRoutes"));
-
-app.use("/api/admin/authors", require("./routes/Adminauthorroutes"));
+app.use(
+  "/api/stories",
+  require("./routes/storyRoutes"),
+);
 
 // --------------------------------------------------
-// 404 Handler
+// PROTECTED USER ROUTES
+// --------------------------------------------------
+
+app.use(
+  "/api/comments",
+  require("./routes/commentRoutes"),
+);
+
+app.use(
+  "/api/saved-stories",
+  require("./routes/savedStoryRoutes"),
+);
+
+// --------------------------------------------------
+// ADMIN ROUTES
+// --------------------------------------------------
+
+app.use(
+  "/api/admin/comments",
+  require("./routes/adminCommentRoutes"),
+);
+
+app.use(
+  "/api/admin/stories",
+  require("./routes/Adminstoryroutes"),
+);
+
+app.use(
+  "/api/admin/users",
+  require("./routes/Adminuserroutes"),
+);
+
+app.use(
+  "/api/admin/authors",
+  require("./routes/Adminauthorroutes"),
+);
+
+// --------------------------------------------------
+// 404 HANDLER
 // --------------------------------------------------
 
 app.use(require("./middleware/notFound"));
 
 // --------------------------------------------------
-// Global Error Handler
+// GLOBAL ERROR HANDLER
 // --------------------------------------------------
 
 app.use(require("./middleware/errorHandler"));

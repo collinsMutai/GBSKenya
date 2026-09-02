@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Phone, User, LogOut } from "lucide-react";
 
 import LoginModal from "../loginmodal/LoginModal";
@@ -67,13 +67,7 @@ function InstagramIcon({ size = 24, ...props }) {
     <svg {...iconBase} width={size} height={size} {...props}>
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
-      <circle
-        cx="17.5"
-        cy="6.5"
-        r="0.8"
-        fill="currentColor"
-        stroke="none"
-      />
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
     </svg>
   );
 }
@@ -95,12 +89,11 @@ function LinkedinIcon({ size = 24, ...props }) {
 ============================== */
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
-
   const [loginOpen, setLoginOpen] = useState(false);
-
   const [user, setUser] = useState(null);
-
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   /* ==============================
@@ -187,8 +180,15 @@ export default function Navbar() {
   const handleLoginSuccess = (loggedInUser) => {
     setUser(loggedInUser);
     setLoginOpen(false);
+    closeMenu();
 
-    console.log("Logged in user:", loggedInUser);
+    if (loggedInUser?.role === "admin") {
+      navigate("/admin");
+    } else if (loggedInUser?.role === "author") {
+      navigate("/author");
+    } else {
+      navigate("/dashboard");
+    }
   };
 
   /* ==============================
@@ -211,6 +211,9 @@ export default function Navbar() {
 
       setUser(null);
       closeMenu();
+
+      // Return to the public homepage after logout
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -218,40 +221,30 @@ export default function Navbar() {
 
   return (
     <header className="navbar">
-
       {/* ==============================
           Top Bar
       ============================== */}
 
       <div className="topbar">
         <div className="container topbar__row">
-
           <div className="topbar__contact">
-
             <a
               href="mailto:info@gbvfoundationkenya.org"
               className="topbar__item"
             >
               <Mail size={14} />
-              <span>
-                info@gbvfoundationkenya.org
-              </span>
+
+              <span>info@gbvfoundationkenya.org</span>
             </a>
 
-            <a
-              href="tel:+254700000000"
-              className="topbar__item"
-            >
+            <a href="tel:+254700000000" className="topbar__item">
               <Phone size={14} />
-              <span>
-                +254 700 000 000
-              </span>
-            </a>
 
+              <span>+254 700 000 000</span>
+            </a>
           </div>
 
           <div className="topbar__socials">
-
             <a
               href="https://facebook.com"
               target="_blank"
@@ -287,19 +280,15 @@ export default function Navbar() {
             >
               <LinkedinIcon size={15} />
             </a>
-
           </div>
-
         </div>
       </div>
-
 
       {/* ==============================
           Main Navigation
       ============================== */}
 
       <div className="container navbar__row">
-
         {/* Logo */}
 
         <Link
@@ -308,22 +297,14 @@ export default function Navbar() {
           onClick={closeMenu}
           aria-label="GBV Foundation Kenya Home"
         >
-          <span className="navbar__logo-main">
-            GBV
-          </span>
+          <span className="navbar__logo-main">GBV</span>
 
-          <span className="navbar__logo-sub">
-            FOUNDATION KENYA
-          </span>
+          <span className="navbar__logo-sub">FOUNDATION KENYA</span>
         </Link>
-
 
         {/* Desktop Navigation */}
 
-        <nav
-          className="navbar__links"
-          aria-label="Main navigation"
-        >
+        <nav className="navbar__links" aria-label="Main navigation">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -336,34 +317,22 @@ export default function Navbar() {
           ))}
         </nav>
 
-
         {/* ==============================
             Desktop Login / User
         ============================== */}
 
         {!checkingAuth && (
           <div className="navbar__account">
-
             <button
               type="button"
               className="navbar__login"
               onClick={openLogin}
-              aria-label={
-                user
-                  ? `Logged in as ${user.name}`
-                  : "Login"
-              }
-              title={
-                user
-                  ? `Logged in as ${user.name}`
-                  : "Login"
-              }
+              aria-label={user ? `Logged in as ${user.name}` : "Login"}
+              title={user ? `Logged in as ${user.name}` : "Login"}
             >
               <User size={19} />
 
-              <span>
-                {user ? user.name : "Login"}
-              </span>
+              <span>{user ? user.name : "Login"}</span>
             </button>
 
             {user && (
@@ -377,42 +346,28 @@ export default function Navbar() {
                 <LogOut size={17} />
               </button>
             )}
-
           </div>
         )}
-
 
         {/* Mobile Menu Button */}
 
         <button
           type="button"
-          aria-label={
-            open
-              ? "Close menu"
-              : "Open menu"
-          }
+          aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           className="navbar__toggle"
-          onClick={() =>
-            setOpen((prev) => !prev)
-          }
+          onClick={() => setOpen((prev) => !prev)}
         >
           {open ? "✕" : "☰"}
         </button>
-
       </div>
-
 
       {/* ==============================
           Mobile Menu
       ============================== */}
 
       {open && (
-        <nav
-          className="navbar__mobile"
-          aria-label="Mobile navigation"
-        >
-
+        <nav className="navbar__mobile" aria-label="Mobile navigation">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -424,7 +379,6 @@ export default function Navbar() {
             </Link>
           ))}
 
-
           {/* Mobile Account */}
 
           {user ? (
@@ -432,10 +386,25 @@ export default function Navbar() {
               <div className="navbar__mobile-user">
                 <User size={20} />
 
-                <span>
-                  {user.name}
-                </span>
+                <span>{user.name}</span>
               </div>
+
+              {/* Admin Dashboard Button */}
+
+              {user.role === "admin" && (
+                <button
+                  type="button"
+                  className="navbar__mobile-login"
+                  onClick={() => {
+                    closeMenu();
+                    navigate("/admin");
+                  }}
+                >
+                  <User size={20} />
+
+                  <span>Admin Dashboard</span>
+                </button>
+              )}
 
               <button
                 type="button"
@@ -444,9 +413,7 @@ export default function Navbar() {
               >
                 <LogOut size={20} />
 
-                <span>
-                  Logout
-                </span>
+                <span>Logout</span>
               </button>
             </>
           ) : (
@@ -457,15 +424,11 @@ export default function Navbar() {
             >
               <User size={20} />
 
-              <span>
-                Login
-              </span>
+              <span>Login</span>
             </button>
           )}
-
         </nav>
       )}
-
 
       {/* ==============================
           Login Modal
@@ -474,15 +437,10 @@ export default function Navbar() {
       {!user && (
         <LoginModal
           isOpen={loginOpen}
-          onClose={() =>
-            setLoginOpen(false)
-          }
-          onLoginSuccess={
-            handleLoginSuccess
-          }
+          onClose={() => setLoginOpen(false)}
+          onLoginSuccess={handleLoginSuccess}
         />
       )}
-
     </header>
   );
 }

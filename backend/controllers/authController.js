@@ -1,6 +1,27 @@
 const argon2 = require("argon2");
 const User = require("../models/User");
 
+/* ==========================================
+   USER RESPONSE
+========================================== */
+
+const formatUser = (user) => ({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  bio: user.bio || "",
+  socialLinks: {
+    twitter: user.socialLinks?.twitter || "",
+    linkedin: user.socialLinks?.linkedin || "",
+    website: user.socialLinks?.website || "",
+  },
+});
+
+/* ==========================================
+   REGISTER
+========================================== */
+
 const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -49,18 +70,17 @@ const register = async (req, res, next) => {
       success: true,
       message: "Account created successfully",
       data: {
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
+        user: formatUser(user),
       },
     });
   } catch (error) {
     next(error);
   }
 };
+
+/* ==========================================
+   LOGIN
+========================================== */
 
 const login = async (req, res, next) => {
   try {
@@ -101,18 +121,17 @@ const login = async (req, res, next) => {
       success: true,
       message: "Login successful",
       data: {
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
+        user: formatUser(user),
       },
     });
   } catch (error) {
     next(error);
   }
 };
+
+/* ==========================================
+   GET CURRENT USER
+========================================== */
 
 const getMe = async (req, res, next) => {
   try {
@@ -128,18 +147,17 @@ const getMe = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: {
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
+        user: formatUser(user),
       },
     });
   } catch (error) {
     next(error);
   }
 };
+
+/* ==========================================
+   LOGOUT
+========================================== */
 
 const logout = (req, res, next) => {
   req.session.destroy((error) => {
@@ -163,9 +181,75 @@ const logout = (req, res, next) => {
   });
 };
 
+/* ==========================================
+   UPDATE PROFILE
+========================================== */
+
+const updateProfile = async (req, res, next) => {
+  try {
+    const userId = req.session.userId;
+
+    const { name, bio, socialLinks } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (name !== undefined) {
+      const trimmedName = name.trim();
+
+      if (!trimmedName) {
+        return res.status(400).json({
+          success: false,
+          message: "Name cannot be empty",
+        });
+      }
+
+      if (trimmedName.length > 100) {
+        return res.status(400).json({
+          success: false,
+          message: "Name cannot exceed 100 characters",
+        });
+      }
+
+      user.name = trimmedName;
+    }
+
+    if (bio !== undefined) {
+      user.bio = String(bio).trim();
+    }
+
+    if (socialLinks !== undefined) {
+      user.socialLinks = {
+        twitter: socialLinks.twitter?.trim() || "",
+        linkedin: socialLinks.linkedin?.trim() || "",
+        website: socialLinks.website?.trim() || "",
+      };
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: {
+        user: formatUser(user),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   getMe,
   logout,
+  updateProfile,
 };

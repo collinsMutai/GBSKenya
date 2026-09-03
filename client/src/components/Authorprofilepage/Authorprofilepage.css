@@ -1,0 +1,110 @@
+/* =========================================================
+   AUTHOR PROFILE
+========================================================= */
+
+.author-profile-page h2 {
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.author-profile-page__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.author-profile-page__card {
+  padding: 24px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.author-profile-page__card h3 {
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+}
+
+.author-profile-page__hint {
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+}
+
+.author-profile-page__card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.author-profile-page__card label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-700);
+}
+
+.author-profile-page__card input,
+.author-profile-page__card textarea {
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--ivory-50);
+
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--ink-900);
+  resize: vertical;
+  outline: none;
+
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.author-profile-page__card input:focus,
+.author-profile-page__card textarea:focus {
+  border-color: var(--canopy-600);
+  box-shadow: 0 0 0 3px rgba(107, 45, 122, 0.12);
+}
+
+.author-profile-page__char-count {
+  align-self: flex-end;
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.author-profile-page__banner {
+  padding: 9px 13px;
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.author-profile-page__banner--error {
+  background: rgba(179, 64, 45, 0.08);
+  color: var(--ember-600);
+}
+
+.author-profile-page__banner--success {
+  background: rgba(22, 163, 74, 0.1);
+  color: #15803d;
+}
+
+.author-profile-page__card .btn {
+  align-self: flex-start;
+}
+
+.author-profile-page__loading {
+  color: var(--ink-700);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 800px) {
+  .author-profile-page__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

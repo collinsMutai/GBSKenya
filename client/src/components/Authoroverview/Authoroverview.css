@@ -1,0 +1,195 @@
+/* =========================================================
+   AUTHOR OVERVIEW
+========================================================= */
+
+.author-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.author-overview__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.author-overview__header h2 {
+  font-size: 1.4rem;
+}
+
+.author-overview__header p {
+  margin-top: 4px;
+}
+
+/* --- stats --- */
+
+.author-overview__stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.author-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.author-stat-card__icon {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+
+  border-radius: 12px;
+  font-size: 1.05rem;
+}
+
+.author-stat-card__icon--purple {
+  background: rgba(107, 45, 122, 0.1);
+  color: var(--canopy-700);
+}
+
+.author-stat-card__icon--gold {
+  background: rgba(192, 134, 46, 0.14);
+  color: var(--marigold-600);
+}
+
+.author-stat-card__icon--terracotta {
+  background: rgba(179, 64, 45, 0.1);
+  color: var(--ember-600);
+}
+
+.author-stat-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--canopy-900);
+  line-height: 1.1;
+}
+
+.author-stat-card span {
+  color: var(--ink-700);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* --- recent stories --- */
+
+.author-overview__recent {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.author-overview__recent-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.author-overview__recent-head h3 {
+  font-size: 1rem;
+}
+
+.author-overview__recent-head a {
+  color: var(--canopy-700);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.author-overview__empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--ink-700);
+  font-size: 0.9rem;
+}
+
+.author-overview__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.author-overview__list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.author-overview__list li:last-child {
+  border-bottom: none;
+}
+
+.author-overview__list strong {
+  display: block;
+  color: var(--canopy-900);
+  font-size: 0.92rem;
+}
+
+.author-overview__list span {
+  color: var(--ink-700);
+  font-size: 0.78rem;
+}
+
+/* --- shared status pill (also used on AuthorStories) --- */
+
+.dashboard-pill {
+  flex: 0 0 auto;
+
+  padding: 3px 10px;
+  border-radius: var(--radius-button);
+
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.dashboard-pill--published {
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+}
+
+.dashboard-pill--draft {
+  background: rgba(100, 116, 139, 0.14);
+  color: #475569;
+}
+
+@media (max-width: 1100px) {
+  .author-overview__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .author-overview__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .author-overview__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

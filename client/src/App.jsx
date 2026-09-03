@@ -37,10 +37,15 @@ import ContactPage from "./components/ContactPage/ContactPage.jsx";
    OTHER PAGES
 ========================================== */
 
-import GetInvolved from "./components/GetInvolved/GetInvolved.jsx";
+
 import EventDetails from "./components/EventDetails/EventDetails.jsx";
-import PartnerWithUs from "./components/PartnerWithUs/PartnerWithUs.jsx";
-import PatientCaregiverSurvey from "./components/PatientCaregiverSurvey/PatientCaregiverSurvey.jsx";
+
+
+/* ==========================================
+   USER DASHBOARD
+========================================== */
+
+// import UserDashboard from "./components/UserDashboard/UserDashboard.jsx";
 
 /* ==========================================
    ADMIN DASHBOARD
@@ -58,11 +63,11 @@ import AdminAuthors from "./components/AdminAuthors/AdminAuthors.jsx";
    AUTHOR DASHBOARD
 ========================================== */
 
-// import RequireAuthor from "./components/RequireAuthor/RequireAuthor.jsx";
+import RequireAuthor from "./components/RequireAuthor/RequireAuthor.jsx";
 import AuthorDashboard from "./components/AuthorDashboard/AuthorDashboard.jsx";
-// import AuthorOverview from "./components/AuthorOverview/AuthorOverview.jsx";
-// import AuthorStories from "./components/AuthorStories/AuthorStories.jsx";
-// import AuthorProfile from "./components/AuthorProfile/AuthorProfile.jsx";
+import AuthorOverview from "./components/Adminoverview/Adminoverview.jsx";
+import AuthorStories from "./components/Authorstories/Authorstories.jsx";
+import AuthorProfilePage from "./components/Authorprofilepage/Authorprofilepage.jsx";
 
 /* ==========================================
    COMING SOON
@@ -100,11 +105,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         {/* ==========================================
             PUBLIC WEBSITE
         ========================================== */}
 
         <Route element={<Layout />}>
+
           {/* HOME */}
           <Route path="/" element={<Home />} />
 
@@ -118,97 +125,171 @@ export default function App() {
               SURVIVOR STORIES
           ======================================== */}
 
-          <Route path="/survivor-stories" element={<AllStories />} />
+          <Route
+            path="/survivor-stories"
+            element={<AllStories />}
+          />
 
-          <Route path="/survivor-stories/:slug" element={<StoryDetails />} />
+          <Route
+            path="/survivor-stories/:slug"
+            element={<StoryDetails />}
+          />
 
           {/* Legacy story URLs */}
 
-          <Route path="/stories" element={<AllStories />} />
+          <Route
+            path="/stories"
+            element={<AllStories />}
+          />
 
-          <Route path="/stories/:slug" element={<StoryDetails />} />
+          <Route
+            path="/stories/:slug"
+            element={<StoryDetails />}
+          />
 
           {/* ========================================
               CONTACT
           ======================================== */}
 
-          <Route path="/contact" element={<ContactPage />} />
+          <Route
+            path="/contact"
+            element={<ContactPage />}
+          />
 
           {/* ========================================
               STORY SUBMISSION
           ======================================== */}
 
-          <Route path="/add-story" element={<StoryEditor />} />
+          <Route
+            path="/add-story"
+            element={<StoryEditor />}
+          />
 
           {/* ========================================
               GET INVOLVED
           ======================================== */}
 
-          <Route path="/get-involved" element={<GetInvolved />} />
-
-          <Route path="/get-involved/events/:slug" element={<EventDetails />} />
+         
 
           <Route
-            path="/get-involved/patient-caregiver-survey"
-            element={<PatientCaregiverSurvey />}
+            path="/get-involved/events/:slug"
+            element={<EventDetails />}
           />
 
-          <Route
-            path="/get-involved/partner-with-us"
-            element={<PartnerWithUs />}
-          />
-
+       
           <Route
             path="/get-involved/donate"
             element={<ComingSoon title="Donate" />}
           />
+
         </Route>
+
+        {/* ==========================================
+            USER DASHBOARD
+        ========================================== */}
+
+        {/* <Route
+          path="/dashboard"
+          element={<UserDashboard />}
+        /> */}
 
         {/* ==========================================
             AUTHOR DASHBOARD
         ========================================== */}
 
-        <Route path="/author" element={<AuthorDashboard />}>
-          {/* <Route element={<AuthorDashboard />}> */}
+        <Route
+          path="/author"
+          element={<RequireAuthor />}
+        >
+          <Route element={<AuthorDashboard />}>
+
             {/* /author */}
-            {/* <Route index element={<AuthorOverview />} /> */}
+            <Route
+              index
+              element={<AuthorOverview />}
+            />
 
             {/* /author/stories */}
-            {/* <Route path="stories" element={<AuthorStories />} /> */}
+            <Route
+              path="stories"
+              element={<AuthorStories />}
+            />
 
             {/* /author/profile */}
-            {/* <Route path="profile" element={<AuthorProfile />} /> */}
-          {/* </Route> */}
+            <Route
+              path="profile"
+              element={<AuthorProfilePage />}
+            />
+
+            {/* Future author pages */}
+            <Route
+              path="comments"
+              element={<ComingSoon title="Comments" />}
+            />
+
+            <Route
+              path="settings"
+              element={<ComingSoon title="Settings" />}
+            />
+
+          </Route>
         </Route>
 
         {/* ==========================================
             ADMIN DASHBOARD
         ========================================== */}
 
-        <Route path="/admin" element={<RequireAdmin />}>
+        <Route
+          path="/admin"
+          element={<RequireAdmin />}
+        >
           <Route element={<AdminDashboard />}>
+
             {/* /admin */}
-            <Route index element={<AdminOverview />} />
+            <Route
+              index
+              element={<AdminOverview />}
+            />
 
             {/* /admin/stories */}
-            <Route path="stories" element={<AdminStories />} />
+            <Route
+              path="stories"
+              element={<AdminStories />}
+            />
 
             {/* /admin/comments */}
-            <Route path="comments" element={<AdminComments />} />
+            <Route
+              path="comments"
+              element={<AdminComments />}
+            />
 
             {/* /admin/users */}
-            <Route path="users" element={<AdminUsers />} />
+            <Route
+              path="users"
+              element={<AdminUsers />}
+            />
 
             {/* /admin/authors */}
-            <Route path="authors" element={<AdminAuthors />} />
+            <Route
+              path="authors"
+              element={<AdminAuthors />}
+            />
 
             {/* /admin/reports */}
-            <Route path="reports" element={<ComingSoon title="Reports" />} />
+            <Route
+              path="reports"
+              element={<ComingSoon title="Reports" />}
+            />
 
             {/* /admin/settings */}
-            <Route path="settings" element={<ComingSoon title="Settings" />} />
+            <Route
+              path="settings"
+              element={<ComingSoon title="Settings" />}
+            />
+
           </Route>
         </Route>
+
       </Routes>
 
       {/* ==========================================
@@ -223,7 +304,10 @@ export default function App() {
         aria-label="Chat with us on WhatsApp"
         title="Chat with us on WhatsApp"
       >
-        <MessageCircle size={25} strokeWidth={2.2} />
+        <MessageCircle
+          size={25}
+          strokeWidth={2.2}
+        />
 
         <span className="whatsapp-float__pulse" />
       </a>
@@ -232,7 +316,11 @@ export default function App() {
           TOAST NOTIFICATIONS
       ========================================== */}
 
-      <ToastContainer position="bottom-right" autoClose={4000} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+      />
+
     </BrowserRouter>
   );
 }
